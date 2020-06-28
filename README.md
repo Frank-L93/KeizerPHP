@@ -11,6 +11,7 @@
 <li> Absence generator and editing by players themselves.</li>
 <li> Pairing</li>
 <li> Administrator rights</li>
+</ol>
 
 <p>In the future, there will be more:</p>
 <ol>
