@@ -16,7 +16,7 @@ function initSW() {
     //register the service worker
     navigator.serviceWorker.register('../sw.js')
         .then(() => {
-            console.log('serviceWorker installed!')
+          
             initPush();
         })
         .catch((err) => {
@@ -57,7 +57,7 @@ function subscribeUser() {
             return registration.pushManager.subscribe(subscribeOptions);
         })
         .then((pushSubscription) => {
-            console.log('Received PushSubscription: ', JSON.stringify(pushSubscription));
+         
             storePushSubscription(pushSubscription);
         });
 }
