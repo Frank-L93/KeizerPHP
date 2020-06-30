@@ -18,6 +18,7 @@ Route::get('/', 'PagesController@index');
 Route::get('/home', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/privacy', 'PagesController@privacy');
+Route::get('/activation', 'ActivationController@index');
 Auth::routes();
 
 # User Group
