@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 Use App\Settings;
 Use App\Config;
-use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -19,7 +19,10 @@ class PagesController extends Controller
     public function index(){
         $settings = app('App\Settings');
         
-       
+        if((Auth::check()) && (auth()->user()->active == 0))
+        {
+            return redirect()->route('logout')->with('error', 'Je hebt geen actief account');
+        }
         return view('pages.index');
     }
     
