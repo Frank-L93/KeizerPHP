@@ -21,8 +21,9 @@ class PagesController extends Controller
         
         if((Auth::check()) && (auth()->user()->active == 0))
         {
+            $errors = ['activation_response' => 'Je hebt geen actief account. ' . link_to(url('activation'), 'Klik hier') . ' om je account te activeren'];
             Auth::logout();
-            return redirect('/login')->with('error', 'Je hebt geen actief account');
+            return redirect('/login')->withErrors($errors);
            
         }
         return view('pages.index');
