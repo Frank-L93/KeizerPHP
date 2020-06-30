@@ -21,7 +21,9 @@ class PagesController extends Controller
         
         if((Auth::check()) && (auth()->user()->active == 0))
         {
-            return redirect()->route('logout')->with('error', 'Je hebt geen actief account');
+            Auth::logout();
+            return redirect('/login')->with('error', 'Je hebt geen actief account');
+           
         }
         return view('pages.index');
     }
