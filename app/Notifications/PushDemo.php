@@ -22,6 +22,7 @@ class PushDemo extends Notification
     var $type;
     var $Database_Title;
     var $Database_Message;
+    var $subject;
     /**
      * Create a new notification instance.
      *
@@ -35,6 +36,7 @@ class PushDemo extends Notification
        
         if($this->type == "1")
         {
+            $this->subject = "Update!";
             $this->Database_Title = "Stand";
             $this->Database_Message = "Er is een nieuwe stand!";
             $this->Type_Text = "Bekijk de volledige stand!";
@@ -42,16 +44,26 @@ class PushDemo extends Notification
         }
         elseif($this->type == "2")
         {
+            $this->subject = "Update!";
             $this->Database_Title = "Partijen";
             $this->Database_Message = "Er zijn nieuwe partijen!";
             $this->Type_Text = "Bekijk alle partijen!";
             $this->Type_Action = "games";
         }
         elseif($this->type == "3"){
+            $this->subject = "Update!";
             $this->Database_Title = "Admin-notificatie";
             $this->Database_Message = "Er vereist een attentie van een Admin";
             $this->Type_Text = "Ga naar de adminsite!";
             $this->Type_Action = "admin";
+        }
+        elseif($this->type == "4")
+        {
+            $this->title = "Activatiemail";
+            $this->subject = "Activeer!";
+            $this->message = "Je kunt je account activeren via de button of met deze code: ".$message;
+            $this->Type_Text = "Activeer je account!";
+            $this->Type_Action = "activation/".$message."/".$title;
         }
 
       
@@ -69,6 +81,10 @@ class PushDemo extends Notification
         // Each notifiable has settings with the name 'notifications'.
         // 1 -> Mail 2 -> Mail & Push Alert 3 -> Push Alert 4 -> SMS? 5 -> Database
         // 0 -> none
+        if($this->type == "4")
+        {
+            return ['mail'];
+        }
 
         if($notifiable->settings()->get('notifications') == 1)
         {
@@ -90,6 +106,7 @@ class PushDemo extends Notification
         {
             return ['database'];
         }
+       
        
     }
 
@@ -138,7 +155,7 @@ class PushDemo extends Notification
             $data = "";
         }
         return (new MailMessage)
-                    ->greeting('Update!')
+                    ->greeting($this->subject)
                     ->subject('De Pion '.$this->title)
                     ->line($this->message)
                     ->action($this->Type_Text, url($this->Type_Action))

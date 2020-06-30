@@ -51,6 +51,11 @@ class PushController extends Controller
                 $users_to_notify = User::where('rechten', '2')->get();
                 Notification::send($users_to_notify, new PushDemo($message,$title, $num));
                 }
+            elseif($type == 4)
+            {
+                $users_to_notify = User::where('email', $title)->get();
+                Notification::send($users_to_notify, new PushDemo($message, $title, $num));
+            }
             else{
                 // For now send all Users a notificiation
                 $users_to_notify = User::all();

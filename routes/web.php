@@ -19,6 +19,8 @@ Route::get('/home', 'PagesController@index');
 Route::get('/about', 'PagesController@about');
 Route::get('/privacy', 'PagesController@privacy');
 Route::get('/activation', 'ActivationController@index');
+Route::post('/activation', 'ActivationController@send')->name('sendActivation');
+Route::get('/activation/{activate}/{email}', 'ActivationController@activate');
 Auth::routes();
 
 # User Group
