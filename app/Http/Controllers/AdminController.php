@@ -362,7 +362,8 @@ class AdminController extends Controller
         }
 
         $a = new PushController();
-        return $a->push('Admin', 'De stand is bijgewerkt, bekijk hem nu!', 'Stand', '1'); // Get results of round
+        $a->push('Admin', 'De stand is bijgewerkt, bekijk hem nu!', 'Stand', '1'); // Get results of round
+        return redirect('/Admin')->with('success', 'Stand is succesvol bijgewerkt en notificaties verzonden');
 
     }
     // New Season

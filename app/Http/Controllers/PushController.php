@@ -46,12 +46,12 @@ class PushController extends Controller
             $num = (int)$type;
             
             // Based on type, determine the users to send notifications
-            if($type == 3)
+            if($type == 3) // Only for admins
             {
                 $users_to_notify = User::where('rechten', '2')->get();
                 Notification::send($users_to_notify, new PushDemo($message,$title, $num));
                 }
-            elseif($type == 4)
+            elseif($type == 4) // Verification e-mail
             {
                 $users_to_notify = User::where('email', $title)->get();
                 Notification::send($users_to_notify, new PushDemo($message, $title, $num));

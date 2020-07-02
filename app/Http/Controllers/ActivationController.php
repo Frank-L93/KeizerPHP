@@ -21,6 +21,10 @@ class ActivationController extends Controller
         $users = User::where('email', $request->input('email'))->get();
         foreach($users as $user)
         {
+            if($user->active == 1)
+            {
+                return redirect()->route('login')->with('error', 'Je bent al actief.');
+            }
             $user->activate = $activation_key;
             $user->save();
             $a = new PushController();
