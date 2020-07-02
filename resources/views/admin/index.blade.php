@@ -64,6 +64,9 @@
         <a class="nav-link" href="#config" role="tab" data-toggle="tab">Configuratie</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="#users" role="tab" data-toggle="tab">Gebruikers</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="#presences" role="tab" data-toggle="tab">Aanwezigheden</a>
     </li>
     <li class="nav-item">
@@ -88,6 +91,11 @@
      <div role="tabpanel" class="tab-pane" id="config">
         <p>
             @include('admin.config')
+        </p>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="users">
+        <p>
+            @include('admin.users')
         </p>
     </div>
     <div role="tabpanel" class="tab-pane" id="presences">
