@@ -58,10 +58,12 @@ Route::post('/Admin/LoadRatings', 'AdminController@loadRatings')->name('import_p
 Route::post('/Admin/LoadRounds', 'AdminController@loadRounds')->name('import_process_rounds')->middleware('admin');
 Route::post('/Admin/Rounds/create', 'AdminController@RoundStore')->middleware('admin');
 Route::post('/Admin/Games/update', 'AdminController@SetScore')->middleware('admin');
+Route::post('/Admin/Users/update', 'AdminController@UpdateUser')->middleware('admin');
 Route::post('/Admin/Config', 'AdminController@Config')->middleware('admin');
 
 // Administrator-pages (deletes)
 Route::delete('/Admin/{Presence}/Presences', 'AdminController@DestroyPresences')->middleware('admin');
+Route::delete('/Admin/{User}/User', 'AdminController@DestroyUser')->middleware('admin');
 
 # End Admin Group
 

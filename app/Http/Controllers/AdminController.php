@@ -166,6 +166,53 @@ class AdminController extends Controller
         return $game->save();
     }
 
+    // User update functionality
+    public function UpdateUser(request $request){
+     
+        $user = User::find($request->input('pk'));
+        if($request->input('name') == 'email')
+        {
+            $user->email = $request->input('value');
+        }
+        elseif($request->input('name') == 'rights')
+        {
+            $user->rechten = $request->input('value');
+        }
+        elseif($request->input('name') == 'rating')
+        {
+            $user->rating = $request->input('value');
+        }
+        elseif($request->input('name') == 'active_user')
+        {
+            $user->active = $request->input('value');
+        }
+        elseif($request->input('name') == 'knsb_id')
+        {
+            $user->knsb_id = $request->input('value');
+        }
+        elseif($request->input('name') == 'beschikbaar')
+        {
+            $user->beschikbaar = $request->input('value');
+        }
+        else{
+            return redirect('/Admin')->with('error', 'Je wilde niks aanpassen. Wat doe je hier?');
+        }
+        return $user->save();
+    }
+
+    public function DestroyUser($id)
+    {
+        if(Gate::allows('admin', Auth::user())){
+            $user= User::find($id);
+            $user->delete();
+            return redirect('/Admin')->with('success', 'Gebruiker verwijderd!');
+        }
+        else
+        {
+            return redirect('/')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
+        }
+    }
+
     // Ranking functionality of our Admin
     public function InitPresences()
     {

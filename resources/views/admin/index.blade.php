@@ -56,6 +56,7 @@
             </div>  
      </div>
 </div>
+<div id="_token" class="hidden" data-token="{{ csrf_token() }}"></div>
 <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
         <a class="nav-link active" href="#ratinglist" role="tab" data-toggle="tab">Ratinglijst</a>
@@ -119,8 +120,67 @@
             @include('admin.games')
         </p>
     </div>
-
- 
 </div>
+  <!-- Editable Form Magic-->
+  <!-- Used by the adminpages -->
+        <script>
+            $.fn.editable.defaults.mode = 'inline';
+            $.fn.editable.defaults.params = function (params) {
+                params._token = $("#_token").data("token");
+                return params;
+            };
+            $('.result').editable({
+                type: 'select',
+                url:'/Admin/Games/update',
+                source: [
+                            {value: "1-0", text: '1-0'},
+                            {value: "0.5-0.5", text: '0.5-0.5'},
+                            {value: "0-1", text: '0-1'}
+                        ]
+            }); 
+            $('.email').editable({
+                type: 'email',
+                name: 'email',
+                url:'/Admin/Users/update',
+            });
+            $('.rights').editable({
+                type: 'select',
+                name: 'rights',
+                url:'/Admin/Users/update',
+                source: [
+                            {value: "0", text: 'Gebruiker'},
+                            {value: "1", text: 'Competitieleider'},
+                            {value: "2", text: 'Admin'}
+                        ]
+            });
+            $('.rating').editable({
+                type: 'number',
+                name: 'rating',
+                url:'/Admin/Users/update',
+            });
+            $('.active_user').editable({
+                type: 'select',
+                name: 'active',
+                url:'/Admin/Users/update',
+                  source: [
+                            {value: "0", text: 'Niet Actief'},
+                            {value: "1", text: 'Actief'},
+                        ]
+            });
+             $('.knsb_id').editable({
+                type: 'number',
+                name: 'knsb_id',
+                url:'/Admin/Users/update',
+            }); 
+             $('.beschikbaar').editable({
+                type: 'select',
+                name: 'beschikbaar',
+                url:'/Admin/Users/update',
+                  source: [
+                            {value: "0", text: 'Standaard Niet Aanwezig'},
+                            {value: "1", text: 'Standaard Aanwezig'},
+                        ]
+            }); 
+        </script>
 @endsection
 
