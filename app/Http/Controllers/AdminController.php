@@ -203,6 +203,24 @@ class AdminController extends Controller
     public function DestroyUser($id)
     {
         if(Gate::allows('admin', Auth::user())){
+            $presences = Presence::find('user_id', $id)->get();
+            foreach($presences as $presence)
+            {
+                $presence->delete();
+            }
+            $games = Game::where('white', $id)->orWhere('black', $id)->get();
+            foreach($games as $game)
+            {
+                if($game->white == $id)
+                {
+                    $game->white == "Lid verwijderd";
+                }
+                else
+                {
+                    $game->black == "Lid verwijderd";
+                }
+                $game->save();
+            }
             $user= User::find($id);
             $user->delete();
             return redirect('/Admin')->with('success', 'Gebruiker verwijderd!');
