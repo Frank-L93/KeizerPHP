@@ -16,7 +16,7 @@
 <ul>
 <li>User Login to pick up the API Key for the user.</li>
 <li>Read games of the authenticated user with his API Key</li>
-<li>See for a small implementation example [DePionApp](https://github.com/Frank-L93/DePionApp).</li>
+<li>See for a small implementation example <a href="https://github.com/Frank-L93/DePionApp/">DePionApp</a></li>
 </ul>
 </li>
 </ol>
