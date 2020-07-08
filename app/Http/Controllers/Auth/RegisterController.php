@@ -39,7 +39,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('admin');
     }
 
     /**
@@ -77,6 +77,7 @@ class RegisterController extends Controller
             'beschikbaar' => $data['beschikbaar'],
             'api_token' => Str::random(60),
             'settings' => ["notifications"=>"0"],
+            'activate' => 0,
         ]);
     }
 }
