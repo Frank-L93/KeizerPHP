@@ -8,6 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
+                    <p>Let op! Na het aanmaken van nieuwe gebruiker word je uitgelogd! Deze onhandigheid wordt nog geprobeerd aan te passen.</p>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

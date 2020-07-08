@@ -205,7 +205,7 @@ class AdminController extends Controller
     public function DestroyUser($id)
     {
         if(Gate::allows('admin', Auth::user())){
-            $presences = Presence::find('user_id', $id)->get();
+            $presences = Presence::where('user_id', $id)->get();
             foreach($presences as $presence)
             {
                 $presence->delete();
@@ -223,7 +223,7 @@ class AdminController extends Controller
                 }
                 $game->save();
             }
-            $user= User::find($id);
+            $user= User::findorFail($id);
             $user->delete();
             return redirect('/Admin')->with('success', 'Gebruiker verwijderd!');
         }
@@ -573,9 +573,10 @@ class AdminController extends Controller
                         'password' => Hash::make($insertData['knsb_id']),
                         'rating' => $insertData['rating'],
                         'beschikbaar' => $insertData['beschikbaar'],
+                        'activate' => 0,
                         ]
                     );
-                    User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["layout"=>"app"]]);
+                    User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["notifications"=>"0"]]);
                     User::where('knsb_id', $insertData['knsb_id'])->update(['api_token' => Str::random(60)]);
                     }
                     else{
@@ -586,6 +587,7 @@ class AdminController extends Controller
                             'email' => $insertData['email'],
                             'rating' => $insertData['rating'],
                             'beschikbaar'=>$insertData['beschikbaar'],
+                            'activate' => 0,
                             
                         ]);
                    User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["notifications"=>"0"]]);

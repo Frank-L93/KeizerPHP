@@ -2,7 +2,8 @@
     @if(auth()->user()->rechten == "2")
     <div class="card text-black bg-light mb-3">
         <div class="card-header text-center">
-            Gebruikers 
+            Gebruikers
+            <a class="btn btn-sm btn-secondary float-right" href="/register" role="button">Maak Gebruiker</a> 
         </div>
             <div class="card-body">
             
