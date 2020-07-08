@@ -8,6 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -74,6 +75,8 @@ class RegisterController extends Controller
             'knsb_id' => $data['knsb_id'],
             'rating' => $data['rating'],
             'beschikbaar' => $data['beschikbaar'],
+            'api_token' => Str::random(60),
+            'settings' => ["notifications"=>"0"],
         ]);
     }
 }

@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 global $k;
 class AdminController extends Controller
 {
@@ -573,7 +575,8 @@ class AdminController extends Controller
                         'beschikbaar' => $insertData['beschikbaar'],
                         ]
                     );
-                    User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["layout"=>"app"]]);;
+                    User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["layout"=>"app"]]);
+                    User::where('knsb_id', $insertData['knsb_id'])->update(['api_token' => Str::random(60)]);
                     }
                     else{
                         // Update so don't pass name and password, but update email! // Still use updateOrCreate function though because it easier.
@@ -585,8 +588,8 @@ class AdminController extends Controller
                             'beschikbaar'=>$insertData['beschikbaar'],
                             
                         ]);
-                   User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["notifications"=>"0"]]);;
-                   
+                   User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["notifications"=>"0"]]);
+                   User::where('knsb_id', $insertData['knsb_id'])->update(['api_token' => Str::random(60)]);
                     }
                   
                 }
