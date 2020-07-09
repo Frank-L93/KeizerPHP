@@ -48,10 +48,10 @@ class ActivationController extends Controller
                 $user->activate = 0;
                 $user->settings = ["notifications"=>"1"];
                 $user->save();
-                return redirect()->route('login')->with('success', 'Je bent actief. Je kunt nu inloggen. Pas je wachtwoord aan in je instellingen.');
+                return redirect()->route('login')->with('success', 'Je bent actief. Je kunt nu inloggen. Pas je wachtwoord aan in je instellingen!');
             }
         }
-        return view('pages.index')->with('error', 'Er ging iets mis bij de activatie. Klopte je code wel?');
+        return view('pages.index')->with('error', 'Er ging iets mis bij de activatie. Klopt je code wel?');
     }
     public function activate($activate, $email)
     {
