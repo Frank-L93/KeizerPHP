@@ -33,6 +33,22 @@ class ActivationController extends Controller
         return view('activation.index')->with('error', 'Opgegeven emailadres is niet gekoppeld aan een account. Je kunt dus niet activeren met dit emailadres');
     }
 
+    public function activate_man(Request $request)
+    {
+        $users = User::where('email', $request->input('email'))->get();
+        foreach($users as $user)
+        {
+            if($user->activate == $request->input('activate'))
+            {
+                $user->active = 1;
+                $user->activate = 0;
+                $user->settings = ["notifications"=>"1"];
+                $user->save();
+                return redirect()->route('login')->with('success', 'Je bent actief. Je kunt nu inloggen. Pas je wachtwoord aan in je instellingen.');
+            }
+        }
+        return view('pages.index')->with('error', 'Er ging iets mis bij de activatie. Klopte je code wel?');
+    }
     public function activate($activate, $email)
     {
         $users = User::where('email', $email)->get();
