@@ -35,6 +35,10 @@ class ActivationController extends Controller
 
     public function activate_man(Request $request)
     {
+        if($request->input('activate') == 0)
+        {
+            return redirect()->route('pages.index')->with('error', 'De activatiecode mag nooit 0 zijn!');
+        }
         $users = User::where('email', $request->input('email'))->get();
         foreach($users as $user)
         {
@@ -51,6 +55,10 @@ class ActivationController extends Controller
     }
     public function activate($activate, $email)
     {
+        if($activate == 0)
+        {
+            return redirect()->route('pages.index')->with('error', 'De activatiecode mag nooit 0 zijn!');
+        }
         $users = User::where('email', $email)->get();
         foreach($users as $user)
         {
