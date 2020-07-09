@@ -26,6 +26,13 @@ class PagesController extends Controller
             return redirect('/login')->withErrors($errors);
            
         }
+        elseif((Auth::check()) && (auth()->user()->remember_token == NULL)){
+            $user = Auth::user();
+
+            $user->remember_token = 1;
+            $user->save();
+            return redirect('/settings')->with('success', 'Gelieve eerst je wachtwoord te wijzigen');
+        }
         return view('pages.index');
     }
     

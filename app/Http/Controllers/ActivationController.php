@@ -28,7 +28,7 @@ class ActivationController extends Controller
             $user->activate = $activation_key;
             $user->save();
             $a = new PushController();
-            return $a->push('Activation', $activation_key, $request->input('email'), '4');
+            return $a->push('activation', $activation_key, $request->input('email'), '4');
         }
         return view('activation.index')->with('error', 'Opgegeven emailadres is niet gekoppeld aan een account. Je kunt dus niet activeren met dit emailadres');
     }

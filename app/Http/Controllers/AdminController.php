@@ -184,7 +184,7 @@ class AdminController extends Controller
         {
             $user->rating = $request->input('value');
         }
-        elseif($request->input('name') == 'active_user')
+        elseif($request->input('name') == 'active')
         {
             $user->active = $request->input('value');
         }
