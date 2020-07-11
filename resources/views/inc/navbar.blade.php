@@ -9,12 +9,26 @@
         <a class="btn btn-outline-primary" href="{{ route('login') }}">{{ __('Login') }}</a>
     
     @else
-     <a class="p-2 text-dark" href="#"  v-pre>
+     <div class="dropdown show">
+     <a class="btn dropdown-toggle p-2 text-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
             {{ Auth::user()->name }}
     </a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="/settings">Instellingen</a>
+    <a class="dropdown-item" href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+                             document.getElementById('logout-form').submit();">
+                {{ __('Log Uit') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+    </div>
+    </div>
     
            <div id="funky"> <a class="p-2 dropdown-toggle" id="notifications" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
-                <span class="glyphicon glyphicon-bell"></span>@if(auth()->user()->unReadNotifications->count() > 0)<span class="badge badge-light">{{auth()->user()->unReadNotifications->count()}}</span>@endif
+                <span class="glyphicon glyphicon-inbox"></span>@if(auth()->user()->unReadNotifications->count() > 0)<span class="badge badge-light">{{auth()->user()->unReadNotifications->count()}}</span>@endif
             </a>
             <ul class="dropdown-menu" aria-labelledby="notificationsMenu" id="notificationsMenu">
             @if(auth()->user()->unReadNotifications->count() > 0)<li class="dropdown-header"><a href="{{route('readNotifications')}}" >Markeer als gelezen</a></li>
@@ -26,15 +40,7 @@
             @endif
             </ul>
             </div>
-    <a class="btn btn-outline-primary" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                             document.getElementById('logout-form').submit();">
-                {{ __('Log Uit') }}
-            </a>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
+             
        
     @endguest
   </div>

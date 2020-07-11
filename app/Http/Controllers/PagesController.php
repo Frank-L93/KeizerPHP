@@ -19,7 +19,7 @@ class PagesController extends Controller
     public function index(){
         $settings = app('App\Settings');
         
-        if((Auth::check()) && (auth()->user()->active == 0))
+        if((Auth::check()) && (auth()->user()->active == 0 || auth()->user()->active == NULL))
         {
             $errors = ['activation_response' => 'Je hebt geen actief account. ' . link_to(url('activation'), 'Klik hier') . ' om je account te activeren'];
             Auth::logout();
