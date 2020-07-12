@@ -30,6 +30,7 @@ class GamesController extends Controller
         else
         {
             $games = Game::all();
+            
         }
         $users = User::all();
         $rounds = Round::all();
@@ -40,8 +41,9 @@ class GamesController extends Controller
         }
         
         $ranking = Ranking::orderBy('score', 'desc')->orderBy('value', 'desc')->get();
+        
         $scores = $this->GetScore($games, $user, $round_to_process->id);
-
+        
         return view('games.index')->with('rounds', $rounds)->with('ranking', $ranking)->with('games', $games)->with('users', $users)->with('current_user', $user)->with('scores', $scores)->with('round_to_process', $round_to_process);
     }
 
@@ -56,6 +58,11 @@ class GamesController extends Controller
                 $white_score = 0;
 
                 $white_ranking = Ranking::where('user_id', $game->white)->first();
+                if($white_ranking == NULL)
+                {
+                    $white_score = 0;
+                }
+                else{
                 if($game->black == "Club"){
                     
                     if($game->round < $round)
@@ -87,6 +94,7 @@ class GamesController extends Controller
                         $white_score += 0.25 * $white_ranking->value;
                     }
                 }
+            }
                 array_push($scores, ["score"=>$white_score, "game"=>$game->id]);
             }
             if(($game->white == $user && $game->result != "Afwezigheid") || ($game->black == $user && $game->result != "Afwezigheid"))

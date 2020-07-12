@@ -38,10 +38,12 @@
                                             <td>Bye</td>
                                         @elseif($game->black === "Club")
                                             <td>Clubverplichting</td>
-                                        @elseif($game->black === "Personal")
+                                        @elseif(auth()->user()->id === $game->white && $game->black === "Personal")
                                             <td>Persoonlijke reden</td>
                                             @elseif($game->black === "Other" || $game->black === "Empty")
-                                            <td>Overig afwezig</td>
+                                            <td>Afwezig</td>
+                                            @else
+                                            <td>Afwezig</td>
                                         @endif
                                         <td>{{$game->result}}</td>
                                         @if($game->white === $current_user OR $game->black === $current_user)
