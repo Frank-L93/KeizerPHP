@@ -10,12 +10,20 @@
             <table class="table table-hover">
                 <thead class="thead-dark">
                         <th>#</th><th>Naam</th><th>Score</th><th>Waarde</th>
+                        @if(settings()->has('ranking') && (settings()->get('ranking') == 1))
+                        <th>Gespeelde Partijen</th><th>Resultaat</th><th>TPR</th>
+                        @endif
                     </thead>
                     <?php
                     $i = 1;
                     ?>
                     @foreach($ranking as $rank)
-                        <tr><td><a href="/ranking/{{$rank->id}}"><?php echo $i; $i++;?></a></td><td>{{$rank->user->name}}</td><td>{{$rank->score}}</td><td>{{$rank->value}}</td></tr>
+                        <tr><td><a href="/ranking/{{$rank->id}}"><?php echo $i; $i++;?></a></td><td>{{$rank->user->name}}</td><td>{{$rank->score}}</td><td>{{$rank->value}}</td>
+                        
+                        @if(settings()->has('ranking') && (settings()->get('ranking') == 1))
+                        <td>{{$rank->amount}}</td><td>{{$rank->gamescore}}</td><td>{{$rank->TPR}}</td>
+                        @endif
+                        </tr>
                     @endforeach
                     
             </table>

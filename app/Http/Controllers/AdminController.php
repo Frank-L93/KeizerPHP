@@ -13,6 +13,7 @@ Use App\Game;
 use App\Match;
 use App\Config;
 use App\Settings;
+use App\TPRHelper;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -319,7 +320,7 @@ class AdminController extends Controller
                 
                 // Find white and black in the ranking
                 $white_ranking = Ranking::where('user_id', $game->white)->first();
-               
+                $white_rating = User::where('id', $game->white)->first();
             
                 // Defaults; //69.05
                 $white_score = $white_ranking->score;
@@ -330,6 +331,7 @@ class AdminController extends Controller
                 else
                 {
                     $black_ranking = Ranking::where('user_id', $game->black)->first();
+                    $black_rating = User::where('id', $game->black)->first();
                     $black_score = $black_ranking->score;
                 }
               
@@ -361,6 +363,9 @@ class AdminController extends Controller
                     {
                         $white_score += $white_result * $black_ranking->value;
                     }
+                    $white_ranking->amount = $white_ranking->amount + 1;
+                    $black_ranking->amount = $black_ranking->amount + 1;
+                    $white_ranking->gamescore = $white_ranking->gamescore + 1;
                     $white_score += Config::Scoring("Presence");
                     $black_score += Config::Scoring("Presence");
                 }
@@ -376,6 +381,10 @@ class AdminController extends Controller
                         $white_score += $white_result * $black_ranking->value;
                         $black_score += $black_result * $white_ranking->value;
                     }
+                    $white_ranking->amount = $white_ranking->amount + 1;
+                    $black_ranking->amount = $black_ranking->amount + 1;
+                    $white_ranking->gamescore = $white_ranking->gamescore + 0.5;
+                    $black_ranking->gamescore = $black_ranking->gamescore + 0.5;
                     $white_score += Config::Scoring("Presence");
                     $black_score += Config::Scoring("Presence");
                 }
@@ -389,6 +398,9 @@ class AdminController extends Controller
                     {
                         $black_score += $black_result * $white_ranking->value;
                     }
+                    $white_ranking->amount = $white_ranking->amount + 1;
+                    $black_ranking->amount = $black_ranking->amount + 1;
+                    $black_ranking->gamescore = $black_ranking->gamescore + 1;
                     $black_score += Config::Scoring("Presence");
                     $white_score += Config::Scoring("Presence");
                 }
@@ -396,6 +408,7 @@ class AdminController extends Controller
                 {
                     continue;
                 }
+                
                 $white_ranking->score = $white_score;
                 $white_ranking->save();
                 if($game->black == 0)
@@ -403,7 +416,14 @@ class AdminController extends Controller
                 }
                 else
                 {
+                    $white_ranking->ratop = $white_ranking->ratop + $black_rating->rating;
+                    $white_ranking->save();
+                    $white_ranking->TPR = $this->calculateTPR($game->white);
+                    $white_ranking->save();
                     $black_ranking->score = $black_score;
+                    $black_ranking->ratop = $black_ranking->ratop + $white_rating->rating;
+                    $black_ranking->save();
+                    $black_ranking->TPR = $this->calculateTPR($game->black);
                     $black_ranking->save();
                 }
             }
@@ -414,6 +434,29 @@ class AdminController extends Controller
         return $this->UpdateRanking();
     }
 
+    // TPR
+    public function calculateTPR($player)
+    {
+        $user = Ranking::where('user_id', $player)->first();
+        if($user->amount == 0)
+        {
+            $tpr = 0;
+            return $tpr;
+        }
+        
+        $divide = $user->gamescore / $user->amount;
+        $average_rating = $user->ratop / $user->amount;
+        $based_on_divide = $this->GetValueForTPR($divide);
+        $tpr = $average_rating + $based_on_divide;
+        return $tpr; 
+    }
+
+    public function GetValueForTPR($amount)
+    {
+        $amount = round($amount, 2);
+        $value = TPRHelper::where('p', $amount)->first();
+        return $value->dp;
+    }
     // Update the ranking as now the scores are processed.
     public function UpdateRanking()
     {
@@ -679,5 +722,6 @@ class AdminController extends Controller
         }
     
     }
+
 }
 

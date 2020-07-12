@@ -193,7 +193,11 @@ class PresencesController extends Controller
                 }
                 else{ // We are updating the presences. It now turns out to be the player is present, therefore, the game with the absence, should be deleted from the database.
                     
-                    $game = Game::where('round_id', $presence->round)->where('white',$user)->first()->get();
+                    $game = Game::where([
+                        ['round_id', '=', $presence->round], 
+                        ['white', '=', $user]
+                        ])->get();
+                    
                     if($game->isEmpty())
                     {
                         // No game to delete.
