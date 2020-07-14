@@ -91,6 +91,8 @@ class Match
         if(count($matched) == count($playerstopair))
         {
             // Create notification
+            $b = new iOSNotificationsController();
+            $b->newFeedItem('Partijen', 'Partijen voor ronde'.$round.' zijn aangemaakt!', 'https://interndepion.nl/games', '2');
              $a = new PushController();
             $a->push('Admin', 'Partijen voor ronde '.$round.' zijn aangemaakt!', 'Partijen', '2');
             return redirect('/Admin')->with('success', 'Partijen voor ronde '.$round.' aangemaakt');

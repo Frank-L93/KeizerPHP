@@ -132,6 +132,21 @@
                         </select>
                         
                     </div>
+                    <label for="rss" class="col-md-4 control-label">RSS-feed</label>
+                    <div class="col-md-6">
+
+                        <select name="rss" class="form-control">
+                            <option value="0" @if(array_key_exists('rss', $settings)) @if($settings['rss'] == 0) selected @endif @endif>Geen RSS</option>
+                            <option value="1" @if(array_key_exists('rss', $settings)) @if($settings['rss'] == 1) selected @endif @endif>RSS</option>
+                        </select>
+                        
+                    </div>
+                    @if($user->api_token !== NULL)
+                    <label for="rss-link" class="col-md-4 control-label">RSS-feed link</label>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" value ="https://interndepion.nl/feed/{{$user->api_token}}"disabled>
+                    </div>
+                    @endif
                     <label for="layout" class="col-md-4 control-label">Layout</label>
                     <div class="col-md-6">
                         <select name="layout" class="form-control">
@@ -177,11 +192,14 @@
                                     <li>Chrome (niet iOS)</li>
                                     <li>Edge (de nieuwste versie)</li>
                                     <li>FireFox (niet iOS)</li>
-                                    <li>Safari (Binnenkort MacOS, niet iOS)</li>
+                                    <li>Safari (Windows)</li>
                                     </ul>
                                     </li>
                                     <li>Notificaties per SMS: Je krijgt een SMS met de statusupdate. Bij het gebruik van deze optie wordt om een kleine donatie gevraagd gezien het versturen van SMS'jes geld kost.</li>
                                     <li>Notificaties op de website: Je krijgt de statusupdate alleen te zien op de website, boven in het scherm zul je een postvak zien waar je de meldingen in ontvangt. Hiervoor dien je ingelogd te zijn. Bij iedere soort notificatie, krijg je deze. Met deze optie krijg je alleen de notificatie op de website.</li>
+                                    </p>
+                                    <p>Wil je pushnotificaties ontvangen op je iPhone? Maak dan gebruik van de optie om een RSS-feed te gebruiken. Met de meeste RSS Reader apps, krijg je een notificatie als er namelijk een nieuw item daar aan is toegevoegd. En dat gebeurd!
+                                    Jouw RSS-feed link is persoonlijk, dus je krijgt alleen je eigen berichten te zien. Werkt ook op andere apparaten;)</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluit</button>

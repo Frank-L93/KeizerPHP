@@ -71,3 +71,6 @@ Route::delete('/Admin/{User}/User', 'AdminController@DestroyUser')->middleware('
 # Web-Push #
 Route::post('/push','PushController@store');
 Route::get('/push','PushController@push')->name('push');
+
+# RSS Feed #
+Route::get('/feed/{API_Token}', 'iOSNotificationsController@getFeedItems');

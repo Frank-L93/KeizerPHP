@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Http\Controllers\iOSNotificationsController;
 
 global $k;
 class AdminController extends Controller
@@ -470,7 +471,8 @@ class AdminController extends Controller
             $rank->save();
             $i = $i - Config::InitRanking("step");
         }
-
+        $b = new iOSNotificationsController();
+        $b->newFeedItem('Stand', 'De stand is bijgewerkt, bekijk hem nu!', 'https://interndepion.nl/rankings', '1');
         $a = new PushController();
         $a->push('Admin', 'De stand is bijgewerkt, bekijk hem nu!', 'Stand', '1'); // Get results of round
         return redirect('/Admin')->with('success', 'Stand is succesvol bijgewerkt en notificaties verzonden');
@@ -535,6 +537,8 @@ class AdminController extends Controller
         $configs->Bye = $request->input('Bye');
         $configs->EndSeason = $request->input('EndSeason');
         //$configs->Admin = $request->input('Admin');
+        $b = new iOSNotificationsController();
+        $b->newFeedItem('Admin-Melding', 'Nieuwe aanmelding!', 'https://interndepion.nl/admin', '3');
         $configs->save();
         return redirect('/Admin')->with('success', 'Instellingen aangepast!');
     }
@@ -620,7 +624,7 @@ class AdminController extends Controller
                         ]
                     );
                     User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["notifications"=>"0"]]);
-                    User::where('knsb_id', $insertData['knsb_id'])->update(['api_token' => Str::random(60)]);
+                    User::where('knsb_id', $insertData['knsb_id'])->update(['api_token' => Str::random(10)]);
                     }
                     else{
                         // Update so don't pass name and password, but update email! // Still use updateOrCreate function though because it easier.
@@ -634,7 +638,7 @@ class AdminController extends Controller
                             
                         ]);
                    User::where('knsb_id', $insertData['knsb_id'])->update(['settings' => ["notifications"=>"0"]]);
-                   User::where('knsb_id', $insertData['knsb_id'])->update(['api_token' => Str::random(60)]);
+                   User::where('knsb_id', $insertData['knsb_id'])->update(['api_token' => Str::random(10)]);
                     }
                   
                 }

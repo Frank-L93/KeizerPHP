@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class SettingsController extends Controller
 {
@@ -169,6 +170,40 @@ class SettingsController extends Controller
         {
             settings()->merge('notifications',$request->get('notifications'));
         }
+
+        // RSS-Feed
+        if(settings()->has('rss'))
+        {
+            if(settings()->get('rss') == 0)
+            {
+                $user = Auth::user();
+                if($user->api_token == NULL)
+                {
+                    $user->api_token = Str::random(10);
+                    $user->save();
+                }
+            }
+            settings()->set('rss', $request->get('rss'));
+            
+        }
+        else
+        {
+            $user = Auth::user();
+            if($request->get('rss') == 0)
+            {
+                $user->api_token = NULL;
+                $user->save();
+            }
+               
+            if($user->api_token == NULL)
+            {
+                $user->api_token = Str::random(10);
+                $user->save();
+            }
+            settings()->merge('rss',$request->get('rss'));
+        }
+
+        // Layout
         if(settings()->has('layout'))
         {
             settings()->set('layout', $request->get('layout'));

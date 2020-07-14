@@ -27,7 +27,7 @@
                                     <th>Ronde</th><th>Wit</th><th>Zwart</th><th>Resultaat</th>
                                 </thead> 
                             @foreach($games as $game)             
-                            @if($game->result !== "Afwezigheid")
+                            
                                 @if($round->id === $game->round_id)
                                 <tr>
                                     <td><a href="/games/{{$game->id}}">{{$game->round_id}} - {{Carbon\Carbon::parse($round->date)->format('j M Y')}}</a></td>
@@ -43,6 +43,13 @@
                                     @endforeach
                                     @if($game->black === "Bye")
                                         <td>Bye</td>
+                                        @elseif($game->black === "Club")
+                                            <td>Clubverplichting</td>
+                                        @elseif($game->black === "Personal")
+                                            <td>Persoonlijke reden</td>
+                                            @elseif($game->black === "Other" || $game->black === "Empty")
+                                            <td>Afwezig</td>
+                                         
                                     @endif
                                     <td>
                                         
@@ -52,7 +59,7 @@
                                     </td>
                                 </tr>
                                 @endif 
-                            @endif
+                            
                             @endforeach
                         </table>
                         </div>

@@ -75,7 +75,7 @@ class RegisterController extends Controller
             'knsb_id' => $data['knsb_id'],
             'rating' => $data['rating'],
             'beschikbaar' => $data['beschikbaar'],
-            'api_token' => Str::random(60),
+            'api_token' => Str::random(10),
             'settings' => ["notifications"=>"0"],
             'activate' => 0,
         ]);

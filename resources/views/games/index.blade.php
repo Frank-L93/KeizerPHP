@@ -21,7 +21,34 @@
                             <th>Wit</th><th>Zwart</th><th>Resultaat</th><th>Jouw Score</th>
                         </thead>
                         @foreach($games as $game)             
-                            
+                            @if($game->result !== "Afwezigheid")
+                                @if($round->id === $game->round_id)
+                                    <tr>
+                                        @foreach($users as $user)
+                                            @if($user->id === $game->white)
+                                                <td>{{$user->name}}</td>
+                                            @endif
+                                        @endforeach
+                                        @foreach($users as $user)
+                                            @if($user->id === intval($game->black))
+                                                <td>{{$user->name}}</td>
+                                            @endif 
+                                        @endforeach
+                                        @if($game->black === "Bye")
+                                            <td>Bye</td>
+                                        @endif
+                                        <td>{{$game->result}}</td>
+                                        @if($game->white === $current_user OR $game->black === $current_user)
+                                            
+                                            @foreach($scores as $score)
+                                                @if($score['game'] === $game->id)
+                                                    <td>{{$score['score']}}</td>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </tr>
+                                @endif
+                            @elseif(auth()->user()->id === $game->white)
                                 @if($round->id === $game->round_id)
                                     <tr>
                                         @foreach($users as $user)
@@ -38,11 +65,9 @@
                                             <td>Bye</td>
                                         @elseif($game->black === "Club")
                                             <td>Clubverplichting</td>
-                                        @elseif(auth()->user()->id === $game->white && $game->black === "Personal")
+                                        @elseif($game->black === "Personal")
                                             <td>Persoonlijke reden</td>
                                             @elseif($game->black === "Other" || $game->black === "Empty")
-                                            <td>Afwezig</td>
-                                            @else
                                             <td>Afwezig</td>
                                         @endif
                                         <td>{{$game->result}}</td>
@@ -55,8 +80,8 @@
                                             @endforeach
                                         @endif
                                     </tr>
-                                @endif 
-                            
+                                @endif
+                            @endif
                         @endforeach
                     </table>
                 </div>
