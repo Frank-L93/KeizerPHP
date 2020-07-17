@@ -74,3 +74,5 @@ Route::get('/push','PushController@push')->name('push');
 
 # RSS Feed #
 Route::get('/feed/{API_Token}', 'iOSNotificationsController@getFeedItems');
+
+Route::get('/sendNotification', 'AdminController@SendNotification')->middleware('admin');

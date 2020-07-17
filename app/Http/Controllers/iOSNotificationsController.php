@@ -48,8 +48,9 @@ class iOSNotificationsController extends Controller implements Feedable
         foreach($users as $user)
         {
           
-            if($user->settings()->get('rss') == 1)
+            if(($user->settings()->has('rss') == true) && ($user->settings()->get('rss') == 1))
             {
+                
                 // Match
                 if($type == 2){
                     $game = Game::where('white', $user->id)->orWhere('black', $user->id)->latest()->first();
@@ -64,7 +65,8 @@ class iOSNotificationsController extends Controller implements Feedable
                         $black = User::select('name')->where('id', $game->black)->first();
                         $black = $black->name;
                     }
-                    $summary = $summary."<br> Jouw partij is: <br>".$white." - ".$black;
+                    $summary += "<br> Jouw partij is: <br>".$white." - ".$black;
+                    
                 } 
                 $item = new iOSNotification();
                 $item->user_id = $user->id;

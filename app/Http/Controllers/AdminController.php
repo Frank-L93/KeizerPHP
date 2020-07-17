@@ -94,15 +94,15 @@ class AdminController extends Controller
     public function FillArrayPlayers($round) // loads all players that are needed to be paired in the specified round.
     {
         $players = Array();
+        $lower_value_set = 0;
         $presentPlayers = Presence::select('user_id')->where(['round' => $round, 'presence' => '1'])->get();
         foreach($presentPlayers as $player)
         {
             array_push($players, $player->user_id);
             $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
-            if($lowest_value->value == NULL)
+            if($lowest_value == NULL)
             {
-                $lowest_value->value = Config::InitRanking('start');
-                $lowest_value->value = $lowest_value->value + 1;
+                $lowest_value_set = Config::InitRanking('start');
             }
             $player_ranked = Ranking::where('user_id', $player->user_id)->get();
             // Player needs to be in Ranking, so add him if he does not appear there yet.
@@ -111,12 +111,26 @@ class AdminController extends Controller
                 $ranking = new Ranking;
                 $ranking->user_id = $player->user_id;
                 $ranking->score = 0;
-                $ranking->value = $lowest_value->value - 1;
+                if($lowest_value_set ==  Config::InitRanking('start'))
+                {
+                    $ranking->value = $lowest_value_set;
+                }
+                else
+                {
+                    $ranking->value = $lowest_value->value - 1;
+                }
                 $ranking->save();
             }
         }
         // We now have all players, before matching, this needs to be sorted.
         return $this->FillArrayPlayersRanked($players, $round);
+    }
+
+    public function SendNotification()
+    {
+        $b = new iOSNotificationsController();
+        $b->newFeedItem('Partijen', 'Partijen voor ronde 1 zijn aangemaakt!', 'https://interndepion.nl/games', '2');
+        return "Notificaties verzonden";
     }
 
     public function checkPaired($player, $round){
@@ -280,6 +294,15 @@ class AdminController extends Controller
             if($game->result == "Afwezigheid")
             {
                 $white_ranking = Ranking::where('user_id', $game->white)->first();
+                if($white_ranking->isEmpty())
+                {
+                    $white_ranking = new Ranking;
+                    $white_ranking->user_id = $game->white;
+                    $white_ranking->score = 0;
+                    $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
+                    $white_ranking->value = $lowest_value->value - 1;  
+                    $white_ranking->save();
+                }
                 $white_score = $white_ranking->score;
 
                 if($game->black == "Club"){
@@ -287,6 +310,10 @@ class AdminController extends Controller
                     if($game->round_id < $round)
                     {
                         $white_score += Config::Scoring("Club") * $white_ranking->LastValue;
+                    }
+                    elseif($game->round_id > $round)
+                    {
+
                     }
                     else
                     {
@@ -298,6 +325,10 @@ class AdminController extends Controller
                     {
                         $white_score += Config::Scoring("Personal") * $white_ranking->LastValue;
                     }
+                    elseif($game->round_id > $round)
+                    {
+                        
+                    }
                     else
                     {
                         $white_score += Config::Scoring("Personal") * $white_ranking->value;
@@ -307,6 +338,10 @@ class AdminController extends Controller
                     if($game->round_id < $round)
                     {
                         $white_score += Config::Scoring("Other") * $white_ranking->LastValue;
+                    }
+                    elseif($game->round_id > $round)
+                    {
+                        
                     }
                     else
                     {
@@ -343,18 +378,17 @@ class AdminController extends Controller
                 // Calculate the new score for white and black for this game or all games?
                 if($game->black == "Bye")
                 {   
-                    
-                    
                     if($game->round_id < $round)
-                    {
-                      
+                    { 
                         $white_score += Config::Scoring("Bye") * $white_ranking->LastValue;
+                    }
+                    elseif($game->round_id > $round)
+                    {
+                        
                     }
                     else
                     {
-                       
-                        $white_score += Config::Scoring("Bye") * $white_ranking->value;
-                     
+                        $white_score += Config::Scoring("Bye") * $white_ranking->value; 
                     }
                     $white_score += Config::Scoring("Presence");
                 }
@@ -363,6 +397,10 @@ class AdminController extends Controller
                     if($game->round_id < $round)
                     {
                         $white_score += $white_result * $black_ranking->LastValue;
+                    }
+                    elseif($game->round_id > $round)
+                    {
+                        
                     }
                     else
                     {
@@ -381,6 +419,10 @@ class AdminController extends Controller
                         $white_score += $white_result * $black_ranking->LastValue;
                         $black_score += $black_result * $white_ranking->LastValue;
                     }
+                    elseif($game->round_id > $round)
+                    {
+                        
+                    }
                     else
                     {
                         $white_score += $white_result * $black_ranking->value;
@@ -398,6 +440,10 @@ class AdminController extends Controller
                     if($game->round_id < $round)
                     {
                         $black_score += $black_result * $white_ranking->LastValue;
+                    }
+                    elseif($game->round_id > $round)
+                    {
+                        
                     }
                     else
                     {
