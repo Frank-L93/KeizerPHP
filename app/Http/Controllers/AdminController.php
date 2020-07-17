@@ -99,7 +99,11 @@ class AdminController extends Controller
         {
             array_push($players, $player->user_id);
             $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
-            
+            if($lowest_value->value == NULL)
+            {
+                $lowest_value->value = Config::InitRanking('start');
+                $lowest_value->value = $lowest_value->value + 1;
+            }
             $player_ranked = Ranking::where('user_id', $player->user_id)->get();
             // Player needs to be in Ranking, so add him if he does not appear there yet.
             if($player_ranked->isEmpty())
