@@ -38,8 +38,8 @@
                                             <td>Bye</td>
                                         @endif
                                         <td>{{$game->result}}</td>
-                                        @if($game->white === $current_user OR $game->black === $current_user)
-                                            
+                                        @if(($game->white === auth()->user()->id) || (intval($game->black) === auth()->user()->id))
+                                     
                                             @foreach($scores as $score)
                                                 @if($score['game'] === $game->id)
                                                     <td>{{$score['score']}}</td>
@@ -70,10 +70,13 @@
                                             @elseif($game->black === "Other" || $game->black === "Empty")
                                             <td>Afwezig</td>
                                         @endif
-                                        <td>{{$game->result}}</td>
-                                        @if($game->white === $current_user OR $game->black === $current_user)
-                                            
+                                        <td>{{$game->result}}
+                                         </td>
+                                       
+                                        @if(($game->white === auth()->user()->id) || (intval($game->black) === auth()->user()->id))
+                                        
                                             @foreach($scores as $score)
+                                           
                                                 @if($score['game'] === $game->id)
                                                     <td>{{$score['score']}}</td>
                                                 @endif
