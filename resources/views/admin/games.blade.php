@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <table class="table table-hover">
                                 <thead class="thead-dark">
-                                    <th>Ronde</th><th>Wit</th><th>Zwart</th><th>Resultaat</th>
+                                    <th>Ronde</th><th>Wit</th><th>Zwart</th><th>Resultaat</th><th>Verwijder</th>
                                 </thead> 
                             @foreach($games as $game)             
                             
@@ -33,12 +33,20 @@
                                     <td><a href="/games/{{$game->id}}">{{$game->round_id}} - {{Carbon\Carbon::parse($round->date)->format('j M Y')}}</a></td>
                                     @foreach($users as $user)
                                         @if($user->id === $game->white)
-                                            <td>{{$user->name}}</td>
+                                            <td>
+                                            <a href="#" class="white" data-pk="{{$game->id}}" data-value="{{$game->white}}" data-title="Verander wit" class="editable editable-click" style="color:gray;" data-original-title="" title="">
+                                            {{$user->name}}
+                                            </a>
+                                            </td>
                                         @endif
                                     @endforeach
                                     @foreach($users as $user)
                                         @if($user->id === intval($game->black))
-                                        <td>{{$user->name}}</td>
+                                        <td>
+                                        <a href="#" class="black" data-pk="{{$game->id}}" data-value="{{$game->black}}" data-title="Verander zwart" class="editable editable-click" style="color:gray;" data-original-title="" title="">
+                                            {{$user->name}}
+                                        </a>
+                                        </td>
                                         @endif 
                                     @endforeach
                                     @if($game->black === "Bye")
@@ -48,14 +56,18 @@
                                         @elseif($game->black === "Personal")
                                             <td>Persoonlijke reden</td>
                                             @elseif($game->black === "Other" || $game->black === "Empty")
-                                            <td>Afwezig</td>
-                                         
+                                            <td>Afwezig</td> 
                                     @endif
                                     <td>
-                                        
                                         <a href="#" class="result" data-pk="{{$game->id}}" data-value="{{$game->result}}" data-title="Selecteer Resultaat" class="editable editable-click" style="color: gray;" data-original-title="" title="">
                                             {{$game->result}}
                                         </a>
+                                    </td>
+                                    <td>
+                                        {!!Form::open(['action'=>['AdminController@DestroyGames', $game->id], 'method'=>'POST', 'class' => 'pull-right'])!!}
+                                        {{Form::hidden('_method', 'DELETE')}}
+                                        {{Form::submit('Verwijder', ['class' => 'btn btn-sm btn-danger'])}}
+                                        {!!Form::close() !!}
                                     </td>
                                 </tr>
                                 @endif 

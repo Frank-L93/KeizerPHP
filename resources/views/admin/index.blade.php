@@ -124,6 +124,9 @@
   <!-- Editable Form Magic-->
   <!-- Used by the adminpages -->
         <script>
+      
+     
+      
             $.fn.editable.defaults.mode = 'inline';
             $.fn.editable.defaults.params = function (params) {
                 params._token = $("#_token").data("token");
@@ -131,13 +134,31 @@
             };
             $('.result').editable({
                 type: 'select',
+                name:'result',
                 url:'/Admin/Games/update',
                 source: [
                             {value: "1-0", text: '1-0'},
                             {value: "0.5-0.5", text: '0.5-0.5'},
                             {value: "0-1", text: '0-1'}
                         ]
-            }); 
+            });
+            
+           
+                $('.white').editable({
+                    type: 'select',
+                    name:'white',
+                    url:'/Admin/Games/update',
+                    source: "/Admin/users/list"
+                });  
+           
+                $('.black').editable({
+                    type: 'select',
+                    name:'black',
+                    url:'/Admin/Games/update',
+                    source: "/Admin/users/list"
+                });
+            
+            
             $('.email').editable({
                 type: 'email',
                 name: 'email',

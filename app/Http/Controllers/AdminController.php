@@ -88,6 +88,18 @@ class AdminController extends Controller
             return redirect('/presences')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
         }
     }
+    public function DestroyGames($id)
+    {
+        if(Gate::allows('admin', Auth::user())){
+            $game = Game::find($id);
+            $game->delete();
+            return redirect('/Admin')->with('success', 'Partij verwijderd!');
+        }
+        else
+        {
+            return redirect('/games')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
+        }
+    }
 
     // Starting Matching process
     
@@ -177,14 +189,38 @@ class AdminController extends Controller
         return redirect('/Admin')->with('Success', 'Partijen aangemaakt!'); // Return will most likely not be called as in the pairing process, the last return that can be called is the return for the notifications which afterwards redirects to the Admin-page too. But for cases that this does not happen, this return is necessary.
     }
 
-
+    public function List()
+    {
+        $users = User::all();
+        $user_list = Array();
+        foreach($users as $user)
+        {
+            array_push($user_list, ["value" => $user->id, "text"=>$user->name]);
+        } 
+        return json_encode($user_list);
+    }
+   
     // Scoring functionality of our Admin
 
     public function SetScore(request $request)
     {
         
         $game = Game::find($request->input('pk'));
-        $game->result = $request->input('value');
+            if($request->input('name') == 'result')
+            {
+                $game->result = $request->input('value');
+            }
+            elseif($request->input('name') == 'white')
+            {
+                $game->white = $request->input('value');
+            }
+            elseif($request->input('name') == 'black')
+            {   
+                $game->black = $request->input('value');
+            }
+            else{
+
+            }
         return $game->save();
     }
 

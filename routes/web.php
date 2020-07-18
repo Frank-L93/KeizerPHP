@@ -53,6 +53,8 @@ Route::get('/Admin/Reset', 'AdminController@ResetSeason')->middleware('admin');
 Route::get('/Admin/Match/{Round}', 'AdminController@FillArrayPlayers')->middleware('admin');
 Route::get('/Admin/Games', 'AdminController@games')->middleware('admin');
 Route::get('/Admin/{Game}/Games', 'AdminController@game')->middleware('admin');
+Route::get('/Admin/users/list', 'AdminController@List')->middleware('admin');
+Route::get('/Admin/users/list2', 'AdminController@List2')->middleware('admin');
 
 // Administrator-pages (posts)
 Route::post('/Admin/LoadRatings', 'AdminController@loadRatings')->name('import_process')->middleware('admin');
@@ -65,6 +67,7 @@ Route::post('/Admin/Config', 'AdminController@Config')->middleware('admin');
 // Administrator-pages (deletes)
 Route::delete('/Admin/{Presence}/Presences', 'AdminController@DestroyPresences')->middleware('admin');
 Route::delete('/Admin/{User}/User', 'AdminController@DestroyUser')->middleware('admin');
+Route::delete('/Admin/{Game}/Games', 'AdminController@DestroyGames')->middleware('admin');
 
 # End Admin Group
 
