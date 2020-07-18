@@ -7,6 +7,7 @@ use App\Feedable;
 use App\FeedItem;
 use App\User;
 Use App\Game;
+Use App\Ranking;
 
 class iOSNotificationsController extends Controller implements Feedable
 {
@@ -65,9 +66,20 @@ class iOSNotificationsController extends Controller implements Feedable
                         $black = User::select('name')->where('id', $game->black)->first();
                         $black = $black->name;
                     }
-                    $summary += "<br> Jouw partij is: <br>".$white." - ".$black;
+                    $summary = "Nieuwe partijen zijn ingedeeld. <br> Jouw partij is: <br>".$white." - ".$black;
                     
                 } 
+                elseif($type == 1)
+                {
+                    $i = 1;
+                    $summary = "Er is een nieuwe stand! Hieronder volgt de nieuwe top 3<hr>";
+                    $data = Ranking::orderBy('score', 'desc')->orderBy('value', 'desc')->take(3)->get();
+                    foreach($data as $ranking)
+                    {
+                        $summary .= $i." | ".$ranking->user->name." | ".$ranking->score." | ".$ranking->value."<br>";
+                        $i++;
+                    }
+                }
                 $item = new iOSNotification();
                 $item->user_id = $user->id;
                 $item->title = $title;

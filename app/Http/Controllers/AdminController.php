@@ -316,13 +316,24 @@ class AdminController extends Controller
 
     public function Calculate($round)
     {
+        // Make round an int
         $round = $round * 1;
+        
+        // Get all rankings
         $rankings = Ranking::all();
+
+        // Reset score as we do recalculating the score of previous rounds based on value in this round
+        // Also reset amount, gamescore & ratop as we loop through all games again. So if we keep it the value it already has, it will duplicate itself!
         foreach($rankings as $ranking)
         {
             $ranking->score = 0;
+            $ranking->amount = 0;
+            $ranking->gamescore = 0;
+            $ranking->ratop = 0;
             $ranking->save();
         }
+
+        // Get all games.
         $games = Game::all();
         foreach($games as $game)
         {
@@ -330,7 +341,9 @@ class AdminController extends Controller
             if($game->result == "Afwezigheid")
             {
                 $white_ranking = Ranking::where('user_id', $game->white)->first();
-                if($white_ranking->isEmpty())
+                
+                // Check if player exist in Ranking, if not, add person to ranking.
+                if($white_ranking == NULL)
                 {
                     $white_ranking = new Ranking;
                     $white_ranking->user_id = $game->white;
@@ -338,6 +351,7 @@ class AdminController extends Controller
                     $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
                     $white_ranking->value = $lowest_value->value - 1;  
                     $white_ranking->save();
+                    $white_ranking = Ranking::where('user_id', $game->white)->first();
                 }
                 $white_score = $white_ranking->score;
 
@@ -349,7 +363,7 @@ class AdminController extends Controller
                     }
                     elseif($game->round_id > $round)
                     {
-
+                        // Do not consider games that are in future rounds (i.e. games due to absence)
                     }
                     else
                     {
@@ -557,10 +571,10 @@ class AdminController extends Controller
             $rank->save();
             $i = $i - Config::InitRanking("step");
         }
-        $b = new iOSNotificationsController();
-        $b->newFeedItem('Stand', 'De stand is bijgewerkt, bekijk hem nu!', 'https://interndepion.nl/rankings', '1');
-        $a = new PushController();
-        $a->push('Admin', 'De stand is bijgewerkt, bekijk hem nu!', 'Stand', '1'); // Get results of round
+       // $b = new iOSNotificationsController();
+        //$b->newFeedItem('Stand', 'De stand is bijgewerkt, bekijk hem nu!', 'https://interndepion.nl/rankings', '1');
+        //$a = new PushController();
+        //$a->push('Admin', 'De stand is bijgewerkt, bekijk hem nu!', 'Stand', '1'); // Get results of round
         return redirect('/Admin')->with('success', 'Stand is succesvol bijgewerkt en notificaties verzonden');
 
     }

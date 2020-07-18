@@ -35,7 +35,7 @@ class Config extends Model
         {
             $value = Config::select('Personal')->first();
            
-            return $value->Club;
+            return $value->Personal;
         }
         elseif($result == "Bye")
         {
@@ -47,12 +47,12 @@ class Config extends Model
         {
             $value = Config::select('Presence')->first();
            
-            return $value->Club;
+            return $value->Presence;
         }
         else{
             $value = Config::select('Other')->first();
            
-            return $value->Club;
+            return $value->Other;
         }
     }
 
