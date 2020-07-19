@@ -75,6 +75,8 @@
                      <div class="col-md-6">
                         <input type="email" name="email" value="{{$user->email}}" class="form-control"/>
                     </div>
+                </div>
+                <div class="form-group">
                     <label for="password" class="col-md-4 control-label">Wachtwoord</label>
                     <div class="col-md-6">
                         <input type="password" name="password" class="form-control" />
@@ -112,6 +114,8 @@
                             <option value="1" @if(array_key_exists('games', $settings)) @if($settings['games'] == 1) selected @endif @endif>Toon eigen partijen</option>
                         </select>
                     </div>
+                </div>
+                <div class="form-group">
                     <label for="ranking" class="col-md-4 control-label">Stand</label>
                     <div class="col-md-6">
                         <select name="ranking" class="form-control">
@@ -119,6 +123,8 @@
                             <option value="1" @if(array_key_exists('ranking', $settings)) @if($settings['ranking'] == 1) selected @endif @endif>Uitgebreide stand</option>
                         </select>
                     </div>
+                </div>
+                <div class="form-group">
                     <label for="notifications" class="col-md-4 control-label">Notificaties<a href="#notifications_explain" class="badge badge-pill badge-info" data-toggle="modal" data-target="#notifications_explain">?</a></label>
                     <div class="col-md-6">
 
@@ -132,6 +138,8 @@
                         </select>
                         
                     </div>
+                </div>
+                <div class="form-group">
                     <label for="rss" class="col-md-4 control-label">RSS-feed</label>
                     <div class="col-md-6">
 
@@ -141,12 +149,16 @@
                         </select>
                         
                     </div>
+                </div>
+                <div class="form-group">
                     @if($user->api_token !== NULL)
                     <label for="rss-link" class="col-md-4 control-label">RSS-feed link</label>
                     <div class="col-md-6">
                         <input class="form-control" type="text" value ="https://interndepion.nl/feed/{{$user->api_token}}"disabled>
                     </div>
                     @endif
+                </div>
+                <div class="form-group">
                     <label for="layout" class="col-md-4 control-label">Layout</label>
                     <div class="col-md-6">
                         <select name="layout" class="form-control">
