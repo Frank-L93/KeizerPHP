@@ -42,11 +42,15 @@
      $(document).ready(function(){
          setInterval(function(){
       $("#funky").load(window.location.href + " #funky" );
-}, 10000);
-
-        
+}, 10000);   
     });
     </script>
+
+    <!-- DataTable -->
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
 </head>
 <body>
 
@@ -56,7 +60,7 @@
             <div class="col-md-8">
                 
                 @include('inc.messages')
-            @yield('content')
+                @yield('content')
             
             </div>
         

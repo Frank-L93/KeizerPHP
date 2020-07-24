@@ -6,6 +6,7 @@ Use App\Game;
 Use App\Ranking;
 Use App\Config;
 use App\Http\Controllers\PushController;
+use App\Http\Controllers\iOSNotificationsController;
 
 class Match
 {

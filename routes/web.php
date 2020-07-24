@@ -46,7 +46,7 @@ Route::get('/Admin/Rounds/create', 'AdminController@RoundsCreate')->middleware('
 Route::get('/Admin/Presences', 'AdminController@presences')->middleware('admin');
 Route::get('/Admin/Presences/create', 'AdminController@InitPresences')->middleware('admin');
 Route::get('/Admin/RankingList', 'AdminController@RankingList')->middleware('admin');
-Route::get('/Admin/RankingList/{Round}/calculate', 'AdminController@Calculate')->middleware('admin');
+Route::get('/Admin/RankingList/{Round}/calculate', 'AdminController@InitCalculation')->middleware('admin');
 Route::get('/Admin/RankingList/create', 'AdminController@InitRanking')->middleware('admin');
 Route::get('/Admin/RatingList', 'AdminController@RatingList')->middleware('admin');
 Route::get('/Admin/Reset', 'AdminController@ResetSeason')->middleware('admin');
@@ -60,7 +60,7 @@ Route::get('/Admin/users/list2', 'AdminController@List2')->middleware('admin');
 Route::post('/Admin/LoadRatings', 'AdminController@loadRatings')->name('import_process')->middleware('admin');
 Route::post('/Admin/LoadRounds', 'AdminController@loadRounds')->name('import_process_rounds')->middleware('admin');
 Route::post('/Admin/Rounds/create', 'AdminController@RoundStore')->middleware('admin');
-Route::post('/Admin/Games/update', 'AdminController@SetScore')->middleware('admin');
+Route::post('/Admin/Games/update', 'AdminController@UpdateGame')->middleware('admin');
 Route::post('/Admin/Users/update', 'AdminController@UpdateUser')->middleware('admin');
 Route::post('/Admin/Config', 'AdminController@Config')->middleware('admin');
 

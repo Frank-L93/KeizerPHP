@@ -13,6 +13,7 @@ Use App\Game;
 use App\Match;
 use App\Config;
 use App\Settings;
+use App\Calculation;
 use App\TPRHelper;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,6 @@ class AdminController extends Controller
     // Index page of our Admin
     public function admin()
     {
-        
         $games = Game::all();
         $users = User::all();
         $presences = Presence::all();
@@ -88,6 +88,9 @@ class AdminController extends Controller
             return redirect('/presences')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
         }
     }
+
+    // Games Functionallity of our Admin
+
     public function DestroyGames($id)
     {
         if(Gate::allows('admin', Auth::user())){
@@ -101,7 +104,7 @@ class AdminController extends Controller
         }
     }
 
-    // Starting Matching process
+    // Starting Matching process --> This you want somewehre else, but I dont know where. #help
     
     public function FillArrayPlayers($round) // loads all players that are needed to be paired in the specified round.
     {
@@ -136,13 +139,6 @@ class AdminController extends Controller
         }
         // We now have all players, before matching, this needs to be sorted.
         return $this->FillArrayPlayersRanked($players, $round);
-    }
-
-    public function SendNotification()
-    {
-        $b = new iOSNotificationsController();
-        $b->newFeedItem('Partijen', 'Partijen voor ronde 1 zijn aangemaakt!', 'https://interndepion.nl/games', '2');
-        return "Notificaties verzonden";
     }
 
     public function checkPaired($player, $round){
@@ -189,6 +185,7 @@ class AdminController extends Controller
         return redirect('/Admin')->with('Success', 'Partijen aangemaakt!'); // Return will most likely not be called as in the pairing process, the last return that can be called is the return for the notifications which afterwards redirects to the Admin-page too. But for cases that this does not happen, this return is necessary.
     }
 
+    // Helping function for UpdateGame, returns a json to fill editable list.
     public function List()
     {
         $users = User::all();
@@ -200,9 +197,9 @@ class AdminController extends Controller
         return json_encode($user_list);
     }
    
-    // Scoring functionality of our Admin
+    // Game Changing functionality of our Admin
 
-    public function SetScore(request $request)
+    public function UpdateGame(request $request)
     {
         
         $game = Game::find($request->input('pk'));
@@ -224,7 +221,7 @@ class AdminController extends Controller
         return $game->save();
     }
 
-    // User update functionality
+    // User update functionality of the Admin
     public function UpdateUser(request $request){
      
         $user = User::find($request->input('pk'));
@@ -258,6 +255,7 @@ class AdminController extends Controller
         return $user->save();
     }
 
+    // Destroy a user
     public function DestroyUser($id)
     {
         if(Gate::allows('admin', Auth::user())){
@@ -289,7 +287,25 @@ class AdminController extends Controller
         }
     }
 
-    // Ranking functionality of our Admin
+    
+    // New Season
+    public function ResetSeason()
+    {
+        // Write results to file
+        // Empty season tables
+        DB::statement("SET foreign_key_checks=0");
+        Ranking::truncate();
+        Round::truncate();
+        Presence::truncate();
+        Game::truncate();  
+        $configs = Config::find(1);
+        $configs->EndSeason = 0;
+        $configs->save();
+        DB::statement("SET foreign_key_checks=1");
+        return redirect('/Admin')->with('success', 'Seizoen gereset');
+    }
+
+    // Presences
     public function InitPresences()
     {
         $users = User::where('beschikbaar', 1)->get();
@@ -314,286 +330,14 @@ class AdminController extends Controller
         return redirect('/Admin')->with('success', 'Aanwezigheden aangemaakt');
     }
 
-    public function Calculate($round)
+    // Calculation
+    public function InitCalculation($round)
     {
-        // Make round an int
-        $round = $round * 1;
-        
-        // Get all rankings
-        $rankings = Ranking::all();
-
-        // Reset score as we do recalculating the score of previous rounds based on value in this round
-        // Also reset amount, gamescore & ratop as we loop through all games again. So if we keep it the value it already has, it will duplicate itself!
-        foreach($rankings as $ranking)
-        {
-            $ranking->score = 0;
-            $ranking->amount = 0;
-            $ranking->gamescore = 0;
-            $ranking->ratop = 0;
-            $ranking->save();
-        }
-
-        // Get all games.
-        $games = Game::all();
-        foreach($games as $game)
-        {
-            // decide the result for white and for black
-            if($game->result == "Afwezigheid")
-            {
-                $white_ranking = Ranking::where('user_id', $game->white)->first();
-                
-                // Check if player exist in Ranking, if not, add person to ranking.
-                if($white_ranking == NULL)
-                {
-                    $white_ranking = new Ranking;
-                    $white_ranking->user_id = $game->white;
-                    $white_ranking->score = 0;
-                    $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
-                    $white_ranking->value = $lowest_value->value - 1;  
-                    $white_ranking->save();
-                    $white_ranking = Ranking::where('user_id', $game->white)->first();
-                }
-                $white_score = $white_ranking->score;
-
-                if($game->black == "Club"){
-                    
-                    if($game->round_id < $round)
-                    {
-                        $white_score += Config::Scoring("Club") * $white_ranking->LastValue;
-                    }
-                    elseif($game->round_id > $round)
-                    {
-                        // Do not consider games that are in future rounds (i.e. games due to absence)
-                    }
-                    else
-                    {
-                        $white_score += Config::Scoring("Club") * $white_ranking->value;
-                    }
-                }
-                elseif($game->black == "Personal"){
-                    if($game->round_id < $round)
-                    {
-                        $white_score += Config::Scoring("Personal") * $white_ranking->LastValue;
-                    }
-                    elseif($game->round_id > $round)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $white_score += Config::Scoring("Personal") * $white_ranking->value;
-                    }
-                }
-                else{
-                    if($game->round_id < $round)
-                    {
-                        $white_score += Config::Scoring("Other") * $white_ranking->LastValue;
-                    }
-                    elseif($game->round_id > $round)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $white_score += Config::Scoring("Other") * $white_ranking->value;
-                    }
-                }
-                $white_ranking->score = $white_score;
-                $white_ranking->save();
-                
-            }
-            else
-            {
-                $result = explode("-", $game->result);
-                $white_result = $result[0];
-                $black_result = $result[1];
-                
-                // Find white and black in the ranking
-                $white_ranking = Ranking::where('user_id', $game->white)->first();
-                $white_rating = User::where('id', $game->white)->first();
-            
-                // Defaults; //69.05
-                $white_score = $white_ranking->score;
-                if($game->black == "Bye")
-                {
-                
-                }
-                else
-                {
-                    $black_ranking = Ranking::where('user_id', $game->black)->first();
-                    $black_rating = User::where('id', $game->black)->first();
-                    $black_score = $black_ranking->score;
-                }
-              
-                // Calculate the new score for white and black for this game or all games?
-                if($game->black == "Bye")
-                {   
-                    if($game->round_id < $round)
-                    { 
-                        $white_score += Config::Scoring("Bye") * $white_ranking->LastValue;
-                    }
-                    elseif($game->round_id > $round)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $white_score += Config::Scoring("Bye") * $white_ranking->value; 
-                    }
-                    $white_score += Config::Scoring("Presence");
-                }
-                elseif($white_result == 1)
-                {
-                    if($game->round_id < $round)
-                    {
-                        $white_score += $white_result * $black_ranking->LastValue;
-                    }
-                    elseif($game->round_id > $round)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $white_score += $white_result * $black_ranking->value;
-                    }
-                    $white_ranking->amount = $white_ranking->amount + 1;
-                    $black_ranking->amount = $black_ranking->amount + 1;
-                    $white_ranking->gamescore = $white_ranking->gamescore + 1;
-                    $white_score += Config::Scoring("Presence");
-                    $black_score += Config::Scoring("Presence");
-                }
-                elseif($white_result == 0.5)
-                {   //69.05 += 0.5 * 69 = 69.05 + 34.5 = 103.60
-                    if($game->round_id < $round)
-                    {
-                        $white_score += $white_result * $black_ranking->LastValue;
-                        $black_score += $black_result * $white_ranking->LastValue;
-                    }
-                    elseif($game->round_id > $round)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $white_score += $white_result * $black_ranking->value;
-                        $black_score += $black_result * $white_ranking->value;
-                    }
-                    $white_ranking->amount = $white_ranking->amount + 1;
-                    $black_ranking->amount = $black_ranking->amount + 1;
-                    $white_ranking->gamescore = $white_ranking->gamescore + 0.5;
-                    $black_ranking->gamescore = $black_ranking->gamescore + 0.5;
-                    $white_score += Config::Scoring("Presence");
-                    $black_score += Config::Scoring("Presence");
-                }
-                elseif($black_result == 1)
-                {
-                    if($game->round_id < $round)
-                    {
-                        $black_score += $black_result * $white_ranking->LastValue;
-                    }
-                    elseif($game->round_id > $round)
-                    {
-                        
-                    }
-                    else
-                    {
-                        $black_score += $black_result * $white_ranking->value;
-                    }
-                    $white_ranking->amount = $white_ranking->amount + 1;
-                    $black_ranking->amount = $black_ranking->amount + 1;
-                    $black_ranking->gamescore = $black_ranking->gamescore + 1;
-                    $black_score += Config::Scoring("Presence");
-                    $white_score += Config::Scoring("Presence");
-                }
-                else // No result yet?
-                {
-                    continue;
-                }
-                
-                $white_ranking->score = $white_score;
-                $white_ranking->save();
-                if($game->black == 0)
-                {
-                }
-                else
-                {
-                    $white_ranking->ratop = $white_ranking->ratop + $black_rating->rating;
-                    $white_ranking->save();
-                    $white_ranking->TPR = $this->calculateTPR($game->white);
-                    $white_ranking->save();
-                    $black_ranking->score = $black_score;
-                    $black_ranking->ratop = $black_ranking->ratop + $white_rating->rating;
-                    $black_ranking->save();
-                    $black_ranking->TPR = $this->calculateTPR($game->black);
-                    $black_ranking->save();
-                }
-            }
-        }
-        $round_processed = Round::find($round);
-        $round_processed->processed = 1;
-        $round_processed->save();
-        return $this->UpdateRanking();
+        $calculation = new Calculation;
+        $calculation->Calculate($round);
+        // No return necessary, return happens in Class of Calculation.
     }
 
-    // TPR
-    public function calculateTPR($player)
-    {
-        $user = Ranking::where('user_id', $player)->first();
-        if($user->amount == 0)
-        {
-            $tpr = 0;
-            return $tpr;
-        }
-        
-        $divide = $user->gamescore / $user->amount;
-        $average_rating = $user->ratop / $user->amount;
-        $based_on_divide = $this->GetValueForTPR($divide);
-        $tpr = $average_rating + $based_on_divide;
-        return $tpr; 
-    }
-
-    public function GetValueForTPR($amount)
-    {
-        $amount = round($amount, 2);
-        $value = TPRHelper::where('p', $amount)->first();
-        return $value->dp;
-    }
-    // Update the ranking as now the scores are processed.
-    public function UpdateRanking()
-    {
-        $Ranking = Ranking::orderBy('score', 'desc')->get();
-        $i = Config::InitRanking("start");
-        foreach($Ranking as $rank)
-        {
-           
-            $rank->LastValue = $rank->value;
-            $rank->value = $i;
-            $rank->save();
-            $i = $i - Config::InitRanking("step");
-        }
-       // $b = new iOSNotificationsController();
-        //$b->newFeedItem('Stand', 'De stand is bijgewerkt, bekijk hem nu!', 'https://interndepion.nl/rankings', '1');
-        //$a = new PushController();
-        //$a->push('Admin', 'De stand is bijgewerkt, bekijk hem nu!', 'Stand', '1'); // Get results of round
-        return redirect('/Admin')->with('success', 'Stand is succesvol bijgewerkt en notificaties verzonden');
-
-    }
-    // New Season
-    public function ResetSeason()
-    {
-        // Write results to file
-        // Empty season tables
-        DB::statement("SET foreign_key_checks=0");
-        Ranking::truncate();
-        Round::truncate();
-        Presence::truncate();
-        Game::truncate();  
-        $configs = Config::find(1);
-        $configs->EndSeason = 0;
-        $configs->save();
-        DB::statement("SET foreign_key_checks=1");
-        return redirect('/Admin')->with('success', 'Seizoen gereset');
-    }
     // Ranking functionality of our Admin
     public function InitRanking()
     {
@@ -615,7 +359,7 @@ class AdminController extends Controller
         return redirect('/Admin')->with('success', 'Ranglijst aangemaakt');
     }
 
-    // Rating List functionality of our Admin
+    // Rating List functionality of our Admin ??
     public function RatingList()
     {
         return view('admin.ratinglist');
@@ -637,11 +381,10 @@ class AdminController extends Controller
         $configs->Bye = $request->input('Bye');
         $configs->EndSeason = $request->input('EndSeason');
         //$configs->Admin = $request->input('Admin');
-        $b = new iOSNotificationsController();
-        $b->newFeedItem('Admin-Melding', 'Nieuwe aanmelding!', 'https://interndepion.nl/admin', '3');
         $configs->save();
         return redirect('/Admin')->with('success', 'Instellingen aangepast!');
     }
+    
     // Process the upload of the Rating List and generate user for player in case of non-existence.
     public function loadRatings(Request $request)
     {
@@ -747,6 +490,7 @@ class AdminController extends Controller
         }
     
     }
+    
     // Process of file for Rounds (fields round and date)
     public function loadRounds(Request $request)
     {
@@ -827,5 +571,14 @@ class AdminController extends Controller
     
     }
 
+    // If notifications are not send, trigger them again.
+    public function SendNotification()
+    {
+        $b = new iOSNotificationsController();
+        $b->newFeedItem('Partijen', 'Partijen voor ronde 2 zijn aangemaakt!', 'https://interndepion.nl/games', '2');
+        $a = new PushController();
+            $a->push('Admin', 'Partijen voor ronde 2 zijn aangemaakt!', 'Partijen', '2');
+        return "Notificaties verzonden";
+    }
 }
 

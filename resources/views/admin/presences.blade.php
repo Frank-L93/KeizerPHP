@@ -9,7 +9,7 @@
         </div>
             <div class="card-body">
                 @if(count($presences)>0)
-                <table class="table table-hover">
+                <table class="table table-hover" id="presencesTable">
                     <thead class="thead-dark">
                             <th>Naam</th><th>Ronde</th><th>Aanwezig</th><th>Verwijder</th>
                         </thead>

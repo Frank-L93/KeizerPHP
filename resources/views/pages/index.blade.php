@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="card">
     @guest
-        <div class="card-header">Dashboard</div>
-    @endguest
-    @auth
-        <div class="card-header">Dashboard van {{Auth::user()->name}}</div>
+    <div class="card bg-warning mb-3">
+        <div class="card-header">Login</div>
+        @endguest
+        @auth
+    <div class="card">
+            <div class="card-header">Menu van {{Auth::user()->name}}</div>
     @endauth
-        <div class="card-body">
-                @guest
-                    Login om gebruik te maken van het Dashboard.
-                @endguest
-                @auth
-                
+                <div class="card-body">
+                    @guest
+                        Login om gebruik te maken van het Menu.
+                    @endguest
+                    @auth
                     <div class="row">
                         <div class="col-sm text-center">
                             <a href="/presences">
@@ -33,8 +33,8 @@
                                 <figcaption class="figure-caption">Partijen</figcaption>
                             </a>
                         </div>
-                      </div>
-                      <div class="row">
+                    </div>
+                    <div class="row">
                         <div class="col-sm text-center">
                             <a href="/settings">
                                 <img src="/assets/icons/gear.svg" alt="" width="64" height="64">
@@ -49,24 +49,53 @@
                         </div>
                         
                         <div class="col-sm text-center">
-                            @if(Auth::user()->id == 21)
+                            @if(Auth::user()->can('admin'))
                             <a href="/Admin">
                                 <img src="/assets/icons/document-text.svg" alt="" width="64" height="64">
                                 <figcaption class="figure-caption">Admin</figcaption>
                             </a>
                             @endif
                         </div>
-                      </div>
-                    
+                    </div>
                 @endauth
+            </div>
+        @auth
+            <div class="card-footer">
+            </div>
+        @endauth
+    </div>
+    <div class="card">
+        <div class="card-header">Dashboard</div>
+            <div class="card-body">
+            @foreach($rounds as $round)
+                @if(Carbon\Carbon::parse($round->date)->format('j M Y') === Carbon\Carbon::parse(now())->format('j M Y'))
+                    Vandaag is een ronde!
+                    <br>
+                    In deze ronde zijn er: 
+                    <? $i = 0; $a = 0; $p = 0; ?>
+                    @foreach($games as $game)
+                    @if($game->round_id === $round->round)
+                        @if($game->result === "Afwezigheid")
+                            <? $a++; ?>
+                        @else
+                            <? $i++; ?>
+                        @endif
+                    @endif
+                    @endforeach
+                    <? echo $i; ?>
+                     partijen & <? echo $a; ?> afwezigheden!
+                    @foreach($presences as $presence)
+                        @if($presence->round === $round->round)
+                            @if($presence->presence === 1)
+                                <? $p++; ?>
+                            @endif
+                        @endif
+                    @endforeach
+                    <br>
+                    Er zullen <? echo $p; ?> spelers aanwezig zijn!
+                @endif
+            @endforeach
+            </div>
         </div>
-        <div class="card-footer">
-        </div>
-     </div>
-</div>
-                        {{-- @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                         @endif --}}
+    </div>
 @endsection

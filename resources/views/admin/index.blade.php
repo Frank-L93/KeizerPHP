@@ -121,12 +121,12 @@
         </p>
     </div>
 </div>
+
   <!-- Editable Form Magic-->
   <!-- Used by the adminpages -->
         <script>
-      
-     
-      
+            $('#presencesTable').DataTable();
+
             $.fn.editable.defaults.mode = 'inline';
             $.fn.editable.defaults.params = function (params) {
                 params._token = $("#_token").data("token");
@@ -142,8 +142,6 @@
                             {value: "0-1", text: '0-1'}
                         ]
             });
-            
-           
                 $('.white').editable({
                     type: 'select',
                     name:'white',
@@ -157,8 +155,6 @@
                     url:'/Admin/Games/update',
                     source: "/Admin/users/list"
                 });
-            
-            
             $('.email').editable({
                 type: 'email',
                 name: 'email',

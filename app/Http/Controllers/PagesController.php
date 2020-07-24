@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 Use App\Settings;
 Use App\Config;
+Use App\Http\Controllers\DashboardController;
 
 class PagesController extends Controller
 {
@@ -33,7 +34,11 @@ class PagesController extends Controller
             $user->save();
             return redirect('/settings')->with('success', 'Gelieve eerst je wachtwoord te wijzigen');
         }
-        return view('pages.index');
+        $dashboard = new DashboardController;
+        $dashboard_games = $dashboard->GameDashBoard();
+        $dashboard_rounds = $dashboard->RoundDashBoard();
+        $dashboard_presences = $dashboard->PresenceDashBoard();
+        return view('pages.index')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences);
     }
     
     public function about(){
