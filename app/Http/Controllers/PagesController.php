@@ -38,7 +38,11 @@ class PagesController extends Controller
         $dashboard_games = $dashboard->GameDashBoard();
         $dashboard_rounds = $dashboard->RoundDashBoard();
         $dashboard_presences = $dashboard->PresenceDashBoard();
-        return view('pages.index')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences);
+        $dashboard_absences = $dashboard->AbsenceDashBoard();
+        if($dashboard_rounds == "Geen rondes meer!"){
+            return view('pages.index')->with('rounds', $dashboard_rounds);
+        }
+        return view('pages.index')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences)->with('absences', $dashboard_absences);
     }
     
     public function about(){

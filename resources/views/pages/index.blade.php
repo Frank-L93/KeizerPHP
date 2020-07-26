@@ -64,38 +64,40 @@
             </div>
         @endauth
     </div>
+    @if($rounds === "Geen rondes meer!")
+    <div class="card bg-warning">
+        <div class="card-header">Er zijn geen rondes meer</div>
+        <div class="card-body">
+            <p>Het seizoen is afgelopen. Er zijn geen rondes meer om te spelen. Op 4 september start het nieuwe seizoen met de ALV</p>
+        </div>
+    </div>
+    @else
     <div class="card">
-        <div class="card-header">Dashboard</div>
-            <div class="card-body">
-            @foreach($rounds as $round)
-                @if(Carbon\Carbon::parse($round->date)->format('j M Y') === Carbon\Carbon::parse(now())->format('j M Y'))
-                    Vandaag is een ronde!
-                    <br>
-                    In deze ronde zijn er: 
-                    <? $i = 0; $a = 0; $p = 0; ?>
-                    @foreach($games as $game)
-                    @if($game->round_id === $round->round)
-                        @if($game->result === "Afwezigheid")
-                            <? $a++; ?>
-                        @else
-                            <? $i++; ?>
-                        @endif
-                    @endif
-                    @endforeach
-                    <? echo $i; ?>
-                     partijen & <? echo $a; ?> afwezigheden!
-                    @foreach($presences as $presence)
-                        @if($presence->round === $round->round)
-                            @if($presence->presence === 1)
-                                <? $p++; ?>
-                            @endif
-                        @endif
-                    @endforeach
-                    <br>
-                    Er zullen <? echo $p; ?> spelers aanwezig zijn!
-                @endif
-            @endforeach
+        <div class="card-header">Dashboard van 
+                            @foreach($rounds as $round)
+                                @if(Carbon\Carbon::parse($round->date)->format('j M Y') === Carbon\Carbon::parse(now())->format('j M Y'))
+                                    Ronde {{$round->round}} | VANDAAG  <?php $timediff = date_diff(Carbon\Carbon::parse($round->date), now()); if(Carbon\Carbon::parse($round->date) > now()){ echo "(over ".$timediff->h." uur, ".$timediff->i." minuten en ".$timediff->s." seconden)";}?>!
+                                @else
+                                   Ronde {{$round->round}} | {{Carbon\Carbon::parse($round->date)->format('j M Y')}}!
+                                @endif
+                            @endforeach
+        </div>
+        <div class="card-body">
+            <div class="row">
+                        <div class="col-sm text-center">
+                             <img src="/assets/icons/play.svg" alt="" width="64" height="64">
+                                <figcaption class="figure-caption">Partijen: {{$games->count()}}</figcaption>
+                        </div>
+                        <div class="col-sm text-center">
+                         <img src="/assets/icons/person-fill.svg" alt="" width="64" height="64">
+                                <figcaption class="figure-caption">Aanwezig: {{$presences->count()}}</figcaption>
+                        </div>
+                        <div class="col-sm text-center">
+                            <img src="/assets/icons/lock.svg" alt="" width="64" height="64">
+                            <figcaption class="figure-caption">Gemelde afwezigheden: {{$absences->count()}}
+                        </div>
             </div>
         </div>
     </div>
+    @endif
 @endsection

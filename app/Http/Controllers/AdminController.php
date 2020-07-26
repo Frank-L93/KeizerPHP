@@ -22,14 +22,14 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Controllers\iOSNotificationsController;
-
+use Carbon\Carbon;
 global $k;
 class AdminController extends Controller
 {
     
     // Index page of our Admin
     public function admin()
-    {
+    {   
         $games = Game::all();
         $users = User::all();
         $presences = Presence::all();
@@ -86,6 +86,19 @@ class AdminController extends Controller
         else
         {
             return redirect('/presences')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
+        }
+    }
+
+    public function DestroyRounds($id)
+    {
+        if(Gate::allows('admin', Auth::user())){
+            $round = Round::find($id);
+            $round->delete();
+            return redirect('/Admin')->with('success', 'Rondeverwijderd!');
+        }
+        else
+        {
+            return redirect('/rounds')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
         }
     }
 

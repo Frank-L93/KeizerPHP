@@ -68,6 +68,7 @@ Route::post('/Admin/Config', 'AdminController@Config')->middleware('admin');
 Route::delete('/Admin/{Presence}/Presences', 'AdminController@DestroyPresences')->middleware('admin');
 Route::delete('/Admin/{User}/User', 'AdminController@DestroyUser')->middleware('admin');
 Route::delete('/Admin/{Game}/Games', 'AdminController@DestroyGames')->middleware('admin');
+Route::delete('/Admin/{Round}/Rounds', 'AdminController@DestroyRounds')->middleware('admin');
 
 # End Admin Group
 
