@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGamesTable extends Migration
+class CreateIOSNoticationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreateGamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('i_o_s_notications', function (Blueprint $table) {
             $table->id();
-            $table->integer('white');
-            $table->string('black');
-            $table->string('result');
-            $table->integer('round_id');
+            $table->integer('user_id');
+            $table->string('title');
+            $table->string('summary');
+            $table->string('link');
+            $table->string('author');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateGamesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('i_o_s_notications');
     }
 }

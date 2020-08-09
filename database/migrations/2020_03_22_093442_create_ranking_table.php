@@ -18,6 +18,12 @@ class CreateRankingTable extends Migration
             $table->integer('user_id');
             $table->double('score');
             $table->integer('value');
+            $table->integer('LastValue')->nullable();
+            $table->integer('color');
+            $table->integer('amount');
+            $table->integer('ratop');
+            $table->double('TPR')->nullable();
+            $table->double('gamescore')->default(0);
             $table->timestamps();
         });
     }
