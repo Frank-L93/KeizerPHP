@@ -82,6 +82,7 @@ class ConfigurationController extends Controller
             'api_token' => Str::random(10),
             'settings' => ["notifications"=>"0"],
             'activate' => 0,
+            'active'=>1,
             'rechten' => 2,
         ]);
         return $redirect->route('LaravelInstaller::configs');

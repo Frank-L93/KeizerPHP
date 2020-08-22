@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRankingTable extends Migration
+class CreateRankingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRankingTable extends Migration
      */
     public function up()
     {
-        Schema::create('ranking', function (Blueprint $table) {
+        Schema::create('rankings', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
             $table->double('score');

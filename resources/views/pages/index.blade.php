@@ -3,34 +3,34 @@
 @section('content')
     @guest
     <div class="card bg-warning mb-3">
-        <div class="card-header">Login</div>
+        <div class="card-header">{!! trans('pages.index.header_Guest') !!}</div>
         @endguest
         @auth
     <div class="card">
-            <div class="card-header">Menu van {{Auth::user()->name}}</div>
+            <div class="card-header">{!! trans('pages.index.header_User') !!} {{Auth::user()->name}}</div>
     @endauth
                 <div class="card-body">
                     @guest
-                        Login om gebruik te maken van het Menu.
+                    {!! trans('pages.index.body_Guest') !!}
                     @endguest
                     @auth
                     <div class="row">
                         <div class="col-sm text-center">
                             <a href="/presences">
                                 <img src="/assets/icons/stopwatch.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">Aanwezigheden</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.presences') !!}</figcaption>
                             </a>
                         </div>
                         <div class="col-sm text-center">
                             <a href="/rankings">
                                 <img src="/assets/icons/trophy.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">Ranglijst</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.rankings') !!}</figcaption>
                             </a>
                         </div>
                         <div class="col-sm text-center">
                             <a href="/games">
                                 <img src="/assets/icons/controller.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">Partijen</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.games') !!}</figcaption>
                             </a>
                         </div>
                     </div>
@@ -38,13 +38,13 @@
                         <div class="col-sm text-center">
                             <a href="/settings">
                                 <img src="/assets/icons/gear.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">Instellingen</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.settings') !!}</figcaption>
                             </a>
                         </div>
                         <div class="col-sm text-center">
                             <a href="https://www.depion.nl">
                                 <img src="/assets/icons/Chess_pdt45.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">De Pion</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.link') !!}</figcaption>
                             </a>
                         </div>
                         
@@ -52,7 +52,7 @@
                             @if(Auth::user()->can('admin'))
                             <a href="/Admin">
                                 <img src="/assets/icons/document-text.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">Admin</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.admin') !!}</figcaption>
                             </a>
                             @endif
                         </div>
@@ -66,7 +66,7 @@
     </div>
     @if($rounds === "Geen rondes meer!")
     <div class="card bg-warning">
-        <div class="card-header">Er zijn geen rondes meer</div>
+        <div class="card-header">{!! trans('pages.index.no_rounds') !!}</div>
         <div class="card-body">
             <p>Het seizoen is afgelopen. Er zijn geen rondes meer om te spelen. Op 4 september start het nieuwe seizoen met de ALV</p>
         </div>
