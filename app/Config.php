@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 // Todo get this stuff from the database.
 class Config extends Model
 {
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'RoundsBetween_Bye', 'RoundsBetween', 'Club','Personal','Bye','Other','Presence','Start','Step','Name','Season','Admin','AbsenceMax',
+    ];
     public static function RoundsBetween($bye){
         if($bye == 1)
         {
@@ -55,7 +64,12 @@ class Config extends Model
             return $value->Other;
         }
     }
-
+    public static function AbsenceMax()
+    {
+        $value = Config::select('AbsenceMax')->first();
+           
+            return $value->AbsenceMax;  
+    }
     public static function InitRanking($key)
     {
         if($key == "start"){
@@ -72,8 +86,11 @@ class Config extends Model
     public static function CompetitionName()
     {
         $value = Config::select('Name')->first();
-           
-            return $value->Name;  
+        if($value == NULL)
+        {
+            return "Need Install";
+        }
+        return $value->Name;  
     }
 
     public static function CompetitionSeason()

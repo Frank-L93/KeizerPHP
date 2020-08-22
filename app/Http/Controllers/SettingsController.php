@@ -9,7 +9,6 @@ use App\User;
 Use App\Ranking;
 Use App\Game;
 Use App\Settings;
-Use App\helpers;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

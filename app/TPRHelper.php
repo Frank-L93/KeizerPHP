@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+// Not really a Helper
 class TPRHelper extends Model
 {
     // Table Name

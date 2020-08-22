@@ -16,6 +16,7 @@ use App\User;
 
 Route::get('/', 'PagesController@index');
 Route::get('/home', 'PagesController@index');
+Route::get('/installed', 'PagesController@indexInstall')->name('installed');
 Route::get('/about', 'PagesController@about');
 Route::get('/privacy', 'PagesController@privacy');
 Route::get('/activation', 'ActivationController@index')->name('activation');
@@ -80,3 +81,67 @@ Route::get('/push','PushController@push')->name('push');
 Route::get('/feed/{API_Token}', 'iOSNotificationsController@getFeedItems');
 
 Route::get('/sendNotification', 'AdminController@SendNotification')->middleware('admin');
+
+Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'middleware' => ['web', 'install']], function () {
+    Route::get('/', [
+        'as' => 'welcome',
+        'uses' => 'WelcomeController@welcome',
+    ]);
+
+    Route::get('environment', [
+        'as' => 'environment',
+        'uses' => 'EnvironmentController@environmentMenu',
+    ]);
+
+    Route::get('environment/wizard', [
+        'as' => 'environmentWizard',
+        'uses' => 'EnvironmentController@environmentWizard',
+    ]);
+
+    Route::post('environment/saveWizard', [
+        'as' => 'environmentSaveWizard',
+        'uses' => 'EnvironmentController@saveWizard',
+    ]);
+
+    Route::get('requirements', [
+        'as' => 'requirements',
+        'uses' => 'RequirementsController@requirements',
+    ]);
+
+    Route::get('permissions', [
+        'as' => 'permissions',
+        'uses' => 'PermissionsController@permissions',
+    ]);
+
+    Route::get('install/database', [
+        'as' => 'database',
+        'uses' => 'DatabaseController@database',
+    ]);
+
+    Route::get('final', [
+        'as' => 'final',
+        'uses' => 'FinalController@finish',
+    ]);
+
+    Route::get('admin', [
+        'as' => 'admin',
+        'uses' => 'ConfigurationController@admin',
+    ]);
+    
+    Route::post('registerAdmin',
+    [
+        'as' => 'registerAdmin',
+        'uses' => 'ConfigurationController@registerAdmin',
+    ]);
+
+    Route::get('configs', [
+        'as' => 'configs',
+        'uses' => 'ConfigurationController@configs',
+    ]);
+
+    Route::post('saveConfigs',
+    [
+        'as' => 'saveConfigs',
+        'uses' => 'ConfigurationController@saveConfigs',
+    ]);
+});
