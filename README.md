@@ -12,6 +12,8 @@
 <li> Pairing</li>
 <li> Administrator rights</li>
 <li> User-configuration system</li>
+<li> Installation Package in the app (not yet an installation of the whole app, so you will need to copy the source and upload it to your hosting)</li>
+<li> Multiple Language Support (Dutch / English (WIP))</li>
 <li> A sort of API to create your own applications on top of it (i.e. for iOS)
 <ul>
 <li>User Login to pick up the API Key for the user.</li>
@@ -23,9 +25,7 @@
 
 <p>In the future, there will be more:</p>
 <ol>
-<li> Installation Package</li>
 <li> Layouts (There is actually a second layout, making the background blue)</li>
-<li> Multiple Language Support</li>
 <li> Notifications via SMS or WhatsApp, and WebPush</li>
 <li> Better Pairing Algorithm</li>
 <li> PGN-games</li>

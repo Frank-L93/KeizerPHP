@@ -68,17 +68,17 @@
     <div class="card bg-warning">
         <div class="card-header">{!! trans('pages.index.no_rounds') !!}</div>
         <div class="card-body">
-            <p>Het seizoen is afgelopen. Er zijn geen rondes meer om te spelen. Op 4 september start het nieuwe seizoen met de ALV</p>
+            <p>{{$config->announcement}}</p>
         </div>
     </div>
     @else
     <div class="card">
-        <div class="card-header">Dashboard van 
+        <div class="card-header">{!! trans('pages.index.dashboard') !!}
                             @foreach($rounds as $round)
                                 @if(Carbon\Carbon::parse($round->date)->format('j M Y') === Carbon\Carbon::parse(now())->format('j M Y'))
-                                    Ronde {{$round->round}} | VANDAAG  <?php $timediff = date_diff(Carbon\Carbon::parse($round->date), now()); if(Carbon\Carbon::parse($round->date) > now()){ echo "(over ".$timediff->h." uur, ".$timediff->i." minuten en ".$timediff->s." seconden)";}?>!
+                                {!! trans('pages.main.Game') !!} {{$round->round}} | {!! trans('pages.index.today') !!} <?php $timediff = date_diff(Carbon\Carbon::parse($round->date), now()); if(Carbon\Carbon::parse($round->date) > now()){ echo "(over ".$timediff->h." uur, ".$timediff->i." minuten en ".$timediff->s." seconden)";}?>!
                                 @else
-                                   Ronde {{$round->round}} | {{Carbon\Carbon::parse($round->date)->format('j M Y')}}!
+                                {!! trans('pages.main.Game') !!} {{$round->round}} | {{Carbon\Carbon::parse($round->date)->format('j M Y')}}!
                                 @endif
                             @endforeach
         </div>
@@ -86,15 +86,15 @@
             <div class="row">
                         <div class="col-sm text-center">
                              <img src="/assets/icons/play.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">Partijen: {{$games->count()}}</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.games') !!}: {{$games->count()}}</figcaption>
                         </div>
                         <div class="col-sm text-center">
                          <img src="/assets/icons/person-fill.svg" alt="" width="64" height="64">
-                                <figcaption class="figure-caption">Aanwezig: {{$presences->count()}}</figcaption>
+                                <figcaption class="figure-caption">{!! trans('pages.index.present') !!}: {{$presences->count()}}</figcaption>
                         </div>
                         <div class="col-sm text-center">
                             <img src="/assets/icons/lock.svg" alt="" width="64" height="64">
-                            <figcaption class="figure-caption">Gemelde afwezigheden: {{$absences->count()}}
+                            <figcaption class="figure-caption">{!! trans('pages.index.absent_dashboard') !!}: {{$absences->count()}}
                         </div>
             </div>
         </div>

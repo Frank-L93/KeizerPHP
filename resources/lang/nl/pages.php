@@ -18,7 +18,7 @@ return [
         <p>Er wordt getracht zo min mogelijk persoonlijke gegevens te verzamelen om de applicatie te laten functioneren. <br>
         Logischerwijs is er een database met enkele persoonlijke gegevens aanwezig. Er wordt zorg voor gedragen deze gegevens zo goed mogelijk te beschermen.</p>
         
-        <small>Versie 0.8-2020 - Copyright Frank Lambregts</small>',
+        <small>Versie 1-2020 - Copyright Frank Lambregts</small>',
     ],
     'index' =>
     [
@@ -32,5 +32,17 @@ return [
         'link' => 'De Pion',
         'admin' => 'Admin',
         'no_rounds' => 'Er zijn geen rondes meer',
+        'dashboard' => 'Dashboard van',
+        'today' => 'VANDAAG',
+        'absent_dashboard' => 'Gemelde afwezigheden',
+        'present' => 'Aanwezig',
     ],
+    'main' =>
+    [
+
+        'Round' => 'Ronde',
+        'Game' => 'Partij',
+        'round' => 'ronde',
+        'game' => 'partij',
+    ]
 ];

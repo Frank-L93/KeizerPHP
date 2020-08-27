@@ -14,8 +14,8 @@ class Config extends Model
      * @var array
      */
     protected $fillable = [
-        'RoundsBetween_Bye', 'RoundsBetween', 'Club','Personal','Bye','Other','Presence','Start','Step','Name','Season','Admin','AbsenceMax',
-    ];
+        'RoundsBetween_Bye', 'RoundsBetween', 'Club','Personal','Bye','Other','Presence','Start','Step','Name','Season','Admin','AbsenceMax','announcement'
+,    ];
     public static function RoundsBetween($bye){
         if($bye == 1)
         {

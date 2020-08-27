@@ -396,6 +396,7 @@ class AdminController extends Controller
         $configs->Other = $request->input('Other');
         $configs->Bye = $request->input('Bye');
         $configs->EndSeason = $request->input('EndSeason');
+        $configs->announcement = $request->input('announcement');
         //$configs->Admin = $request->input('Admin');
         $configs->save();
         return redirect('/Admin')->with('success', 'Instellingen aangepast!');

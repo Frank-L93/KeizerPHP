@@ -3,13 +3,13 @@
     <h5 class="my-0 mr-md-auto font-weight-normal">KeizerPHP</h5>
     <nav class="my-2 my-md-0 mr-md-3">
         <a class="p-2 text-dark" href="/">Home</a>
-        <a class="p-2 text-dark" href="/about">Over</a>
+        <a class="p-2 text-dark" href="/about">{!! trans('pages.about.header') !!}</a>
     </nav>
     @else
     <h5 class="my-0 mr-md-auto font-weight-normal">{{config('app.name', 'KeizerPHP')}}</h5>
     <nav class="my-2 my-md-0 mr-md-3">
       <a class="p-2 text-dark" href="/">Home</a>
-      <a class="p-2 text-dark" href="/about">Over</a>
+      <a class="p-2 text-dark" href="/about">{!! trans('pages.about.header') !!}</a>
     </nav>
     <!-- Authentication Links -->
     @guest
@@ -21,7 +21,7 @@
             {{ Auth::user()->name }}
     </a>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="/settings">Instellingen</a>
+    <a class="dropdown-item" href="/settings">{!! trans('pages.index.settings') !!}</a>
     <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                              document.getElementById('logout-form').submit();">

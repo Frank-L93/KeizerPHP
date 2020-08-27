@@ -24,7 +24,8 @@
                             <tr><td>Score voor Aanwezigheid</td><td><input type="number" name="Presence" step="0.0001" max="1" min="0" id="Presence" value="{{$config->Presence}}" /></td></tr>
                             <tr><td>Score voor Afwezigheid namens Club</td><td><input type="number" name="Club" step="0.0001" max="1" min="0" id="Club" value="{{$config->Club}}" /></td></tr>
                             <tr><td>Score voor Afwezigheid Ziekte / Persoonlijke reden</td><td><input type="number" name="Personal" step="0.0001" max="1" min="0" id="Personal" value="{{$config->Personal}}" /></td></tr>
-                             <tr><td>Score voor Afwezigheid Overig</td><td><input type="number" name="Other" step="0.0001" max="1" min="0" id="Other" value="{{$config->Other}}" /></td></tr>
+                            <tr><td>Score voor Afwezigheid Overig</td><td><input type="number" name="Other" step="0.0001" max="1" min="0" id="Other" value="{{$config->Other}}" /></td></tr>
+                            <tr><td>Mededeling na afloop seizoen</td><td><input type="textarea" name="announcement" id="announcement" value="{{$config->announcement}}" /></td></tr>
                       
                 </table>
                 @endforeach
