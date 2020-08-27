@@ -16,7 +16,7 @@
 
 @endforeach
 {{-- Table or Game --}}
-@if($actionUrl == "https://interndepion.nl/rankings")
+@if($actionUrl == url('/')."/rankings")
 <?php $i = 1;?>
 @component('mail::table')
 | # | naam | score | waarde |
@@ -25,7 +25,7 @@
 | <?php echo $i; $i++; ?> | {{$ranking->user->name}} | {{$ranking->score}} | {{$ranking->value}}| 
 @endforeach
 @endcomponent
-@elseif($actionUrl == "https://interndepion.nl/games")
+@elseif($actionUrl == url('/')."/games")
 Jouw partij is:
 @component('mail::table')
 |Wit|Zwart|

@@ -15,12 +15,32 @@ Use App\Settings;
 Use App\Config;
 Use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Schema;
+use App;
 
 class PagesController extends Controller
 {
 
     public function index(){
         $settings = app('App\Settings');
+        if(!is_object($settings))
+        {
+            $settings_json = json_decode($settings);
+            App::setLocale($settings_json->language);
+        }
+        else
+        {
+            $settings_json = $settings;
+            if($settings_json->has('language'))
+            {
+                App::setLocale($settings_json->language);
+            }
+        }
+        
+        try {
+            DB::connection()->getPdo();
+        } catch (\Exception $e) {
+            return redirect('/install');
+        }
         if((!Schema::hasTable('configs')) || Config::CompetitionName() == "Need Install")
         {
             return redirect('/install');
@@ -51,6 +71,7 @@ class PagesController extends Controller
         }
         return view('pages.index')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences)->with('absences', $dashboard_absences);
     }
+    
     public function indexInstall(){
         $settings = app('App\Settings');
         if((!Schema::hasTable('configs')) || Config::CompetitionName() == "Need Install")

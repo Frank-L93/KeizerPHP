@@ -1,5 +1,4 @@
-
-    @if(auth()->user()->id == "21")
+@auth
     <div class="card text-black bg-light mb-3">
         <div class="card-header text-center">
             Ranglijst 
@@ -24,6 +23,4 @@
                 </table>
             </div>
     </div>
-       
-   
-    @endif
+@endauth

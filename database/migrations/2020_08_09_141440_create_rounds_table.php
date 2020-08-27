@@ -17,7 +17,7 @@ class CreateRoundsTable extends Migration
             $table->id();
             $table->integer('round');
             $table->datetime('date');
-            $table->integer('processed');
+            $table->integer('processed')->nullable();
             $table->timestamps();
         });
     }

@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Http\Controllers\iOSNotificationsController;
 use Carbon\Carbon;
+
 global $k;
 class AdminController extends Controller
 {
@@ -126,6 +127,7 @@ class AdminController extends Controller
         $presentPlayers = Presence::select('user_id')->where(['round' => $round, 'presence' => '1'])->get();
         foreach($presentPlayers as $player)
         {
+            $lowest_value_set = 0;
             array_push($players, $player->user_id);
             $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
             if($lowest_value == NULL)
@@ -348,7 +350,8 @@ class AdminController extends Controller
     {
         $calculation = new Calculation;
         $calculation->Calculate($round);
-        // No return necessary, return happens in Class of Calculation.
+        // No return necessary, return happens in Class of Calculation. But in case this fails, return to /Admin with a success message.
+        return redirect('/Admin')->with('success', 'Ranglijst is bijgewerkt.');
     }
 
     // Ranking functionality of our Admin
@@ -582,16 +585,6 @@ class AdminController extends Controller
             }
         }
     
-    }
-
-    // If notifications are not send, trigger them again.
-    public function SendNotification()
-    {
-        $b = new iOSNotificationsController();
-        $b->newFeedItem('Partijen', 'Partijen voor ronde 2 zijn aangemaakt!', 'https://interndepion.nl/games', '2');
-        $a = new PushController();
-            $a->push('Admin', 'Partijen voor ronde 2 zijn aangemaakt!', 'Partijen', '2');
-        return "Notificaties verzonden";
     }
 }
 

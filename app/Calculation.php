@@ -1,4 +1,4 @@
-<?
+<?php
 namespace App;
 
 Use App\Ranking;
@@ -33,7 +33,6 @@ class Calculation
         
         foreach($rankings as $ranking)
         {
-            $ranking->score = 0;
             $ranking->amount = 0;
             $ranking->gamescore = 0;
             $ranking->ratop = 0;
@@ -267,6 +266,10 @@ class Calculation
     {
         $amount = round($amount, 2);
         $value = TPRHelper::where('p', $amount)->first();
+        if($value == null)
+        {
+            return 0;
+        }
         return $value->dp;
     }
    
@@ -287,6 +290,6 @@ class Calculation
         $b->newFeedItem('Stand', 'De stand is bijgewerkt, bekijk hem nu!', 'https://interndepion.nl/rankings', '1');
         $a = new PushController();
         $a->push('Admin', 'De stand is bijgewerkt, bekijk hem nu!', 'Stand', '1'); // Get results of round
-        return redirect('/Admin')->with('success', 'Stand is succesvol bijgewerkt en notificaties verzonden');
+        return redirect('/Admin')->with('success', 'Stand is bijgewerkt en notificaties verzonden');
      }
 }

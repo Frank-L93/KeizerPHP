@@ -159,18 +159,17 @@ class PushDemo extends Notification
                     ->subject('De Pion '.$this->title)
                     ->line($this->message)
                     ->action($this->Type_Text, url($this->Type_Action))
-                    ->markdown('vendor.notifications.email', ['data' => $data]);
-                    
+                    ->markdown('vendor.notifications.email', ['data' => $data]);         
     }
   
 
     /**
-     * Get the array representation of the notification.
+     * Get the database representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toDatabase($notifiable)
     {
         
         return [

@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('api_token')->nullable();
             $table->string('email')->unique();
             $table->integer('knsb_id');
-            $table->integer('rechten');
+            $table->integer('rechten')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->double('rating');

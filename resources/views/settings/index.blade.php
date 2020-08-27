@@ -168,6 +168,15 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="language" class="col-md-4 control-label">Taal</label>
+                    <div class="col-md-6">
+                        <select name="language" class="form-control">
+                            <option value="nl" @if(array_key_exists('language', $settings)) @if($settings['language'] == "nl") selected @endif @endif>Nederlands</option>
+                            <option value="en" @if(array_key_exists('language', $settings)) @if($settings['language'] == "en") selected @endif @endif>English</option>
+                       </select>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-md-6 col-md-offset-4">                    
                         <div class="btn-group btn-group-lg mr-2" role="group" aria-label="chooser">
                             <button name="settings" type="submit"  value="0" class="btn btn-success form-control">Pas aan</button>

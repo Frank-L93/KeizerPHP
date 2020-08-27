@@ -19,9 +19,9 @@ class CreateRankingsTable extends Migration
             $table->double('score');
             $table->integer('value');
             $table->integer('LastValue')->nullable();
-            $table->integer('color');
-            $table->integer('amount');
-            $table->integer('ratop');
+            $table->integer('color')->nullable();
+            $table->integer('amount')->nullable();
+            $table->integer('ratop')->nullable();
             $table->double('TPR')->nullable();
             $table->double('gamescore')->default(0);
             $table->timestamps();

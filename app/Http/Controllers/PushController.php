@@ -64,8 +64,7 @@ class PushController extends Controller
                     $users_to_notify,
                     new PushDemo($message, $title, $num)
                 );
-            
-                return redirect()->route($route)->with('Success', 'Push Bericht gestuurd');
+            return true;
             }
         }
 }

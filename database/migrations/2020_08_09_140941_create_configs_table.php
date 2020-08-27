@@ -28,7 +28,7 @@ class CreateConfigsTable extends Migration
             $table->string('Season');
             $table->timestamps();
             $table->integer('Admin');
-            $table->integer('EndSeason');
+            $table->integer('EndSeason')->nullable();
             $table->integer('AbsenceMax');
         });
     }

@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
             if(auth()->guest())
             {
                 $standard_settings = Array();
-                $standard_settings = json_encode(["layout" => "app"]);
+                $standard_settings = json_encode(["layout" => "app", "language"=>"nl"]);
                 return $standard_settings;
             }
             else

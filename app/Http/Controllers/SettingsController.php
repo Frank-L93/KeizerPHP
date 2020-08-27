@@ -211,6 +211,16 @@ class SettingsController extends Controller
         {
             settings()->merge('layout',$request->get('layout'));
         }
+
+        // Language
+        if(settings()->has('language'))
+        {
+            settings()->set('language', $request->get('language'));
+        }
+        else
+        {
+            settings()->merge('language',$request->get('language'));
+        }
         return redirect()->back()->with('success', 'Voorkeuren aangepast!');
     }
 
