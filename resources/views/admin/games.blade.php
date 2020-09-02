@@ -74,6 +74,8 @@
                             
                             @endforeach
                         </table>
+                        
+                        <a href="/Admin/Game/Add/{{$round->id}}" class="btn btn-sm btn-secondary">Voeg partij toe</a>
                         </div>
                     </div>
                     @endif

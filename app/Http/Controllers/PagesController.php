@@ -35,7 +35,6 @@ class PagesController extends Controller
                 App::setLocale($settings_json->language);
             }
         }
-        
         try {
             DB::connection()->getPdo();
         } catch (\Exception $e) {
@@ -45,6 +44,7 @@ class PagesController extends Controller
         {
             return redirect('/install');
         }
+
         config(['app.name' => Config::CompetitionName()]);
         
         if((Auth::check()) && (auth()->user()->active == 0 || auth()->user()->active == NULL))
@@ -52,7 +52,6 @@ class PagesController extends Controller
             $errors = ['activation_response' => 'Je hebt geen actief account. ' . link_to(url('activation'), 'Klik hier') . ' om je account te activeren'];
             Auth::logout();
             return redirect('/login')->withErrors($errors);
-           
         }
         elseif((Auth::check()) && (auth()->user()->remember_token == NULL)){
             $user = Auth::user();

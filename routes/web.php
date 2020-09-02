@@ -56,6 +56,8 @@ Route::get('/Admin/Games', 'AdminController@games')->middleware('admin');
 Route::get('/Admin/{Game}/Games', 'AdminController@game')->middleware('admin');
 Route::get('/Admin/users/list', 'AdminController@List')->middleware('admin');
 Route::get('/Admin/users/list2', 'AdminController@List2')->middleware('admin');
+Route::get('/Admin/Game/Add/{Round}', 'AdminController@AddGame')->middleware('admin');
+Route::get('/Admin/Presence/Add', 'AdminController@AddPresence')->middleware('admin');
 
 // Administrator-pages (posts)
 Route::post('/Admin/LoadRatings', 'AdminController@loadRatings')->name('import_process')->middleware('admin');
@@ -64,6 +66,8 @@ Route::post('/Admin/Rounds/create', 'AdminController@RoundStore')->middleware('a
 Route::post('/Admin/Games/update', 'AdminController@UpdateGame')->middleware('admin');
 Route::post('/Admin/Users/update', 'AdminController@UpdateUser')->middleware('admin');
 Route::post('/Admin/Config', 'AdminController@Config')->middleware('admin');
+Route::post('/Admin/Game/create', 'AdminController@storeGame')->middleware('admin');
+Route::post('/Admin/Presence/create', 'AdminController@storePresence')->middleware('admin');
 
 // Administrator-pages (deletes)
 Route::delete('/Admin/{Presence}/Presences', 'AdminController@DestroyPresences')->middleware('admin');

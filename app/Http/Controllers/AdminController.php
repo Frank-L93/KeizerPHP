@@ -81,8 +81,37 @@ class AdminController extends Controller
     {
         if(Gate::allows('admin', Auth::user())){
             $presence = Presence::find($id);
-            $presence->delete();
-            return redirect('/Admin')->with('success', 'Aanwezigheid verwijderd!');
+            // Check if player has a game in this round
+
+            $games_white = Game::where('round_id', $presence->round)->where('white',$presence->user_id)->get();
+            $games_black = Game::where('round_id', $presence->round)->where('black', $presence->user_id)->get();
+            if($games_white->isEmpty() && $games_black->isEmpty())
+            {
+                $presence->delete();
+                return redirect('/Admin')->with('success', 'Aanwezigheid verwijderd!');
+            }
+            elseif($games_black->isEmpty())
+            {
+                foreach($games_white as $game)
+                {
+                    if($game->black == "Bye")
+                    {
+                        $round = Round::find($game->round_id);
+                        if($round->processed == 1)
+                        {
+                            return redirect('/Admin')->with('error', 'Deze aanwezigheid kan niet meer verwijderd worden.');
+                        }
+                        $presence->delete();
+                        return redirect('/Admin')->with('success', 'Aanwezigheid verwijderd!');
+                    }
+                    else
+                    {
+                        return redirect('/Admin')->with('error', 'Deze aanwezigheid kan niet meer verwijderd worden');
+                    }
+                }
+            }
+
+            return redirect('/Admin')->with('error', 'Deze aanwezigheid kan niet meer verwijderd worden');
         }
         else
         {
@@ -236,6 +265,29 @@ class AdminController extends Controller
         return $game->save();
     }
 
+    public function AddGame($round)
+    {
+        $players = User::all();
+        return view('admin.addgame')->with('round', $round)->with('players', $players);
+    }
+    public function storeGame(request $request)
+    {
+        $game = new Game;
+        $game->white = $request->white;
+        $game->black = $request->black;
+        $game->result = "0-0";
+        $game->round_id = $request->round;
+        $game->save();
+
+        // Update ranking of player
+        $white_ranking = Ranking::where('user_id', $request->white)->first();
+        $white_ranking->color = $white_ranking->color + 1;
+        $white_ranking->save();
+        $black_ranking = Ranking::where('user_id', $request->black)->first();
+        $black_ranking->color = $black_ranking->color - 1;
+        $black_ranking->save();
+        return redirect('/Admin')->with('success', 'Partij toegevoegd aan '.$request->round);
+    }
     // User update functionality of the Admin
     public function UpdateUser(request $request){
      
@@ -345,6 +397,64 @@ class AdminController extends Controller
         return redirect('/Admin')->with('success', 'Aanwezigheden aangemaakt');
     }
 
+    public function AddPresence()
+    {
+        $users = User::all();
+        $rounds = Round::all();
+        return view('admin.addpresence')->with('players', $users)->with('rounds', $rounds);
+    }
+
+    public function storePresence(request $request)
+    {
+        $this->validate($request,[
+            'round' => 'required',
+            'presence' => 'required'
+        ]);
+
+            $round = $request->round;
+            $user = $request->player;
+            
+            $presence_exist = Presence::where('user_id', $user)->where('round', $round)->get();
+            
+            if($presence_exist->isEmpty())
+            {
+                $presence = new Presence;
+                $presence->user_id = $request->player;
+                $presence->round = $round;
+                $presence->presence = $request->presence;
+                
+                if($presence->presence == 0)
+                {
+                    
+                    if($request->reason == "Empty")
+                    {
+                        return redirect('presences')->with('error', 'Aanwezigheid niet aangepast! Je wilde een afmelding plaatsen, kies dan een reden!');
+                    }
+                    $games_white = Game::where('round_id', $round)->where('white',$user)->get();
+                    $games_black = Game::where('round_id', $round)->where('black', $user)->get();
+                    if($games_white->isEmpty() && $games_black->isEmpty())
+                    {
+
+                        $game = new Game;
+                        $game->white = $user;
+                        $game->result = "Afwezigheid";
+                        $game->round_id = $round;    
+                        $game->black = $request->input('reason');
+                        $game->save();
+                    }
+                    else
+                    {
+                        return redirect('presences')->with('error', 'Aanwezigheid niet aangepast! Je hebt al een partij in deze ronde gespeeld!');
+                    }
+
+                }
+                
+                 $presence->save();
+                 return redirect('/Admin')->with('success', 'Aanwezigheid voor '.$request->player.' doorgegeven');
+            }
+            return redirect('/Admin')->with('error', 'Er bestond al een aanwezigheid voor deze speler');
+        
+    }
     // Calculation
     public function InitCalculation($round)
     {

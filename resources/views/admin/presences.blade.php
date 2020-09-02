@@ -25,6 +25,7 @@
                             </tr>
                         @endforeach
                 </table>
+                <a href="/Admin/Presence/Add" class="btn btn-sm btn-secondary">Voeg aanwezigheid toe</a>
                 @endif
             </div>
     </div>

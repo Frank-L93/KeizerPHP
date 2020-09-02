@@ -95,6 +95,13 @@ class Calculation
                     }
                 }
                 else{
+                    // Check if Absence Max is hit, otherwise let the player score.
+                    $absence_max = Config::AbsenceMax();
+                    $amount_absence = Game::where([['white', '=', $game->white], ['result', '=', 'Afwezigheid'], ['black', '=', 'Other']])->count();
+                    if($amount_absence > $absence_max)
+                    {}
+                    else
+                    {
                     if($game->round_id < $round)
                     {
                         $white_score += Config::Scoring("Other") * $white_ranking->LastValue;
@@ -106,6 +113,7 @@ class Calculation
                     else
                     {
                         $white_score += Config::Scoring("Other") * $white_ranking->value;
+                    }
                     }
                 }
                 $white_ranking->score = $white_score;
