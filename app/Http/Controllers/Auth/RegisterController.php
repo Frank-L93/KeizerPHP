@@ -77,6 +77,7 @@ class RegisterController extends Controller
             'beschikbaar' => $data['beschikbaar'],
             'api_token' => Str::random(10),
             'settings' => ["notifications"=>"0"],
+            'active' => 1,
             'activate' => 0,
         ]);
     }

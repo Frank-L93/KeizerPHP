@@ -592,6 +592,7 @@ class AdminController extends Controller
                         'password' => Hash::make($insertData['knsb_id']),
                         'rating' => $insertData['rating'],
                         'beschikbaar' => $insertData['beschikbaar'],
+                        'active' => 1,
                         'activate' => 0,
                         ]
                     );
@@ -606,6 +607,7 @@ class AdminController extends Controller
                             'email' => $insertData['email'],
                             'rating' => $insertData['rating'],
                             'beschikbaar'=>$insertData['beschikbaar'],
+                            'active' => 1,
                             'activate' => 0,
                             
                         ]);

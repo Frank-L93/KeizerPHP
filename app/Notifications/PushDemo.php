@@ -59,11 +59,13 @@ class PushDemo extends Notification
         }
         elseif($this->type == "4")
         {
-            $this->title = "Activatiemail";
-            $this->subject = "Activeer!";
-            $this->message = "Je kunt je account activeren via de button of met deze code: ".$message;
-            $this->Type_Text = "Activeer je account!";
-            $this->Type_Action = "activation/".$message."/".$title;
+            $pieces = explode(" & ", $message);
+       
+            $this->title = "Nieuw wachtwoord";
+            $this->subject = "Wachtwoordreset Intern De Pion!";
+            $this->message = "Je nieuwe wachtwoord voor https://interndepion.nl/ is: ".$pieces[0]." Om hiervan gebruik te maken, klik je op de link. Niet aangevraagd? Neem contact op met Frank.";
+            $this->Type_Text = "Activeer je nieuwe wachtwoord!";
+            $this->Type_Action = "activation/".$pieces[1]."/".$title;
         }
 
       

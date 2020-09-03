@@ -55,7 +55,7 @@ class PushController extends Controller
             {
                 $users_to_notify = User::where('email', $title)->get();
                 Notification::send($users_to_notify, new PushDemo($message, $title, $num));
-                return redirect()->route($route)->with('success', 'Activatiemail verzonden! Niet ontvangen? Kijk ook in je spambox! Voeg alvast competitieleider@interndepion.nl toe aan je contacten');
+                return redirect()->route($route)->with('success', 'Wachtwoordreset verzonden! Niet ontvangen? Kijk ook in je spambox! Voeg alvast competitieleider@interndepion.nl toe aan je contacten');
             }
             else{
                 // For now send all Users a notificiation

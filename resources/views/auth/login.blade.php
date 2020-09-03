@@ -46,8 +46,8 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-                                <a href="/activation" class="btn btn-primary">
-                                Activeer
+                                <a href="/password" class="btn btn-primary">
+                                Wachtwoord vergeten?
                                 </a>
                                 
                             </div>
