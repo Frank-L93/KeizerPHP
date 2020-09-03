@@ -83,7 +83,7 @@ class PresencesController extends Controller
                     
                     if($request->input('reason') == "Empty")
                     {
-                        return redirect('presences')->with('error', 'Aanwezigheid niet aangepast! Je wilde een afmelding plaatsen, kies dan een reden!');
+                        return redirect('/presences')->with('error', 'Aanwezigheid niet aangepast! Je wilde een afmelding plaatsen, kies dan een reden!');
                     }
                     $games_white = Game::where('round_id', $round)->where('white',$user)->get();
                     $games_black = Game::where('round_id', $round)->where('black', $user)->get();
@@ -132,7 +132,7 @@ class PresencesController extends Controller
         }
         else
         {
-            return redirect('presences')->with('error', 'Dit is niet jouw aanwezigheid die jij probeert te bekijken!');
+            return redirect('/presences')->with('error', 'Dit is niet jouw aanwezigheid die jij probeert te bekijken!');
         }
     }
 
@@ -159,16 +159,17 @@ class PresencesController extends Controller
     public function update(Request $request, $id)
     {
         $presence = Presence::find($id);
-        $user = auth()->user()->id;    
+        
         if($presence->user_id == auth()->user()->id || Gate::allows('admin', Auth::user()))
             {
+                $user = $presence->user_id;   
                 $presence->presence = $request->input('presence');
                 
                 if($presence->presence == 0)
                 {
                     if($request->input('reason') == "Empty")
                     {
-                        return redirect('presences')->with('error', 'Aanwezigheid niet aangepast! Je wilde een afmelding plaatsen, kies dan een reden!');
+                        return redirect('/presences')->with('error', 'Aanwezigheid niet aangepast! Je wilde een afmelding plaatsen, kies dan een reden!');
                     }
 
                     $games_white = Game::where('round_id', $presence->round)->where('white',$user)->get();
@@ -190,7 +191,7 @@ class PresencesController extends Controller
                         $b->newFeedItem('Admin-Melding', 'Nieuwe late afmelding!', 'https://interndepion.nl/admin', '3');
                         $a = new PushController();
                         $a->push('none', 'Nieuwe late afmelding!', 'Afmelding', '3'); 
-                        return redirect('presences')->with('error', 'Aanwezigheid niet aangepast! Je hebt al een partij in deze ronde gespeeld!');
+                        return redirect('/presences')->with('error', 'Aanwezigheid niet aangepast! Je hebt al een partij in deze ronde gespeeld!');
                     }
                 }
                 else{ // We are updating the presences. It now turns out to be the player is present, therefore, the game with the absence, should be deleted from the database.
@@ -211,11 +212,11 @@ class PresencesController extends Controller
                     }
                 }
                 $presence->save();
-                return redirect('presences')->with('success', 'Aanwezigheid is aangepast');
+                return redirect('/presences')->with('success', 'Aanwezigheid is aangepast');
             }
             else
             {
-                return redirect('presences')->with('error', 'Dit is niet jouw aanwezigheid die jij probeert aan te passen!');
+                return redirect('/presences')->with('error', 'Dit is niet jouw aanwezigheid die jij probeert aan te passen!');
             }
     }
 
@@ -230,11 +231,11 @@ class PresencesController extends Controller
         if(Gate::allows('admin', Auth::user())){
             $presence = Presence::find($id);
             $presence->delete();
-            return view('/PresencesAdmin')->with('success', 'Aanwezigheid verwijderd!');
+            return view('/Admin')->with('success', 'Aanwezigheid verwijderd!');
         }
         else
         {
-            return redirect('presences')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
+            return redirect('/presences')->with('error', 'Je hebt geen toegang tot administrator-paginas!');
         }
     }
 }

@@ -98,6 +98,18 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right"> {!! trans('installer_messages.configs.seasonPart') !!}</label>
+                            <div class="col-md-6">
+                                <input id="SeasonPart" type="number" name="SeasonPart" class="form-control" value="" required>
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right"> {!! trans('installer_messages.configs.Bye') !!}</label>
                             <div class="col-md-6">
                                 <input type="number" name="Bye" step="0.0001" max="1" min="0" id="Bye" class="form-control" value="" required>

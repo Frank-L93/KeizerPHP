@@ -507,6 +507,8 @@ class AdminController extends Controller
         $configs->Bye = $request->input('Bye');
         $configs->EndSeason = $request->input('EndSeason');
         $configs->announcement = $request->input('announcement');
+        $configs->AbsenceMax = $request->input('AbsenceMax');
+        $configs->SeasonPart = $request->input('SeasonPart');
         //$configs->Admin = $request->input('Admin');
         $configs->save();
         return redirect('/Admin')->with('success', 'Instellingen aangepast!');

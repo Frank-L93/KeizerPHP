@@ -23,9 +23,9 @@
                 <label for="reason">Reden (alleen invullen als afwezig)</label><br>
                 <select name="reason" class="form-control">
                     <option value="Empty"></option>
-                    <option value="Club">Avondcompetitie of Beker</option>
-                    <option value="Personal">Ziek, Persoonlijke reden, bekend bij Wedstrijdleider</option>
-                    <option value="Other">Anders</option>
+                    <option value="Other">Afwezig met Bericht</option>
+                    <option value="Club">Afwezig i.v.m. clubactiviteit</option>
+                    <option value="Personal">Afwezig i.g.v. force majeure (Ziek, Persoonlijke reden, bekend bij Wedstrijdleider)</option>
                 </select>
                 <label for="presence">Aanwezigheid</label><br>
                 <div class="btn-group btn-group-lg mr-2" role="group" aria-label="chooser">

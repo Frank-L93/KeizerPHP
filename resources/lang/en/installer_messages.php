@@ -160,6 +160,7 @@ return [
         'Other' => 'Score for being absent due to other reasons',
         'Admin' => 'User-ID for Admin (default: 1)',
         'absenceMax' => 'Maximum rounds a player can get Absent-scoring (except Club)',
+        'seasonPart' => 'Amount of rounds per season part',
         'save' => 'Save configuration',
     ],
 

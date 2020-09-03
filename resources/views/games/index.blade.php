@@ -64,11 +64,11 @@
                                         @if($game->black === "Bye")
                                             <td>Bye</td>
                                         @elseif($game->black === "Club")
-                                            <td>Clubverplichting</td>
+                                            <td>Afwezig i.v.m. Clubverplichting</td>
                                         @elseif($game->black === "Personal")
-                                            <td>Persoonlijke reden</td>
+                                            <td>Afwezig i.g.v. Force Majeure</td>
                                             @elseif($game->black === "Other" || $game->black === "Empty")
-                                            <td>Afwezig</td>
+                                            <td>Afwezig met Bericht</td>
                                         @endif
                                         <td>{{$game->result}}
                                          </td>

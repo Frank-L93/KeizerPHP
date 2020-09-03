@@ -52,9 +52,9 @@
                                     @if($game->black === "Bye")
                                         <td>Bye</td>
                                         @elseif($game->black === "Club")
-                                            <td>Clubverplichting</td>
+                                            <td>Afwezig i.v.m. Clubverplichting</td>
                                         @elseif($game->black === "Personal")
-                                            <td>Persoonlijke reden</td>
+                                            <td>Afwezig i.g.v. force majeure</td>
                                             @elseif($game->black === "Other" || $game->black === "Empty")
                                             <td>Afwezig</td> 
                                     @endif

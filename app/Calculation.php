@@ -97,7 +97,18 @@ class Calculation
                 else{
                     // Check if Absence Max is hit, otherwise let the player score.
                     $absence_max = Config::AbsenceMax();
-                    $amount_absence = Game::where([['white', '=', $game->white], ['result', '=', 'Afwezigheid'], ['black', '=', 'Other']])->count();
+
+                    // Season parts
+                    $season_part = Config::SeasonPart();
+                    // filter this for the first X rounds.
+                    if($game->round_id <= $season_part)
+                    {
+                        $amount_absence = Game::where([['white', '=', $game->white], ['round_id', '<=', $season_part], ['result', '=', 'Afwezigheid'], ['black', '=', 'Other']])->count();
+                    }
+                    else
+                    {
+                        $amount_absence = Game::where([['white', '=', $game->white], ['round_id', '>', $season_part], ['result', '=', 'Afwezigheid'], ['black', '=', 'Other']])->count();
+                    }
                     if($amount_absence > $absence_max)
                     {}
                     else

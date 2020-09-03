@@ -64,6 +64,7 @@ class ConfigurationController extends Controller
         'EndSeason' => $request->input('EndSeason'),
         'Admin' => $request->input('Admin'),
         'AbsenceMax' => $request->input('AbsenceMax'),
+        'SeasonPart' => $request->input('SeasonPart'),
         ]);
 
         $finalStatusMessage = $fileManager->update();

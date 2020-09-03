@@ -14,8 +14,8 @@ class Config extends Model
      * @var array
      */
     protected $fillable = [
-        'RoundsBetween_Bye', 'RoundsBetween', 'Club','Personal','Bye','Other','Presence','Start','Step','Name','Season','Admin','AbsenceMax','announcement'
-,    ];
+        'RoundsBetween_Bye', 'RoundsBetween', 'Club','Personal','Bye','Other','Presence','Start','Step','Name','Season','Admin','AbsenceMax','announcement','SeasonPart',
+  ];
     public static function RoundsBetween($bye){
         if($bye == 1)
         {
@@ -34,12 +34,14 @@ class Config extends Model
     
     public static function Scoring($result)
     {
+        // Absence club (afwezig club)
         if($result == "Club")
         {
             $value = Config::select('Club')->first();
            
             return $value->Club;
         }
+        // Absence due to personal reasons/sickness/force majeure (0.25)
         elseif($result == "Personal")
         {
             $value = Config::select('Personal')->first();
@@ -58,11 +60,18 @@ class Config extends Model
            
             return $value->Presence;
         }
+        // Absence with message (afwezig met bericht) (0.3333) --> max 5 times per season part
         else{
             $value = Config::select('Other')->first();
            
             return $value->Other;
         }
+    }
+    public static function SeasonPart()
+    {
+        $value = Config::select('SeasonPart')->first();
+
+        return $value->SeasonPart;
     }
     public static function AbsenceMax()
     {

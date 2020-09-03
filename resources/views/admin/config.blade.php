@@ -20,11 +20,13 @@
                             <tr><td>Stapgrootte</td><td><input type="number" name="Step" id="Step" value="{{$config->Step}}" /></td></tr>
                             <tr><td>Rondes tussen elkaar treffen</td><td><input type="number" name="RoundsBetween" id="RoundsBetween" value="{{$config->RoundsBetween}}" /></td></tr>
                             <tr><td>Rondes tussen bye opnieuw</td><td><input type="number" name="RoundsBetween_Bye" id="RoundsBetween_Bye" value="{{$config->RoundsBetween_Bye}}" /></td></tr>
+                            <tr><td>Rondes per seizoenshelft</td><td><input id="SeasonPart" type="number" name="SeasonPart" value="{{$config->SeasonPart}}" /></td></tr>
                             <tr><td>Score voor Bye</td><td><input type="number" name="Bye" step="0.0001" max="1" min="0" id="Bye" value="{{$config->Bye}}" /></td></tr>
                             <tr><td>Score voor Aanwezigheid</td><td><input type="number" name="Presence" step="0.0001" max="1" min="0" id="Presence" value="{{$config->Presence}}" /></td></tr>
                             <tr><td>Score voor Afwezigheid namens Club</td><td><input type="number" name="Club" step="0.0001" max="1" min="0" id="Club" value="{{$config->Club}}" /></td></tr>
-                            <tr><td>Score voor Afwezigheid Ziekte / Persoonlijke reden</td><td><input type="number" name="Personal" step="0.0001" max="1" min="0" id="Personal" value="{{$config->Personal}}" /></td></tr>
-                            <tr><td>Score voor Afwezigheid Overig</td><td><input type="number" name="Other" step="0.0001" max="1" min="0" id="Other" value="{{$config->Other}}" /></td></tr>
+                            <tr><td>Score voor Afwezigheid Force Majeure (overig)</td><td><input type="number" name="Personal" step="0.0001" max="1" min="0" id="Personal" value="{{$config->Personal}}" /></td></tr>
+                            <tr><td>Score voor Afwezigheid met Bericht</td><td><input type="number" name="Other" step="0.0001" max="1" min="0" id="Other" value="{{$config->Other}}" /></td></tr>
+                            <tr><td>Maximaal aantal keren Afwezigheid met Bericht per seizoenshelft</td><td><input id="AbsenceMax" type="number" name="AbsenceMax" value="{{$config->AbsenceMax}}" /></td></tr>
                             <tr><td>Mededeling na afloop seizoen</td><td><input type="textarea" name="announcement" id="announcement" value="{{$config->announcement}}" /></td></tr>
                       
                 </table>

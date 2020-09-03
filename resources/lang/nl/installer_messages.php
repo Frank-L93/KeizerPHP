@@ -157,6 +157,7 @@ return [
         'Other' => 'Score voor afwezigheid i.v.m. overige redenen',
         'Admin' => 'Gebruikers-ID van Admin-account (standaard: 1)',
         'absenceMax' => 'Maximaal aantal rondes een speler Afwezigheidsscore kan krijgen (excl. Clubafwezigheid)',
+        'seasonPart' => 'Aantal rondes per seizoenshelft',
         'save' => 'Sla configuratie op',
     ],
     

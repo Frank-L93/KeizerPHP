@@ -76,9 +76,9 @@
         <div class="card-header">{!! trans('pages.index.dashboard') !!}
                             @foreach($rounds as $round)
                                 @if(Carbon\Carbon::parse($round->date)->format('j M Y') === Carbon\Carbon::parse(now())->format('j M Y'))
-                                {!! trans('pages.main.Game') !!} {{$round->round}} | {!! trans('pages.index.today') !!} <?php $timediff = date_diff(Carbon\Carbon::parse($round->date), now()); if(Carbon\Carbon::parse($round->date) > now()){ echo "(over ".$timediff->h." uur, ".$timediff->i." minuten en ".$timediff->s." seconden)";}?>!
+                                {!! trans('pages.main.Round') !!} {{$round->round}} | {!! trans('pages.index.today') !!} <?php $timediff = date_diff(Carbon\Carbon::parse($round->date), now()); if(Carbon\Carbon::parse($round->date) > now()){ echo "(over ".$timediff->h." uur, ".$timediff->i." minuten en ".$timediff->s." seconden)";}?>!
                                 @else
-                                {!! trans('pages.main.Game') !!} {{$round->round}} | {{Carbon\Carbon::parse($round->date)->format('j M Y')}}!
+                                {!! trans('pages.main.Round') !!} {{$round->round}} | {{Carbon\Carbon::parse($round->date)->format('j M Y')}}!
                                 @endif
                             @endforeach
         </div>
