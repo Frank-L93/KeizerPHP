@@ -28,13 +28,12 @@ class ActivationController extends Controller
             {
                 $password = Str::random(10);
                 $user->active = 0;
-                $user->activate = $activation_key;
                 $user->password = Hash::make($password);
                 $user->activate = $activation_key;
                 $user->save();
-                echo("<script>console.log('PHP: " . $password . "');</script>");
                 $a = new PushController();
-                return $a->push('activation', $password.' & '.$activation_key, $request->input('email'), '4');
+                $a->push('activation', $password.' & '.$activation_key, $request->input('email'), '4');
+                return redirect()->route('activation')->with('success', 'Wachtwoord gereset, check je mail');
                 
             }
             return redirect()->route('login')->with('error', 'Je bent niet actief, dus kunt ook geen nieuw wachtwoord aanvragen. Dat heb je waarschijnlijk al gedaan.');

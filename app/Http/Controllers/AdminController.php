@@ -464,18 +464,35 @@ class AdminController extends Controller
         return redirect('/Admin')->with('success', 'Ranglijst is bijgewerkt.');
     }
 
+    private function sort_rating($a, $b)
+    {
+        return strnatcmp($b['rating'], $a['rating']);
+    }
     // Ranking functionality of our Admin
     public function InitRanking()
     {
-        $users = User::where('beschikbaar', 1)->orderBy('rating', 'desc')->get();
-        $i = Config::InitRanking("start");
-        foreach($users as $user)
+        $presences = Presence::where('round', 1)->get();
+        $users_present = Array();
+        foreach($presences as $presence)
         {
-            $ranking_exist = Ranking::where('user_id', $user->id)->get();
+            $user_that_is_present = User::where('id', $presence->user_id)->first();
+            
+            $user_array = ["id" => $user_that_is_present->id, "rating" => $user_that_is_present->rating];
+            
+            array_push($users_present, $user_array);
+        }
+        
+        usort($users_present, array($this, 'sort_rating'));
+
+        $i = Config::InitRanking("start");
+        foreach($users_present as $user)
+        {
+            
+            $ranking_exist = Ranking::where('user_id', $user["id"])->get();
             if($ranking_exist->isEmpty())
             {
                 $ranking = new Ranking;
-                $ranking->user_id = $user->id;
+                $ranking->user_id = $user["id"];
                 $ranking->score = 0;
                 $ranking->value = $i;
                 $ranking->save();

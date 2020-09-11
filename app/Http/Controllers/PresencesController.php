@@ -188,9 +188,9 @@ class PresencesController extends Controller
                     {
                         // Notify Admin that player wants to set absence while already has a game for this round.
                         $b = new iOSNotificationsController();
-                        $b->newFeedItem('Admin-Melding', 'Nieuwe late afmelding!', 'https://interndepion.nl/admin', '3');
+                        $b->newFeedItem('Admin-Melding', 'Nieuwe late afmelding van '.$user, 'https://interndepion.nl/admin', '3');
                         $a = new PushController();
-                        $a->push('none', 'Nieuwe late afmelding!', 'Afmelding', '3'); 
+                        $a->push('none', 'Nieuwe late afmelding van '.$user, 'Afmelding', '3'); 
                         return redirect('/presences')->with('error', 'Aanwezigheid niet aangepast! Je hebt al een partij in deze ronde gespeeld!');
                     }
                 }

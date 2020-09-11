@@ -53,7 +53,9 @@ class PushController extends Controller
                 }
             elseif($type == 4) // Verification e-mail
             {
+                
                 $users_to_notify = User::where('email', $title)->get();
+                
                 Notification::send($users_to_notify, new PushDemo($message, $title, $num));
                 return redirect()->route($route)->with('success', 'Wachtwoordreset verzonden! Niet ontvangen? Kijk ook in je spambox! Voeg alvast competitieleider@interndepion.nl toe aan je contacten');
             }

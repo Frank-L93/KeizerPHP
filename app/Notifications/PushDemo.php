@@ -60,7 +60,7 @@ class PushDemo extends Notification
         elseif($this->type == "4")
         {
             $pieces = explode(" & ", $message);
-       
+            
             $this->title = "Nieuw wachtwoord";
             $this->subject = "Wachtwoordreset Intern De Pion!";
             $this->message = "Je nieuwe wachtwoord voor https://interndepion.nl/ is: ".$pieces[0]." Om hiervan gebruik te maken, klik je op de link. Niet aangevraagd? Neem contact op met Frank.";
