@@ -3,7 +3,7 @@
         <div class="card-header text-center">
             Ranglijst 
             @if(count($ranking)>0)
-                
+                <a class="btn btn-sm btn-secondary float-right" href="/Admin/RankingList/add" role="button">Voeg iemand toe</a>
             @else
                 <a class="btn btn-sm btn-secondary float-right" href="/Admin/RankingList/create" role="button">Genereer Ranglijst</a>
             @endif

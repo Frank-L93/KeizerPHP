@@ -455,6 +455,33 @@ class AdminController extends Controller
             return redirect('/Admin')->with('error', 'Er bestond al een aanwezigheid voor deze speler');
         
     }
+
+    public function AddRanking()
+    {
+        $players = User::all();
+        return view('admin.addranking')->with('players', $players);
+    }
+
+    public function storeRanking(request $request)
+    {
+        
+            $ranking_exist = Ranking::where('user_id', $request->player)->first();
+            if($ranking_exist == null)
+            {
+                $ranking = new Ranking;
+                $ranking->user_id = $request->player;
+                $ranking->score = $request->score;
+                $ranking->value = $request->value;
+                $ranking->save();
+            }
+            else
+            {
+                $ranking_exist->score = $request->score;
+                $ranking_exist->value = $request->value;
+                $ranking_exist->save();   
+            }
+            return redirect('/Admin')->with('success', 'Voor speler met id '.$request->player.' de ranking gemaakt (of aangepast) naar score & waarde: '.$request->score.' & '.$request->value.'!');
+    }
     // Calculation
     public function InitCalculation($round)
     {

@@ -20,7 +20,7 @@ class Calculation
 
     // We will give the function Calculate an inputvalue of a round, so we know which round is the latest round to be calculated.
 
-    public function Calculate($round)
+    public function Calculate($round) // 1
     {
         // Make round an int (just in case it is passed on as a string)
         $round = $round * 1;
@@ -40,7 +40,7 @@ class Calculation
         }
 
         // Get all games.
-        $games = Game::all();
+        $games = Game::where('round_id', '<=', $round)->get();
         foreach($games as $game)
         {
             // decide the result for white and for black
@@ -61,9 +61,14 @@ class Calculation
                     // Set the new created Ranking as white_ranking again.
                     $white_ranking = Ranking::where('user_id', $game->white)->first();
                 }
-                
-                $white_score = $white_ranking->score;
-
+                if($white_ranking->score == 0)
+                {
+                    $white_score = $white_ranking->value + $white_ranking->score;
+                }
+                else
+                {
+                    $white_score = $white_ranking->score;
+                }
                 // We have multiple options for the Afwezigheid-results --> Black = Club, Black = Other or Black = Personal
                 if($game->black == "Club"){
                     
@@ -113,7 +118,7 @@ class Calculation
                     {}
                     else
                     {
-                    if($game->round_id < $round)
+                        if($game->round_id < $round)
                     {
                         $white_score += Config::Scoring("Other") * $white_ranking->LastValue;
                     }
@@ -142,7 +147,14 @@ class Calculation
                 $white_rating = User::where('id', $game->white)->first();
             
                 // Defaults; //69.05
-                $white_score = $white_ranking->score;
+                if($white_ranking->score == 0)
+                {
+                    $white_score = $white_ranking->value + $white_ranking->score;
+                }
+                else
+                {
+                    $white_score = $white_ranking->score;
+                }
                 if($game->black == "Bye")
                 {
                 
@@ -151,7 +163,14 @@ class Calculation
                 {
                     $black_ranking = Ranking::where('user_id', $game->black)->first();
                     $black_rating = User::where('id', $game->black)->first();
-                    $black_score = $black_ranking->score;
+                    if($black_ranking->score == 0)
+                    {
+                        $black_score = $black_ranking->value + $black_ranking->score;
+                    }
+                    else
+                    {
+                        $black_score = $black_ranking->score;
+                    }
                 }
               
                 // Calculate the new score for white and black for this game or all games?

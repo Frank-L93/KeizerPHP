@@ -33,7 +33,6 @@ class PushDemo extends Notification
         $this->message = $message;
         $this->title = $title;
         $this->type = $type;
-       
         if($this->type == "1")
         {
             $this->subject = "Update!";
@@ -63,7 +62,7 @@ class PushDemo extends Notification
             
             $this->title = "Nieuw wachtwoord";
             $this->subject = "Wachtwoordreset Intern De Pion!";
-            $this->message = "Je nieuwe wachtwoord voor https://interndepion.nl/ is: ".$pieces[0]." Om hiervan gebruik te maken, klik je op de link. Niet aangevraagd? Neem contact op met Frank.";
+            $this->message = "Je nieuwe wachtwoord voor https://interndepion.nl/ is: ".$pieces[0]."<br> Om hiervan gebruik te maken, klik je op de link. Niet aangevraagd? Neem contact op met Frank.";
             $this->Type_Text = "Activeer je nieuwe wachtwoord!";
             $this->Type_Action = "activation/".$pieces[1]."/".$title;
         }
