@@ -14,9 +14,30 @@ class Match
     public function InitPairing($players, $round)
     {
        $playerstopair = $players;
+       $players_to_pair_with_rating = Array(); 
        $round = $round;
        $init = 0;
        
+       // Check for player being an outliner in the bottom of the group
+       foreach($players as $player)
+       {
+           
+           $player_rating = User::where('id', $player["id"])->first();
+           array_push($players_to_pair_with_rating, ["player" => $player_rating->id, "rating" => $player_rating->rating]);
+       }
+
+       $last_player_to_pair = end($players_to_pair_with_rating);
+       $count_players_rated = count($players_to_pair_with_rating);
+       $non_last_player_to_pair = $players_to_pair_with_rating[$count_players_rated -2];
+       if($this->CheckIfOkToPairThisWay($last_player_to_pair["rating"], $non_last_player_to_pair["rating"]) == true)
+       {
+        $playerstopair = $this->moveElement($playerstopair, $count_players_rated-1, $count_players_rated - rand(2, $count_players_rated-1));
+       }
+       else
+       {
+        }
+      
+
        
        //Check even or odd amount of players
        if(count($playerstopair) % 2 == 0)
@@ -28,7 +49,29 @@ class Match
         $this->MatchGame($playerstopair, $round, $bye_necessary);
        
     }
-    
+    public function CheckIfOkToPairThisWay($a, $b)
+    {
+        $c = 0;
+        $math = rand(0,6);
+        if($a - $b > 500)
+        {
+            $c = ($a/100 - $b/100);
+        }
+        if($math + $c > 10)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public function moveElement(&$array, $a, $b) {
+        $out = array_splice($array, $a, 1);
+        array_splice($array, $b, 0, $out);
+       
+        return $array;
+    }
     public function MatchGame($playerstopair, $round, $bye_necessary) // matches players
     {
         $matches = Array();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Ranking;
+use App\Game;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 

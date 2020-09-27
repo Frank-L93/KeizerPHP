@@ -127,6 +127,7 @@ class PushDemo extends Notification
      */
     public function toMail($notifiable)
     { 
+        $other_message = 0;
         if($this->type == "1")
         {
             $data = Ranking::orderBy('score', 'desc')->orderBy('value', 'desc')->take(3)->get();
@@ -135,33 +136,50 @@ class PushDemo extends Notification
         {
           
             $game = Game::where('white', $notifiable->id)->orWhere('black', $notifiable->id)->latest()->first();
-            
-            $white = User::select('name')->where('id', $game->white)->first();
+            if(isset($game->white))
+            {
+                $white = User::select('name')->where('id', $game->white)->first();
           
-            if($game->black == "Bye" || $game->result == "Afwezigheid")
-            {
-                
-                $black = "Bye of Afwezigheid";
+                if($game->black == "Bye" || $game->result == "Afwezigheid")
+                {
+                    $black = "Bye of Afwezigheid";
+                }
+                else
+                {
+                    $black = User::select('name')->where('id', $game->black)->first();
+                    $black = $black->name;
+                }
+                $data = Array();
+                array_push($data, ["white" => $white->name, "black"=>$black]);
             }
-            else
-            {
-                $black = User::select('name')->where('id', $game->black)->first();
-                $black = $black->name;
+            else{
+                $other_message = 1;
+                $data = Array();
+                array_push($data, ["white" => "Geen partij voor jou", "black"=>"deze ronde"]);
             }
-            $data = Array();
-            array_push($data, ["white" => $white->name, "black"=>$black]);
-            
         }
         else{
             $data = "";
         }
+        if($other_message == 1)
+        {
+            return (new MailMessage)
+                    ->greeting($this->subject)
+                    ->subject('De Pion '.$this->title)
+                    ->line("Er zijn nieuwe partijen ingedeeld, maar geen voor jou.")
+                    ->action($this->Type_Text, url($this->Type_Action))
+                    ->markdown('vendor.notifications.email', ['data' => $data]);
+        }
+        else
+        {
         return (new MailMessage)
                     ->greeting($this->subject)
                     ->subject('De Pion '.$this->title)
                     ->line($this->message)
                     ->action($this->Type_Text, url($this->Type_Action))
                     ->markdown('vendor.notifications.email', ['data' => $data]);         
-    }
+                }
+        }
   
 
     /**

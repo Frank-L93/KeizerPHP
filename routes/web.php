@@ -28,6 +28,7 @@ Auth::routes();
 # User Group
 
 Route::resource('presences', 'PresencesController')->middleware('auth');
+Route::get('rankings/{player}', 'RankingsController@Details')->middleware('auth');
 Route::resource('rounds', 'RoundsController')->middleware('auth');
 Route::resource('rankings', 'RankingsController')->middleware('auth');
 Route::resource('games', 'GamesController')->middleware('auth');

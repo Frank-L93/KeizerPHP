@@ -20,7 +20,7 @@ class Calculation
 
     // We will give the function Calculate an inputvalue of a round, so we know which round is the latest round to be calculated.
 
-    public function Calculate($round) // 1
+    public function Calculate($round) // 3
     {
         // Make round an int (just in case it is passed on as a string)
         $round = $round * 1;
@@ -33,6 +33,7 @@ class Calculation
         
         foreach($rankings as $ranking)
         {
+            $ranking->score = 0;
             $ranking->amount = 0;
             $ranking->gamescore = 0;
             $ranking->ratop = 0;
@@ -40,7 +41,7 @@ class Calculation
         }
 
         // Get all games.
-        $games = Game::where('round_id', '<=', $round)->get();
+        $games = Game::where('round_id', '<=', $round)->get(); // Round 2 // Win of Joshua Round 1 & Afwezig in ronde 2
         foreach($games as $game)
         {
             // decide the result for white and for black
@@ -63,7 +64,7 @@ class Calculation
                 }
                 if($white_ranking->score == 0)
                 {
-                    $white_score = $white_ranking->value + $white_ranking->score;
+                    $white_score = $white_ranking->value; // value 60
                 }
                 else
                 {
@@ -74,7 +75,7 @@ class Calculation
                     
                     if($game->round_id < $round)
                     {
-                        $white_score += Config::Scoring("Club") * $white_ranking->LastValue;
+                        $white_score += Config::Scoring("Club") * $white_ranking->LastValue; //53*2/3
                     }
                     elseif($game->round_id > $round)
                     {
@@ -149,7 +150,7 @@ class Calculation
                 // Defaults; //69.05
                 if($white_ranking->score == 0)
                 {
-                    $white_score = $white_ranking->value + $white_ranking->score;
+                    $white_score = $white_ranking->value; // 60
                 }
                 else
                 {
@@ -165,7 +166,7 @@ class Calculation
                     $black_rating = User::where('id', $game->black)->first();
                     if($black_ranking->score == 0)
                     {
-                        $black_score = $black_ranking->value + $black_ranking->score;
+                        $black_score = $black_ranking->value;
                     }
                     else
                     {
@@ -194,7 +195,7 @@ class Calculation
                 {
                     if($game->round_id < $round)
                     {
-                        $white_score += $white_result * $black_ranking->LastValue;
+                        $white_score += $white_result * $black_ranking->LastValue;  //
                     }
                     elseif($game->round_id > $round)
                     {
@@ -202,7 +203,7 @@ class Calculation
                     }
                     else
                     {
-                        $white_score += $white_result * $black_ranking->value;
+                        $white_score += $white_result * $black_ranking->value; //58+60 = 118.05 + 59 = 178.1 + 28.5 = 205.65 
                     }
                     $white_ranking->amount = $white_ranking->amount + 1;
                     $black_ranking->amount = $black_ranking->amount + 1;

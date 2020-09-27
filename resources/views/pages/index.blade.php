@@ -98,6 +98,33 @@
                         </div>
             </div>
         </div>
+        @if($games->count() > 1)
+        <div class="card-body">
+            <table><thead><th>Wit</th><th>Zwart</th><th>Resultaat</th></thead>@foreach($games as $game)             
+                            @if($game->result !== "Afwezigheid")
+                                @if($round->round === $game->round_id)
+                                    <tr>
+                                        @foreach($users as $user)
+                                            @if($user->id === $game->white)
+                                                <td>{{$user->name}}</td>
+                                            @endif
+                                        @endforeach
+                                        @foreach($users as $user)
+                                            @if($user->id === intval($game->black))
+                                                <td>{{$user->name}}</td>
+                                            @endif 
+                                        @endforeach
+                                        @if($game->black === "Bye")
+                                            <td>Bye</td>
+                                        @endif
+                                        <td>{{$game->result}}</td>
+                                    </tr>
+                                @endif
+                            @endif
+                        @endforeach
+                                </table>
+        </div>
+        @endif
     </div>
     @endif
 @endsection

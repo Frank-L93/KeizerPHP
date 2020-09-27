@@ -65,11 +65,12 @@ class PagesController extends Controller
         $dashboard_rounds = $dashboard->RoundDashBoard();
         $dashboard_presences = $dashboard->PresenceDashBoard();
         $dashboard_absences = $dashboard->AbsenceDashBoard();
+        $users = User::all();
         $announcement = Config::select('announcement')->first();
         if($dashboard_rounds == "Geen rondes meer!"){
             return view('pages.index')->with('rounds', $dashboard_rounds)->with('config', $announcement);
         }
-        return view('pages.index')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences)->with('absences', $dashboard_absences)->with('config', $announcement);
+        return view('pages.index')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences)->with('absences', $dashboard_absences)->with('config', $announcement)->with('users', $users);
     }
     
     public function indexInstall(){
@@ -99,11 +100,12 @@ class PagesController extends Controller
         $dashboard_rounds = $dashboard->RoundDashBoard();
         $dashboard_presences = $dashboard->PresenceDashBoard();
         $dashboard_absences = $dashboard->AbsenceDashBoard();
+        $users = User::all();
         $announcement = Config::select('announcement')->first();
         if($dashboard_rounds == "Geen rondes meer!"){
             return view('pages.index')->with('rounds', $dashboard_rounds)->with('config', $announcement);
         }
-        return view('pages.index')->with('success', 'Installation gelukt')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences)->with('absences', $dashboard_absences)->with('config', $announcement);
+        return view('pages.index')->with('success', 'Installation gelukt')->with('games', $dashboard_games)->with('rounds', $dashboard_rounds)->with('presences', $dashboard_presences)->with('absences', $dashboard_absences)->with('config', $announcement)->with('users', $users);
     }
     
     public function about(){

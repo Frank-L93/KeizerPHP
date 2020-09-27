@@ -26,14 +26,18 @@
 @endforeach
 @endcomponent
 @elseif($actionUrl == url('/')."/games")
+@foreach($data as $game)
+@if($game['white'] == "Geen partij voor jou")
+@else
 Jouw partij is:
 @component('mail::table')
 |Wit|Zwart|
 |:----:|:----:|
-@foreach($data as $game)
 | {{$game['white']}} | {{$game['black']}} |
-@endforeach
 @endcomponent
+@endif
+@endforeach
+
 @endif
 {{-- Action Button --}}
 @isset($actionText)
