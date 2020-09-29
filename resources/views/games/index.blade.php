@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@inject('Details', 'App\Services\DetailsService')
 <div class="card text-black bg-light mb-3">
         <div class="card-header text-center">
             Partijen
@@ -39,12 +40,7 @@
                                         @endif
                                         <td>{{$game->result}}</td>
                                         @if(($game->white === auth()->user()->id) || (intval($game->black) === auth()->user()->id))
-                                     
-                                            @foreach($scores as $score)
-                                                @if($score['game'] === $game->id)
-                                                    <td>{{$score['score']}}</td>
-                                                @endif
-                                            @endforeach
+                                            <td>{{$Details->CurrentScore(auth()->user()->id, $round->id)}}</td>
                                         @endif
                                     </tr>
                                 @endif
@@ -74,13 +70,7 @@
                                          </td>
                                        
                                         @if(($game->white === auth()->user()->id) || (intval($game->black) === auth()->user()->id))
-                                        
-                                            @foreach($scores as $score)
-                                           
-                                                @if($score['game'] === $game->id)
-                                                    <td>{{$score['score']}}</td>
-                                                @endif
-                                            @endforeach
+                                            <td>{{$Details->CurrentScore(auth()->user()->id, $round->id)}}</td>
                                         @endif
                                     </tr>
                                 @endif
