@@ -36,14 +36,14 @@ class DetailsService
             return $PlayerName->name;
         }
     }
-
+    
     public function CurrentScore($player, $selectedRound)
     {
         // Get the Game;
         $game = Game::where([['white','=', $player],['round_id', '=', $selectedRound]])->orWhere([['black', '=', $player], ['round_id', '=', $selectedRound]])->first();
         // Get the current Round to determine if round game round is earlier.
         $currentRound = Round::where('processed', '=', 1)->latest('updated_at')->first();
-        $round = $currentRound->round + 1;
+        $round = $currentRound->round;
         
         // Set score to 0;
         $score = 0;
@@ -59,23 +59,23 @@ class DetailsService
             // Club
             if($game->black == "Club")
             {
-                if($game->round < $round)
+                if($game->round_id < $round)
+                {
+                    $white_score = Config::Scoring("Club") * $white_ranking->LastValue2;
+                }
+                else
                 {
                     $white_score = Config::Scoring("Club") * $white_ranking->LastValue;
                 }
-                else
-                {
-                    $white_score = Config::Scoring("Club") * $white_ranking->value;
-                }
             }
             elseif($game->black == "Personal"){
-                if($game->round < $round)
+                if($game->round_id < $round)
                 {
-                   $white_score = Config::Scoring("Personal") * $white_ranking->LastValue;
+                   $white_score = Config::Scoring("Personal") * $white_ranking->LastValue2;
                 }
                 else
                 {
-                    $white_score = Config::Scoring("Personal") * $white_ranking->value;
+                    $white_score = Config::Scoring("Personal") * $white_ranking->LastValue;
                 }
             }
             else{
@@ -97,11 +97,11 @@ class DetailsService
                 {
                     if($game->round_id < $round)
                     {
-                        $white_score = Config::Scoring("Other") * $white_ranking->LastValue;
+                        $white_score = Config::Scoring("Other") * $white_ranking->LastValue2;
                     }
                     else
                     {
-                        $white_score = Config::Scoring("Other") * $white_ranking->value;
+                        $white_score = Config::Scoring("Other") * $white_ranking->LastValue;
                     }
                 }
             }
@@ -133,25 +133,25 @@ class DetailsService
                 // Calculate the new score for white and black for this game or all games?
                 if($game->black == "Bye")
                 {   
-                    if($game->round < $round)
+                    if($game->round_id < $round)
                     {
-                        $white_score = Config::Scoring("Bye") * $white_ranking->LastValue;
+                        $white_score = Config::Scoring("Bye") * $white_ranking->LastValue2;
                     }
                     else
                     {
-                        $white_score = Config::Scoring("Other") * $white_ranking->value;
+                        $white_score = Config::Scoring("Other") * $white_ranking->LastValue;
                     }
                     $white_score += 0.05;
                 }
                 elseif($white_result == 1)
                 {
-                    if($game->round < $round)
+                    if($game->round_id < $round)
                     {
-                        $white_score = $white_result * $black_ranking->LastValue;
+                        $white_score = $white_result * $black_ranking->LastValue2;
                     }
                     else
                     {
-                        $white_score = $white_result * $black_ranking->value;
+                        $white_score = $white_result * $black_ranking->LastValue;
                     }
                     $white_score += 0.05;
                     $black_score += 0.05;
@@ -159,28 +159,30 @@ class DetailsService
                 }
                 elseif($white_result == 0.5)
                 {   //69.05 += 0.5 * 69 = 69.05 + 34.5 = 103.60
-                    if($game->round < $round)
+                    
+                    if($game->round_id < $round)
                     {
-                        $white_score = $white_result * $black_ranking->LastValue;
-                        $black_score = $black_result * $white_ranking->LastValue;
+                        $white_score = $white_result * $black_ranking->LastValue2;
+                        $black_score = $black_result * $white_ranking->LastValue2;
                     }
                     else
                     {
-                        $white_score = $white_result * $black_ranking->value;
-                        $black_score = $black_result * $white_ranking->value;
+                        $white_score = $white_result * $black_ranking->LastValue;
+                        $black_score = $black_result * $white_ranking->LastValue;
                     }
                     $white_score += 0.05;
                     $black_score += 0.05;
                 }
                 elseif($black_result == 1)
                 {
-                    if($game->round < $round)
+                    
+                    if($game->round_id < $round)
                     {
-                        $black_score = $black_result * $white_ranking->LastValue;
+                        $black_score = $black_result * $white_ranking->LastValue2;
                     }
                     else
                     {
-                        $black_score = $black_result * $white_ranking->value;
+                        $black_score = $black_result * $white_ranking->LastValue;
                     }
                     $black_score += 0.05;
                     $white_score += 0.05;
