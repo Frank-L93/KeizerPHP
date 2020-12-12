@@ -35,11 +35,12 @@
 </ol>
 
 
-## About Laravel
+## About KeizerPHP & Laravel
 
 Laravel is a web application framework with expressive, elegant syntax.
 KeizerPHP is now based on a 7.x version of Laravel. Begin 2021, KeizerPHP 2.0 will be released based on Laravel 8.x. 
 
-## License
+## License of KeizerPHP & Laravel
 
+The KeizerPHP License can be found in the LICENSE file
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
