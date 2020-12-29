@@ -4,21 +4,31 @@ return [
     'about' =>
     [
         'header' => 'Over',
-        'body' => 'Een Keizerlijke Competitie, mede mogelijk gemaakt door:<br>
-        <ul>
-        <li>Laravel
-            <ul>
-            <li>Web Push Notifications</li>
-            <li>Notification Channels</li>
-            <li>Maatwebsite Excel</li>
-            </ul>
-        </li>
-        <li>Bootstrap</li>
-        </ul>
-        <p>Er wordt getracht zo min mogelijk persoonlijke gegevens te verzamelen om de applicatie te laten functioneren. <br>
-        Logischerwijs is er een database met enkele persoonlijke gegevens aanwezig. Er wordt zorg voor gedragen deze gegevens zo goed mogelijk te beschermen.</p>
-        
-        <small>Versie 1-2020 - Copyright Frank Lambregts</small>',
+        'privacyT' => 'Privacy',
+        'privacyCardTitle' => 'Jouw Privacy',
+        'privacyContent' => 'Wij waarderen jouw privacy enorm. Daarom proberen we zo min mogelijk jou te volgen. Uiteraard hebben we wel wat informatie over jou nodig. Zoals je naam en je e-mailadres. Ook slaan we je rating en KNSB of FIDE-nummer op om je TPR te berekenen en je club de mogelijkheid te geven een volledige competitie te beheren. We gebruiken daarnaast alleen essentiële cookies zodat je ingelogd blijft tijdens je browsersessie.',
+    'sourceCardTitle' => 'Broncode',
+    'sourceContent' => 'We maken ook alleen gebruik van zogenoemde Open Source pakketten om toffe functionaliteit toe te voegen zoals de notificaties. Bovendien kan iedereen de broncode van KeizerPHP bekijken. Heb je desalniettemin het gevoel dat je privacy in het geding is, neem dan alsjeblieft contact op met Frank Lambregts<br><a href="https://github.com/Frank-L93/KeizerPHP"><img src="assets/GitHub_Logo.png" alt="GitHub" width="30%" height="30%"></a>',
+        'helpT' => 'Help',
+        'helpCardTitle' => 'Handleiding',
+        'helpContent' => 'Hier komt binnenkort een help link.',
+        'builtT' => 'Gemaakt Met',
+        'laravel' => 'Geprogrammeerd met <i class="fas fa-heart"></i> in <a href="https://laravel.com"><img src="assets/laravel.svg" alt="laravel"></a>',
+        'livewire'=>'Interactief gemaakt met <i class="fas fa-heart"></i> in <ul><li><a href="https://github.com/alpinejs/alpine">AlpineJS</a></li><li><a href="https://github.com/livewire/livewire">LiveWire</a></li><li><a href="https://github.com/turbolinks/turbolinks">TurboLinks</a></li></ul>',
+
+'tailwind' => 'Opgemaakt met <i class="fas fa-heart"></i> door middel van
+        <a href="https://tailwindcss.com"><img src="assets/tailwind.svg" alt="tailwind"></a>',
+        'jetbrains' =>'Gebouwd met <i class="fas fa-heart"></i> in <a href="https://www.jetbrains.com/?from=KeizerPHP"><img src="assets/jetbrains.svg" alt="jetbrains"></a>',
+       'copyright' => '<small>Versie 2-2021 - Copyright Frank Lambregts</small>',
+    ],
+    'front' => [
+        'intro' => 'Met KeizerPHP kun je als vereniging eenvoudig een Keizercompetitie organiseren via het internet. Je hebt geen speciaal softwareprogramma nodig. <br>Het is aanmelden en gaan! De layout is bovendien geheel mobielvriendelijk!',
+        'intro2' => 'De competitieleider van je vereniging registreert zichzelf en verzorgt de eerste instellingen. Leden van je vereniging hoeven alleen maar in te loggen met de door de competitieleider aangemaakte accounts.',
+        'intro3' => 'Demo <i class="fas fa-desktop"></i> & Handleiding <i class="fab fa-wpexplorer"></i>',
+        'button' => 'WIJ WILLEN HIER GEBRUIK VAN MAKEN!',
+    ],
+    'error'=>[
+        'auth' => 'Je bent niet bevoegd voor deze pagina.',
     ],
     'index' =>
     [
@@ -29,12 +39,14 @@ return [
         'rankings' => 'Ranglijst',
         'games' => 'Partijen',
         'settings' => 'Instellingen',
-        'link' => 'De Pion',
+        'link' => config('app.name', 'KeizerPHP'),
         'admin' => 'Admin',
         'no_rounds' => 'Er zijn geen rondes meer',
+        'helpno_rounds' => 'Zie je geen rondes meer? Geen zorgen, de competitieleider moet gewoon nieuwe rondes plannen. Het dashboard is dan weer gloednieuw.',
+        'adminAnnouncement' => 'Als admin kun je bovenstaand bericht aanpassen in het Admin-panel',
         'dashboard' => 'Dashboard van',
         'today' => 'VANDAAG',
-        'absent_dashboard' => 'Gemelde afwezigheden',
+        'absent_dashboard' => 'Afwezigheden',
         'present' => 'Aanwezig',
     ],
     'main' =>
@@ -44,5 +56,80 @@ return [
         'Game' => 'Partij',
         'round' => 'ronde',
         'game' => 'partij',
+    ],
+    'settings' =>
+    [
+        'header' => 'Instellingen',
+        'button' => 'Bevestig',
+        'password' => 'Wachtwoord',
+        'currentPassword' => 'Huidig Wachtwoord',
+        'newPassword' => 'Nieuw Wachtwoord',
+        'newPassword2' => 'Bevestig Nieuw Wachtwoord',
+        'email' => 'E-mailadres',
+        'preferences' => 'Voorkeuren',
+        'games' => 'Partijen',
+        'ownGames' => 'Toon alleen mijn eigen partijen',
+        'allGames' => 'Toon alle partijen',
+        'ranking' => 'Stand',
+        'fullRanking' => 'Uitgebreide stand',
+        'notfullRanking' => 'Beknopte stand',
+        'notifications' => 'Notificaties',
+        'rss' => 'RSS-Feed',
+        'norss' => 'Geen RSS-Feed',
+        'yesrss' => 'RSS-Feed Aan',
+        'rsslink' => 'RSS-Feed Link',
+        'layout' => 'Layout',
+        'standard' => 'Standaard',
+        'blue' => 'Blauw',
+        'language' => 'Taal',
+        'nl' => 'Nederlands',
+        'en' => 'Engels',
+        'noNotifications' => 'Geen Notificaties',
+        'notificationsMS' => 'Via e-mail en site',
+        'notificationsMPS' => 'Via e-mail, Push Notificaties en site',
+        'notificationsPS'=>'Via Push Notificaties en site',
+        'notificationsSMS' => 'Via SMS (wordt aangewerkt) en site',
+        'notificationsSite' => 'Via site alleen',
+
+    ],
+    'presences' =>[
+        'header' => 'Aanwezigheden',
+        'headerLink' => 'Voeg toe',
+        'name' => 'Naam',
+        'round' => 'Ronde',
+        'presence' => 'Aanwezigheid',
+        'absent' => 'Afwezig',
+        'present' => 'Aanwezig',
+        'reason' => 'Reden',
+        'reasonReq' => 'Je moet een reden opgeven als je je wilt afmelden.',
+        'other' => 'Afwezig met bericht',
+        'club' => 'Afwezig i.v.m. clubactiviteit',
+        'personal' => 'Afwezig door persoonlijke omstandigheid (bijvoorbeeld ziekte)',
+        'labelPresent' => 'Aanwezigheid - Je bent momenteel afwezig',
+        'back' => 'Ga Terug',
+        'process' => 'Verwerken',
+        'processExplain' => 'We verwerken je verzoek! Je zult zo teruggestuurd worden naar je overzicht.',
+        'error' => 'FOUT',
+        'errorExplain' => 'Er gaat iets mis!',
+        'success' => 'Afwezigheid succesvol doorgegeven!',
+        'success2' => 'Aanwezigheid succesvol doorgegeven!',
+        'LateAbsent' => 'Je was al ingedeeld voor deze ronde. We hebben de admin op de hoogte gebracht.',
+        'errorGame' => 'Vreemd genoeg had je al een partij voor deze ronde...',
+    ],
+    'register' => [
+      'name' => 'Naam van de vereniging',
+      'person' => 'Contactpersoon',
+      'mail' => 'E-mail',
+      'password' => 'Wachtwoord',
+      'id' => 'KNSB-nummer van Contactpersoon',
+      'rating' => 'Rating',
+        'button' => 'Registreer vereniging',
+    ],
+    'dashboard' =>
+    [
+        'introTitle' => 'Wat nu?',
+        'intro' => 'Allereerst, dankjewel voor het kiezen van KeizerPHP. Je bent nu voor de eerste maal ingelogd als competitieleider. Dat betekent dat er nog wat instellingen en acties uitgevoerd moeten worden. De volgende objecten zul je moeten aanmaken: <ul class="list-disc py-2 px-4 text-gray-600 dark:text-gray-400"><li>Gebruikers</li><li>Rondes</li><li>Aanwezigheden</li><li>Ranglijst</li></ul> <p class="text-gray-600 dark:text-gray-400">Klinkt lastig, is het niet! Je kunt boven in het scherm naar je persoonlijk menu gaan, daar kun je vervolgens kiezen voor het Admin-panel. De rest volgt zich vanzelf.</p>',
+        'helpTitle' => 'Help',
+        'help' => 'Kom je er niet uit? Dan kun je altijd een handleiding bekijken en bij sommige pagina\'s zie je ook een help-icoon voor extra uitleg. Goed om te weten is wellicht dat deze twee boxen bij de volgende login niet meer getoond worden! Je kunt de handleiding ook terugvinden bij <i>Over</i>',
     ]
 ];

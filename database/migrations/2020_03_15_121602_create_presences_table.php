@@ -18,6 +18,7 @@ class CreatePresencesTable extends Migration
             $table->integer('user_id');
             $table->integer('round');
             $table->integer('presence');
+            $table->integer('club_id')->nullable();
             $table->timestamps();
         });
     }

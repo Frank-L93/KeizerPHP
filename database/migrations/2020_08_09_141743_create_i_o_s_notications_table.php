@@ -20,6 +20,7 @@ class CreateIOSNoticationsTable extends Migration
             $table->string('summary');
             $table->string('link');
             $table->string('author');
+            $table->integer('club_id')->nullable();
             $table->timestamps();
         });
     }

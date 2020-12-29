@@ -1,5 +1,4 @@
 <?php
-use App\Config;
 
 return [
 
@@ -40,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -68,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'Europe/Amsterdam',
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -81,8 +80,9 @@ return [
     |
     */
 
-    'locale' => 'nl',
-
+    'locale' => 'en',
+    'layout' => 'app',
+    'notifications' => '0',
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -166,8 +166,7 @@ return [
         /*
          * Package Service Providers...
          */
-        NotificationChannels\WebPush\WebPushServiceProvider::class,
-    
+
         /*
          * Application Service Providers...
          */
@@ -176,6 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
     ],
 
     /*

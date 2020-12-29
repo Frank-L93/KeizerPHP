@@ -19,6 +19,7 @@ class CreateGamesTable extends Migration
             $table->string('black');
             $table->string('result');
             $table->integer('round_id');
+            $table->integer('club_id')->nullable();
             $table->timestamps();
         });
     }

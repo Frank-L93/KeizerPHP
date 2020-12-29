@@ -18,6 +18,7 @@ class CreateNotificationsTable extends Migration
             $table->string('type');
             $table->morphs('notifiable');
             $table->text('data');
+            $table->integer('club_id')->nullable();
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
         });

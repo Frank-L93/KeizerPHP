@@ -32,6 +32,7 @@ class CreateConfigsTable extends Migration
             $table->text('announcement')->nullable();
             $table->integer('AbsenceMax');
             $table->integer('SeasonPart');
+            $table->integer('club_id')->nullable();
         });
     }
 

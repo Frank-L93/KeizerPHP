@@ -17,6 +17,7 @@ class CreateTPRHelperTable extends Migration
             $table->id();
             $table->float('p');
             $table->integer('dp');
+            $table->integer('club_id')->nullable();
             $table->timestamps();
         });
     }

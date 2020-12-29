@@ -1,7 +1,22 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Livewire\Auth\Login;
+use App\Http\Livewire\Auth\Passwords\Confirm;
+use App\Http\Livewire\Auth\Passwords\Email;
+use App\Http\Livewire\Auth\Passwords\Reset;
+use App\Http\Livewire\Auth\Register;
+use App\Http\Livewire\Auth\Verify;
 use Illuminate\Support\Facades\Route;
-use App\User;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ClubController;
+use App\Http\Middleware\SettingsMiddleware;
+use App\Http\Livewire\Auth\Settings;
+use App\Http\Livewire\Presences;
+use App\Http\Livewire\PresencesEdit;
+use App\Http\Livewire\PresencesCreate;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,141 +29,44 @@ use App\User;
 |
 */
 
-Route::get('/', 'PagesController@index');
-Route::get('/home', 'PagesController@index');
-Route::get('/installed', 'PagesController@indexInstall')->name('installed');
-Route::get('/about', 'PagesController@about');
-Route::get('/privacy', 'PagesController@privacy');
-Route::get('/password', 'ActivationController@index')->name('activation');
-Route::post('/activation', 'ActivationController@send')->name('sendActivation');
-Route::get('/activation/{activate}/{email}', 'ActivationController@activate');
-Route::post('/activation_manually', 'ActivationController@activate_man')->name('postActivation');
-Auth::routes();
-
-# User Group
-
-Route::resource('presences', 'PresencesController')->middleware('auth');
-Route::get('rankings/{player}', 'RankingsController@Details')->middleware('auth');
-Route::resource('rounds', 'RoundsController')->middleware('auth');
-Route::resource('rankings', 'RankingsController')->middleware('auth');
-Route::resource('games', 'GamesController')->middleware('auth');
-Route::resource('settings', 'SettingsController')->middleware('auth');
-Route::post('/changePassword','SettingsController@ChangePassword')->name('changePassword')->middleware('auth');
-Route::post('/changeEmail', 'SettingsController@ChangeEmail')->name('changeEmail')->middleware('auth');
-Route::get('notifications', 'NotificationsController@read')->name('readNotifications')->middleware('auth');
-
-# End User Group
-
-# Admin Group
-
-// Administrator-pages (gets)
-Route::get('/Admin', 'AdminController@admin')->middleware('admin')->name('Admin');
-Route::get('/Admin/Rounds', 'AdminController@RoundsIndex')->middleware('admin');
-Route::get('/Admin/Rounds/create', 'AdminController@RoundsCreate')->middleware('admin');
-Route::get('/Admin/Presences', 'AdminController@presences')->middleware('admin');
-Route::get('/Admin/Presences/create', 'AdminController@InitPresences')->middleware('admin');
-Route::get('/Admin/RankingList', 'AdminController@RankingList')->middleware('admin');
-Route::get('/Admin/RankingList/{Round}/calculate', 'AdminController@InitCalculation')->middleware('admin');
-Route::get('/Admin/RankingList/create', 'AdminController@InitRanking')->middleware('admin');
-Route::get('/Admin/RatingList', 'AdminController@RatingList')->middleware('admin');
-Route::get('/Admin/Reset', 'AdminController@ResetSeason')->middleware('admin');
-Route::get('/Admin/Match/{Round}', 'AdminController@FillArrayPlayers')->middleware('admin');
-Route::get('/Admin/Games', 'AdminController@games')->middleware('admin');
-Route::get('/Admin/{Game}/Games', 'AdminController@game')->middleware('admin');
-Route::get('/Admin/users/list', 'AdminController@List')->middleware('admin');
-Route::get('/Admin/users/list2', 'AdminController@List2')->middleware('admin');
-Route::get('/Admin/Game/Add/{Round}', 'AdminController@AddGame')->middleware('admin');
-Route::get('/Admin/Presence/Add', 'AdminController@AddPresence')->middleware('admin');
-Route::get('/Admin/RankingList/add', 'AdminController@AddRanking')->middleware('admin');
-
-// Administrator-pages (posts)
-Route::post('/Admin/LoadRatings', 'AdminController@loadRatings')->name('import_process')->middleware('admin');
-Route::post('/Admin/LoadRounds', 'AdminController@loadRounds')->name('import_process_rounds')->middleware('admin');
-Route::post('/Admin/Rounds/create', 'AdminController@RoundStore')->middleware('admin');
-Route::post('/Admin/Games/update', 'AdminController@UpdateGame')->middleware('admin');
-Route::post('/Admin/Users/update', 'AdminController@UpdateUser')->middleware('admin');
-Route::post('/Admin/Config', 'AdminController@Config')->middleware('admin');
-Route::post('/Admin/Game/create', 'AdminController@storeGame')->middleware('admin');
-Route::post('/Admin/Presence/create', 'AdminController@storePresence')->middleware('admin');
-Route::post('/Admin/Ranking/create', 'AdminController@storeRanking')->middleware('admin');
-
-// Administrator-pages (deletes)
-Route::delete('/Admin/{Presence}/Presences', 'AdminController@DestroyPresences')->middleware('admin');
-Route::delete('/Admin/{User}/User', 'AdminController@DestroyUser')->middleware('admin');
-Route::delete('/Admin/{Game}/Games', 'AdminController@DestroyGames')->middleware('admin');
-Route::delete('/Admin/{Round}/Rounds', 'AdminController@DestroyRounds')->middleware('admin');
-
-# End Admin Group
-
-# Web-Push #
-Route::post('/push','PushController@store');
-Route::get('/push','PushController@push')->name('push');
-
-# RSS Feed #
-Route::get('/feed/{API_Token}', 'iOSNotificationsController@getFeedItems');
-
-Route::get('/sendNotification', 'AdminController@SendNotification')->middleware('admin');
-
-Route::group(['prefix' => 'install', 'as' => 'LaravelInstaller::', 'middleware' => ['web', 'install']], function () {
-    Route::get('/', [
-        'as' => 'welcome',
-        'uses' => 'WelcomeController@welcome',
-    ]);
-
-    Route::get('environment', [
-        'as' => 'environment',
-        'uses' => 'EnvironmentController@environmentMenu',
-    ]);
-
-    Route::get('environment/wizard', [
-        'as' => 'environmentWizard',
-        'uses' => 'EnvironmentController@environmentWizard',
-    ]);
-
-    Route::post('environment/saveWizard', [
-        'as' => 'environmentSaveWizard',
-        'uses' => 'EnvironmentController@saveWizard',
-    ]);
-
-    Route::get('requirements', [
-        'as' => 'requirements',
-        'uses' => 'RequirementsController@requirements',
-    ]);
-
-    Route::get('permissions', [
-        'as' => 'permissions',
-        'uses' => 'PermissionsController@permissions',
-    ]);
-
-    Route::get('install/database', [
-        'as' => 'database',
-        'uses' => 'DatabaseController@database',
-    ]);
-
-    Route::get('final', [
-        'as' => 'final',
-        'uses' => 'FinalController@finish',
-    ]);
-
-    Route::get('admin', [
-        'as' => 'admin',
-        'uses' => 'ConfigurationController@admin',
-    ]);
-    
-    Route::post('registerAdmin',
-    [
-        'as' => 'registerAdmin',
-        'uses' => 'ConfigurationController@registerAdmin',
-    ]);
-
-    Route::get('configs', [
-        'as' => 'configs',
-        'uses' => 'ConfigurationController@configs',
-    ]);
-
-    Route::post('saveConfigs',
-    [
-        'as' => 'saveConfigs',
-        'uses' => 'ConfigurationController@saveConfigs',
-    ]);
+Route::middleware([\App\Http\Middleware\Language::class])->group(function()
+{
+    Route::get('/', [Controller::class, 'index'])->name('home');
+Route::middleware([SettingsMiddleware::class])->group(function () {
+    // All through settings so the settings are get.
+    Route::get('/dashboard', [Controller::class, 'dashboard'])->name('dashboard')->middleware('auth');
+    Route::get('/about', [Controller::class, 'about'])->name('about');
+    Route::get('/settings', Settings::class)->name('settings')->middleware('auth');
+    Route::get('/presences', Presences::class)->name('presences')->middleware('auth');
+    Route::get('/presences/edit/{presenceID}/{action}', PresencesEdit::class)->name('presencesEdit')->middleware('auth');
+    Route::get('/presences/create', PresencesCreate::class)->name('presencesCreate')->middleware('auth');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
 });
+
+
+Route::middleware('guest')->group(function () {
+
+    Route::get('login', Login::class)
+        ->name('login');
+    Route::get('register', Register::class)
+        ->name('register');
+    Route::get('register/club', [Controller::class, 'clubRegister'])->name('clubRegister');
+    Route::post('register/club', [ClubController::class, 'registerClub'])->name('registerClub');
+});
+
+
+Route::get('password/reset', Email::class)
+    ->name('password.request');
+
+Route::get('password/reset/{token}', Reset::class)
+    ->name('password.reset');
+
+
+Route::middleware('auth')->group(function () {
+    Route::post('logout', LogoutController::class)
+        ->name('logout');
+
+});
+});
+Route::get('/lang/{lang}', [\App\Http\Controllers\ChangeLang::class, 'change_lang']);
+

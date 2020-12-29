@@ -4,21 +4,31 @@ return [
     'about' =>
     [
         'header' => 'About',
-        'body' => 'A Kaiser Competition, supported by:<br>
-        <ul>
-        <li>Laravel
-            <ul>
-            <li>Web Push Notifications</li>
-            <li>Notification Channels</li>
-            <li>Maatwebsite Excel</li>
-            </ul>
-        </li>
-        <li>Bootstrap</li>
-        </ul>
-        <p>We try to collect as less personal data as posisble while keeping the application functionable. <br>
-        Of course there is a database with a couple of personal data, but we protect this with our best abilities.</p>
-        
-        <small>Version 1-2020 - Copyright Frank Lambregts</small>',
+        'privacyT' => 'Privacy',
+        'privacyCardTitle' => 'Your Privacy',
+        'privacyContent' => 'We value your privacy very much. Therefore we try to keep tracking you to a minimum. Of course we need some information about you, like your name and your email. Also your rating and KNSB or FIDE-id is saved in order to keep track of your rating performance and making it possible for your club  to manage a competition. Only essential cookies are used in order to help you stayed logged in during your browser session.',
+        'sourceCardTitle' => 'Open Source',
+        'sourceContent' => 'We also only use open source packages for some cool stuff like our notifications. And on top of that, KeizerPHP is also open source. In case you think that we violate your privacy, please feel free to contact Frank Lambregts<br><a href="https://github.com/Frank-L93/KeizerPHP"><img src="assets/GitHub_Logo.png" width="30%" height="30%" alt="GitHub"></a>',
+        'helpT' => 'Help',
+        'helpCardTitle' => 'Manual',
+        'helpContent' => 'Here a link to a help document will come.',
+        'builtT' => 'Built With',
+        'laravel' => 'Coded with <i class="fas fa-heart"></i> in <a href="https://laravel.com"><img src="assets/laravel.svg" alt="laravel"></a>',
+        'livewire' => 'Interactive with <i class="fas fa-heart"></i> in <ul><li><a href="https://github.com/alpinejs/alpine">AlpineJS</a></li><li><a href="https://github.com/livewire/livewire">LiveWire</a></li><li><a href="https://github.com/turbolinks/turbolinks">TurboLinks</a></li></ul>',
+        'tailwind'=>'Designed with <i class="fas fa-heart"></i> with the use of
+        <img src="assets/tailwind.svg" alt="tailwind">',
+        'jetbrains' =>'Crafted with <i class="fas fa-heart"></i> in <a href="https://www.jetbrains.com/?from=KeizerPHP"><img src="assets/jetbrains.svg" alt="jetbrains"></a>',
+        'copyright' => '<small>Version 2-2021 - Copyright Frank Lambregts</small>',
+    ],
+    'front' => [
+        'intro' => 'Easily manage your Kaiser competition with KeizerPHP online. No special software is necessary.<br> Just sign up & go! The layout is even mobile-friendly.',
+        'intro2' => 'The competition leader of your club registers himself and set ups the competition. Members of the club only have to login with the account created by the competition leader.',
+        'intro3' => 'Demo <i class="fas fa-desktop"></i> & Manual <i class="fab fa-wpexplorer"></i>',
+        'button' => 'WE WANT TO USE THIS!',
+    ],
+    'error'=>
+    [
+        'auth'=>'You do not have permission for this action!',
     ],
     'index' =>
     [
@@ -29,9 +39,11 @@ return [
         'rankings' => 'Rankings',
         'games' => 'Games',
         'settings' => 'Settings',
-        'link' => 'De Pion',
+        'link' => config('app.name', 'KeizerPHP'),
         'admin' => 'Admin',
         'no_rounds' => 'No more rounds',
+        'helpno_rounds' => 'Seeing no more rounds? Don\'t worry, the competition leader just needs to plan new rounds. The dashboard will then be brand new!',
+        'adminAnnouncement' => 'As admin you can configure the above message in the Admin-panel',
         'dashboard' => 'Dashboard of',
         'today' => 'TODAY',
         'absent_dashboard' => 'Absences',
@@ -44,5 +56,79 @@ return [
         'Game' => 'Game',
         'round' => 'round',
         'game' => 'game',
-    ]
+    ],
+    'settings' =>
+    [
+        'header' => 'Settings',
+        'button' => 'Confirm',
+        'password' => 'Password',
+        'currentPassword' => 'Current Password',
+        'newPassword' => 'New Password',
+        'newPassword2' => 'Confirm New Password',
+        'email' => 'E-mail Address',
+        'preferences' => 'Preferences',
+        'games' => 'Games',
+        'ownGames' => 'Show only own games',
+        'allGames' => 'Show all games',
+        'ranking' => 'Ranking',
+        'fullRanking' => 'All details',
+        'notfullRanking' => 'Not all details',
+        'notifications' => 'Notifications',
+        'rss' => 'RSS-Feed',
+        'norss' => 'No RSS-Feed',
+        'yesrss' => 'RSS-Feed Enabled',
+        'rsslink' => 'RSS-Feed Link',
+        'layout' => 'Layout',
+        'standard' => 'Standard',
+        'blue' => 'Blue',
+        'language' => 'Language',
+        'nl' => 'Dutch',
+        'en' => 'English',
+         'noNotifications' => 'No notifications',
+        'notificationsMS' => 'Via e-mail and website',
+        'notificationsMPS' => 'Via e-mail, Push Notifications and website',
+        'notificationsPS'=>'Via Push Notifications and website',
+        'notificationsSMS' => 'Via text message (under construction) & website',
+        'notificationsSite' => 'Via website only',
+    ],
+    'presences' =>[
+        'header' => 'Presences',
+        'headerLink' => 'Add new',
+        'name' => 'Name',
+        'round' => 'Round',
+        'presence' => 'Presence',
+        'absent' => 'Absent',
+        'present' => 'Present',
+        'reason' => 'Reason',
+        'other' => 'Absent with message',
+        'club' => 'Absent due to club duties',
+        'reasonReq' => 'When setting an absence, a reason is required!',
+        'personal' => 'Absent due to personal reasons (i.e. illness)',
+        'labelPresent' => 'Presence - You are currently absent',
+        'back' => 'Go Back',
+        'process' => 'Processing',
+        'processExplain' => 'We are processing your request! You will be returned to the Presence List soon.',
+        'error' => 'ERROR',
+        'errorExplain' => 'Something is going wrong!',
+        'success' => 'Absence successfully committed!',
+        'success2' => 'Presence successfully committed!',
+        'LateAbsent' => 'You are already paired for this round, the admin is notified for your request.',
+        'errorGame' => 'Strange you are absence for this round as you already have a game for this round...',
+    ],
+    'register' => [
+        'name' => 'Name of the club',
+        'person' => 'Contact person',
+        'mail' => 'E-mail',
+        'password' => 'Password',
+        'id' => 'FIDE ID of Contact person',
+        'rating' => 'Rating',
+        'button' => 'Register club',
+    ],
+    'dashboard' =>
+        [
+            'introTitle' => 'Wat nu?',
+            'intro' => 'First of all, thank you for choosing KeizerPHP. You are now logged in for the first time as competition leader. That means you will need to set up a competition for the first time and therefore need to perform some actions. The following objects should be created: <ul class="list-disc py-2 px-4 text-gray-600 dark:text-gray-400"><li>Users</li><li>Rounds</li><li>Presences</li><li>Ranking</li></ul> <p class="text-gray-600 dark:text-gray-400">Seems hard? Don\'t worry it is easy! You can navigate to the Admin-panel through your personal menu in the top of the screen. From there, just follow the steps.</p>',
+            'helpTitle' => 'Help',
+            'help' => 'Still struggling? Look up the manual and at some pages a help button is available for extra explanation. Good to know is that those two boxes will disappear at the next login! You can find the manual at all times at the <i>About</i> page.',
+        ]
 ];

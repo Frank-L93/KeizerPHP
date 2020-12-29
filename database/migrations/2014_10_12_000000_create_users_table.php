@@ -21,11 +21,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->integer('knsb_id');
             $table->integer('rechten')->nullable();
+            $table->integer('club_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->double('rating');
             $table->integer('beschikbaar');
-            $table->text('settings')->nullable();
+            $table->integer('firsttimelogin')->nullable();
             $table->integer('active')->nullable();
             $table->string('activate');
         });

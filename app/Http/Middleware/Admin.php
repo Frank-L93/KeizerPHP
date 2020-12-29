@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Support\Facades\Auth;
 use Closure;
-use App\Config;
+use Illuminate\Http\Request;
+use App\Models\Config;
+use Illuminate\Support\Facades\Auth;
 
 class Admin
 {
@@ -15,19 +16,10 @@ class Admin
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
-        if(Auth::check())
-        {
-            $admin = Config::select('Admin')->first();
-            if (Auth::user()->id !== $admin->Admin) {
-                return redirect('/')->with('error', 'Je bent geen Administrator!');
-            }
+            dd(auth()->user());
             return $next($request);
-        }
-        else
-        {
-            return redirect('/')->with('error', 'Je bent niet ingelogd!');
-        }
+
     }
 }
