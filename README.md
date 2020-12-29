@@ -1,60 +1,46 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+This is the branch to work on for KeizerPHP 2.0 - Laravel 8.x version
+Changes to Laravel 8.X, Use of Tailwind instead of Bootstrap and AlpineJS or VueJS
+## About KeizerPHP
+<p>This project is made with the Laravel Framework. All rights reserved to the third party vendor packages that make this work.</p>
+<p>KeizerPHP is an implementation of Systeem Keizer that is used by chess clubs to pair their internal competition. I try to provide an web-based, open-source alternative for software like Sevilla (JBF) as I missed this.</p>
+<p>It is just a hobby project, so if things are broken or if you think things can be better. Please do so. The first version that is now available has loads of features that come in handy:</p>
+<ol>
+<li> User-system (mass creation of users by uploading a ratinglist or single creation of users by the Administrator)</li>
+<li> Users can configure their own personal settings</li>
+<li> Password Forget option</li>
+<li> Competition Configs, easy to manage</li>
+<li> Dashboard with information about the upcoming round</li>
+<li> Easy to create rounds</li>
+<li> Notify players when pairings are done or rankings are updated (WebPush, E-mail, Website)</li>
+<li> Absence generator and editing by players themselves.</li>
+<li> Pairing based on Systeem Keizer (random Bye, Algorithm to determine if very strong player is at the bottom of the ranking due to first game should be paired against the players above him)</li>
+<li> Add multiple Administrators (not fully tested)</li>
+<li> Ranking, including some details like TPR, but also showing all games of a player and the score for that game</li>
+<li> Installation Package in the app (not yet an installation of the whole app, so you will need to copy the source and upload it to your hosting)</li>
+<li> Multiple Language Support (Dutch / English (WIP))</li>
+<li> A sort of API to create your own applications on top of it (i.e. for iOS)
+<ul>
+<li>User Login to pick up the API Key for the user.</li>
+<li>Read games of the authenticated user with his API Key</li>
+<li>See for a small implementation example <a href="https://github.com/Frank-L93/DePionApp/">DePionApp</a></li>
+</ul>
+</li>
+</ol>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+<p>In the future, there will be more:</p>
+<ol>
+<li> Layouts (There is actually a second layout, making the background blue)</li>
+<li> Notifications via SMS or WhatsApp, and WebPush</li>
+<li> Better Pairing Algorithm</li>
+<li> PGN-games to analyze games</li>
+<li> Sourcecode rewritten</li>
+</ol>
+
 
 ## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Laravel is a web application framework with expressive, elegant syntax.
+KeizerPHP is now based on a 7.x version of Laravel. Begin 2021, KeizerPHP 2.0 will be released based on Laravel 8.x. 
 
 ## License
 
