@@ -1,15 +1,15 @@
 ## About KeizerPHP (2.0)
 <p>Ever wanted to manage a chess club competition with some ease, just from the web? Now it is possible. KeizerPHP (oh boy, what a name) gives you the possibility to do this. Just sign up your club and start using it.</p>
 
-##Help
+## Help
 Okay, to be fair, you can't use it just yet (sorry, sorry, this is just a hobby of me). I'm working on a new release somewhere begin 2021. The sourcecode you are seeing here is not complete. But when you can use it, this page will be updated.
 
 You can then just sign up via https://keizerphp.nl (the homepage of this project is now https://interndepion.nl which runs version 1.0 of KeizerPHP, released in 2020, but that version is old and way too depressing to work on.) 
 
 To check things out by then, use DEMO and password DEMO.
 
-##About
-###Features
+## About
+### Features
 <ol>
 <li>Keizer-competition</li>
 <li>Manage your members</li>
@@ -30,7 +30,7 @@ To check things out by then, use DEMO and password DEMO.
 <li>Better security, more roles</li>
 </ol>
 
-###Credits
+### Credits
 This project is made with Laravel, a PHP Framework. 
 All rights reserved to the third party vendor packages that make this work. And a special shout-out to JBFSoftware for making Sevilla, software to manage your chess club competition. Used it so often to check if calculation I made were right.</p>
 
