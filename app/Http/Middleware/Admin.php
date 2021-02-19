@@ -18,8 +18,13 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-            dd(auth()->user());
+
+        if (Auth::user() &&  Auth::user()->rechten == 2) {
             return $next($request);
+        }
+
+        return redirect()->to('/dashboard')->with('error','You have not admin access');
+
 
     }
 }

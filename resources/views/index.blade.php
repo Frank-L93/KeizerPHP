@@ -2,7 +2,7 @@
 
 @section('content')
 <x-card-header>
-    Welkom bij KeizerPHP
+    Welkom bij KeizerPHPtest
 </x-card-header>
     <x-card-body>
         <x-grid cols="3">

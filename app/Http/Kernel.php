@@ -23,6 +23,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         'SettingsMiddleware' => \App\Http\Middleware\SettingsMiddleware::class,
 
+
     ];
 
     /**

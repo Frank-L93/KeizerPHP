@@ -27,6 +27,16 @@ class ConfigCompetition extends Component
         'configs.*.AbsenceMax' => 'required',
         'configs.*.SeasonPart' => 'required',
     ];
+
+    public function save()
+    {
+        foreach($this->configs as $config)
+        {
+            $config->save();
+        }
+        session()->flash('success', 'Configuratie opgeslagen');
+    }
+
     public function render()
     {
 

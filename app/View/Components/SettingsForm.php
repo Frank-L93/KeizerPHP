@@ -6,6 +6,7 @@ use Illuminate\View\Component;
 
 class SettingsForm extends Component
 {
+
     /**
      * Create a new component instance.
      *

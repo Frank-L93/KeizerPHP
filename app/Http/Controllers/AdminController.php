@@ -7,11 +7,15 @@ use App\Models\Presence;
 use App\Models\Ranking;
 use App\Models\Round;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Models\Config;
 
 class AdminController extends Controller
 {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function index()
     {
         $configs = Config::all();
