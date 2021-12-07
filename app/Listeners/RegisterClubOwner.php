@@ -30,29 +30,29 @@ class RegisterClubOwner
      * @return void
      */
     public function handle(ClubCreated $event)
-    {
+        {
 
-        $newUser = User::create([
-            'email' => $event->request->Email,
-            'name' => $event->request->Contact,
-            'password' => Hash::make($event->request->Password),
-            'knsb_id' => $event->request->KNSB,
-            'rechten' => 2,
-            'club_id' => $event->club->id,
-            'rating' => $event->request->rating,
-            'beschikbaar' => 0,
-            'active' => 1,
-            'activate' => 0,
-        ]);
+            $newUser = User::create([
+                'email' => $event->request->email,
+                'name' => $event->request->contact,
+                'password' => Hash::make($event->request->password),
+                'knsb_id' => $event->request->knsb,
+                'club_id' => $event->club->id,
+                'rating' => $event->request->rating,
+                'beschikbaar' => 0,
+                'active' => 1,
+                'activate' => 0,
+            ]);
 
-        $club = Club::find($event->club->id);
-        $club->club_owner = $newUser->id;
-        $club->save();
+            $newUser->assignRole('competitionleader');
+            $club = Club::find($event->club->id);
+            $club->club_owner = $newUser->id;
+            $club->save();
 
-        event(new UserCreated($newUser));
-        event(new ClubOwnerCreated($newUser, $club));
+            event(new UserCreated($newUser));
+            event(new ClubOwnerCreated($newUser, $club));
 
-        $newUser->notify(new ClubCreationCompleted($club));
-    }
+            $newUser->notify(new ClubCreationCompleted($club));
+        }
 
 }

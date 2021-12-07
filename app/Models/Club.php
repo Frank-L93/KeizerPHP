@@ -16,5 +16,4 @@ class Club extends Model
     public $fillable = [
         'name', 'contact', 'club_owner',
     ];
-
 }

@@ -2,10 +2,13 @@
 namespace App\Http\Controllers;
 
 use App\Events\ClubCreated;
-use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use App\Models\Club;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
+use Inertia\Inertia;
+
 class ClubController extends BaseController
 {
 
@@ -14,15 +17,23 @@ class ClubController extends BaseController
      *
      * @return string
      */
-    public function registerClub(Request $request): string
+    public function registerClub(Request $request)
     {
-        $newClub = Club::create([
-            'name' => $request->Club,
-            'contact' => $request->Contact,
 
+        $request->validate([
+           'name' => ['required', 'max:100', Rule::unique('clubs')],
+           'contact' => ['required', 'max:100'],
+           'email' => ['required', 'max:100', 'email:rfc,dns', Rule::unique('users')],
+           'password' => ['required'],
+           'knsb' => ['required', 'numeric'],
+           'rating' => ['nullable', 'numeric'],
+        ]);
+        $newClub = Club::create([
+            'name' => $request->name,
+            'contact' => $request->contact,
         ]);
 
         ClubCreated::dispatch($newClub, $request);
-        return redirect()->to('/')->with('success', trans('messages.club.created'));
+        return Redirect::route('register')->with('success', 'Club aangemaakt. Voor alle details zie de e-mail die verstuurd is naar '.$request->email);
     }
 }

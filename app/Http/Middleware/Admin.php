@@ -12,6 +12,7 @@ class Admin
     /**
      * Handle an incoming request.
      *
+     * Check Spatie/Roles-package
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
      * @return mixed

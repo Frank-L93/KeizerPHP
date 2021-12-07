@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Events\ClubCreated;
+use App\Events\PlayerCreated;
 use App\Events\ClubOwnerCreated;
 use App\Events\UserCreated;
 use App\Listeners\ClearClubIdFromSession;
@@ -11,6 +12,8 @@ use App\Listeners\RegisterClubConfig;
 use App\Listeners\RegisterClubOwner;
 use App\Listeners\RegisterSettings;
 use App\Listeners\SetClubIdInSession;
+use App\Listeners\RegisterPlayer;
+use App\Listeners\ProcessNotifications;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
 use Illuminate\Auth\Events\Registered;
@@ -44,6 +47,13 @@ class EventServiceProvider extends ServiceProvider
         ],
         Logout::class => [
             ClearClubIdFromSession::class,
+        ],
+        PlayerCreated::class => [
+            RegisterPlayer::class,
+        ],
+        'Illuminate\Notifications\Events\NotificationSent' =>
+        [
+            ProcessNotifications::class,
         ]
     ];
 

@@ -12,18 +12,15 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use App\Models\Config;
+use Inertia\Inertia;
 
 class AdminController extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     public function index()
     {
-        $configs = Config::all();
-        $users = User::all();
-        $rounds = Round::all();
-        $rankings = Ranking::all();
-        $presences = Presence::all();
-        $games = Game::all();
-        return view('admin.index')->with(['configs' => $configs, 'users' => $users, 'rounds' => $rounds, 'rankings' => $rankings, 'presences' => $presences, 'games' => $games]);
+        // Get all data for this Admin (all queries are limited to the current Club_ID)
+        // Future work: Super-Admin to get more
+        return Inertia::render('Admin/Index');
     }
 }

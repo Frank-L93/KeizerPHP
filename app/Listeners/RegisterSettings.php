@@ -26,6 +26,7 @@ class RegisterSettings
     public function handle(UserCreated $event)
     {
 
+        // These settings are shared via the Inertia-middleware to all pages, therefore creation of them is mandatory.
         Setting::create([
             'user_id' => $event->user->id,
             'notifications' => 0,

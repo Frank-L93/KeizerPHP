@@ -23,27 +23,21 @@ class Presence extends Model
     */
     public function user()
     {
-        if(Gate::allows('admin', Auth::user()))
-        {
-            return $this->hasOne('App\Models\User', 'id', 'user_id');
-        }
-        return $this->belongsTo('App\Models\User');
+
+        return $this->belongsTo('App\Models\User', 'user_id', 'id');
     }
 
     public function date()
     {
-        if(Gate::allows('admin', Auth::user()))
-        {
-            return $this->hasOne('App\Models\Round', 'id', 'round');
-        }
-        return $this->belongsTo('App\Models\Round', 'id', 'round');
+
+        return $this->belongsTo('App\Models\Round', 'round', 'id');
     }
 
     protected static function booted()
     {
         static::addGlobalScope(new ClubScope);
-        static::creating(function($model) {
-            if(session()->has('club_id')) {
+        static::creating(function ($model) {
+            if (session()->has('club_id')) {
                 $model->club_id = session()->get('club_id');
             }
         });

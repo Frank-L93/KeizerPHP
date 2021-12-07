@@ -9,10 +9,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     /**
      * A user is a player, therefore it has some extraordinary characteristics, namely
@@ -28,7 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'knsb_id','rating','club_id','beschikbaar','active','activate','rechten',
+        'knsb_id', 'rating', 'club_id', 'beschikbaar', 'active', 'activate',
     ];
 
     /**
@@ -48,12 +49,52 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'beschikbaar' => 'boolean',
+        'active' => 'boolean',
+        'activate' => 'boolean',
+        'firsttimelogin' => 'boolean',
     ];
 
-    public function settings()
+    public static function settings()
     {
         $settings = Setting::where('user_id', auth()->id())->first();
         return $settings;
+    }
+
+    public function getRSSLink()
+    {
+        return $this->api_token;
+    }
+
+    public function rating()
+    {
+        return $this->rating;
+    }
+
+    public function name()
+    {
+        return $this->name;
+    }
+
+    public function ranking()
+    {
+        return $this->hasOne('App\Models\Ranking');
+    }
+
+    public function isAdmin()
+    {
+        if ($this->hasRole('super-admin')) {
+            return true;
+        }
+        return false;
+    }
+
+    public function isCompetitionLeader()
+    {
+        if ($this->hasRole('competitionleader')) {
+            return true;
+        }
+        return false;
     }
 
     protected static function booted()
@@ -61,8 +102,8 @@ class User extends Authenticatable
         if (auth()->check()) {
             static::addGlobalScope(new ClubScope);
         }
-        static::creating(function($model) {
-            if(session()->has('club_id')) {
+        static::creating(function ($model) {
+            if (session()->has('club_id')) {
                 $model->club_id = session()->get('club_id');
             }
         });

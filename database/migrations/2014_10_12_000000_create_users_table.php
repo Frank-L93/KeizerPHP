@@ -25,10 +25,10 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->double('rating');
-            $table->integer('beschikbaar');
-            $table->integer('firsttimelogin')->nullable();
-            $table->integer('active')->nullable();
-            $table->string('activate');
+            $table->boolean('beschikbaar')->default(false);
+            $table->boolean('firsttimelogin')->default(true);
+            $table->boolean('active')->default(false);
+            $table->boolean('activate')->default(true);
         });
     }
 

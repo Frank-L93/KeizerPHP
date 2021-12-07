@@ -20,12 +20,27 @@ class Game extends Model
     * A game has one round, while a round may have 0, 1 or more games.
     */
 
+    public function whitePlayer()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'white');
+    }
+
+    public function blackPlayer()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'black');
+    }
+
+    public function round()
+    {
+        return $this->hasOne('App\Models\Round', 'id', 'round_id');
+    }
+
     protected static function booted()
     {
         static::addGlobalScope(new ClubScope);
 
-        static::creating(function($model) {
-            if(session()->has('club_id')) {
+        static::creating(function ($model) {
+            if (session()->has('club_id')) {
                 $model->club_id = session()->get('club_id');
             }
         });
