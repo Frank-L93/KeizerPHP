@@ -11,7 +11,8 @@
           </div>
 
           <div class="p-8 -mr-6 -mb-8 grid grid-cols-1">
-            Je past je aanwezigheid aan voor ronde {{ Presence.round }}
+
+            Je past je aanwezigheid aan voor ronde {{Round}}
             <input
               type="hidden"
               v-model="form.id"
@@ -83,6 +84,7 @@ export default {
   },
   props: {
     Presence: Object,
+    Round: Object,
     errors: Object,
   },
   remember: "form",

@@ -283,7 +283,9 @@ class PresencesController extends Controller
                 return redirect('presences')->with('error', 'Deze aanwezigheid kun je niet meer aanpassen.');
             }
         }
-        return Inertia::render('Presences/Edit')->with('Presence', $presence_id);
+        $Round = Round::find($presence_id->round);
+
+        return Inertia::render('Presences/Edit')->with('Presence', $presence_id)->with('Round', $Round->round);
     }
 
     public function patchAdmin(Presence $presence_id)

@@ -36,7 +36,7 @@
               :class="{ 'bg-gray-50': checkOdd(key) }"
             >
 
-              <td class="py-3 px-6 text-center">{{presence.round }} - {{ formattedDate(presence.date.date)}}</td>
+              <td class="py-3 px-6 text-center">{{presence.date.round }} - {{ formattedDate(presence.date.date)}}</td>
               <td class="py-3 px-6 text-center">
                 <div v-if="presence.presence === 1">Aanwezig</div>
                 <div v-else>Afwezig</div>

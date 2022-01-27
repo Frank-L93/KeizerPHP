@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $settings;
     }
 
+    public function hasSettings()
+    {
+        return $this->hasOne('App\Models\Setting');
+    }
+
     public function getRSSLink()
     {
         return $this->api_token;

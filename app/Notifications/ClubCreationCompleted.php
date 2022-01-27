@@ -14,6 +14,7 @@ class ClubCreationCompleted extends Notification
     use Queueable;
 
     public $club;
+    public $name;
     /**
      * Create a new notification instance.
      *
@@ -23,6 +24,7 @@ class ClubCreationCompleted extends Notification
     public function __construct(Club $club)
     {
         $this->club = $club;
+        $this->name = 'ClubCreation';
     }
 
     /**
@@ -46,9 +48,9 @@ class ClubCreationCompleted extends Notification
     {
         return (new MailMessage)
             ->greeting('Welcome!')
-                    ->line('Your club '.$this->club->name.' has been created!')
-                    ->action('Configure your club through logging into your account', url('/'))
-                    ->line('Thank you for choosing KeizerPHP!');
+            ->line('Your club ' . $this->club->name . ' has been created!')
+            ->action('Configure your club through logging into your account', url('/'))
+            ->line('Thank you for choosing KeizerPHP!');
     }
 
     /**

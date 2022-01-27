@@ -2,30 +2,37 @@
 
 namespace App\Notifications;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Events\GameSaving;
+use App\Models\Round;
 
-class PlayerCreationCompleted extends Notification
+class GameNotification extends Notification
 {
     use Queueable;
 
-    public $user;
-    public $name;
-    public $password;
+    public $event;
+    public $black;
+    public $opponnent;
+    public $type;
+    public $round;
+
     /**
      * Create a new notification instance.
      *
-     * @param \App\Models\User $user
-     * @param \App\Models\Club $club
+     * @return void
      */
-    public function __construct(User $user, $password)
+    public function __construct(GameSaving $event, Round $round, $black, $opponnent, $type)
     {
-        $this->user = $user;
-        $this->password = $password;
-        $this->name = 'PlayerCreation';
+        $this->event = $event;
+        $this->black = $black;
+        $this->opponnent = $opponnent;
+        $this->type = $type;
+        $this->round = $round;
+
+        //        dd($this->event, $this->black, $this->opponnent, $this->type);
     }
 
     /**
@@ -36,7 +43,7 @@ class PlayerCreationCompleted extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return $this->type;
     }
 
     /**
@@ -48,12 +55,10 @@ class PlayerCreationCompleted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Welcome!')
-            ->line('Hi ' . $this->user->name . '! De competitieleider van jouw vereniging heeft voor jou een account aangemaakt op KeizerPHP.nl')
-            ->line('Met dit account kun je meedoen aan de Keizercompetitie van jouw vereniging. Log in en geef je beschikbare speelavonden op zodat je ingedeeld kunt worden.')
-            ->line('Je eerste wachtwoord is: ' . $this->password . ' Er wordt aangeraden om dit wachtwoord na inloggen aan te passen.')
-            ->action('Geef je beschikbaarheid op', url('/'))
-            ->line('Succes!');
+            ->line('Je hebt een nieuwe partij!')
+            ->line('De partij van ronde ' . $this->round->round . ' is tegen ' . $this->opponnent->name)
+            ->action('Bekijk de volledige indeling hier', url('/'))
+            ->line('Tot snel!');
     }
 
     /**
