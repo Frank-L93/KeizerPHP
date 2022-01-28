@@ -7,9 +7,14 @@ use App\Models\Game;
 use App\Models\Presence;
 use App\Models\Round;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Inertia\Response;
+use InvalidArgumentException;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -273,6 +278,12 @@ class PresencesController extends Controller
         return redirect('presences')->with('success', 'Je hebt je aan-/afwezigheid op de juiste wijze doorgegeven!');
     }
 
+    /**
+     * @param Presence $presence_id 
+     * @return mixed 
+     * @throws BindingResolutionException 
+     * @throws InvalidArgumentException 
+     */
     public function patch(Presence $presence_id)
     {
         if ($presence_id->user_id !== Auth::user()->id) {
@@ -288,6 +299,12 @@ class PresencesController extends Controller
         return Inertia::render('Presences/Edit')->with('Presence', $presence_id)->with('Round', $Round->round);
     }
 
+    /**
+     * @param Presence $presence_id 
+     * @return Redirector|RedirectResponse|Response 
+     * @throws BindingResolutionException 
+     * @throws InvalidArgumentException 
+     */
     public function patchAdmin(Presence $presence_id)
     {
         if (!Auth::user()->hasRole('competitionleader')) {

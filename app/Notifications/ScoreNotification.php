@@ -2,20 +2,21 @@
 
 namespace App\Notifications;
 
+use App\Events\GameUpdating;
+use App\Models\Round;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Events\GameSaving;
-use App\Models\Round;
-use Carbon\Carbon;
 
-class GameNotification extends Notification
+class ScoreNotification extends Notification
 {
     use Queueable;
 
     public $event;
     public $black;
+    public $scoringtext;
     public $opponnent;
     public $type;
     public $round;
@@ -25,10 +26,11 @@ class GameNotification extends Notification
      *
      * @return void
      */
-    public function __construct(GameSaving $event, Round $round, $black, $opponnent, $type)
+    public function __construct(GameUpdating $event, Round $round, $scoringtext, $black, $opponnent, $type)
     {
         $this->event = $event;
         $this->black = $black;
+        $this->scoringtext = $scoringtext;
         $this->opponnent = $opponnent;
         $this->type = $type;
         $this->round = $round;
@@ -55,16 +57,14 @@ class GameNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $date = $this->round->date;
-        Carbon::setLocale('nl_NL');
-        $dateFormatted = Carbon::parse($date)->timezone('Europe/Amsterdam')->isoFormat('D MMMM YYYY');
+
 
         if (intval($this->black == 0)) {
             if ($this->opponnent == 2) {
-                return (new MailMessage)->subject('Indeling voor ' . $dateFormatted . ' bekend')->markdown('emails.games.bye', ['round' => $this->round->round]);
+                return (new MailMessage)->subject('Uitslag ronde ' . $this->round->round)->markdown('emails.games.scoreBye', ['round' => $this->round->round, 'gamescore' => $this->scoringtext]);
             }
         } else {
-            return (new MailMessage)->subject('Indeling voor ' . $dateFormatted . ' bekend')->markdown('emails.games.new', ['round' => $this->round->round, 'opponnent' => $this->opponnent->name]);
+            return (new MailMessage)->subject('Uitslag ronde ' . $this->round->round)->markdown('emails.games.score', ['round' => $this->round->round, 'opponnent' => $this->opponnent->name, 'gamescore' => $this->scoringtext]);
         }
     }
 
@@ -81,6 +81,7 @@ class GameNotification extends Notification
                 return [
                     'round' => $this->round->round,
                     'opponnent' => "Bye of aanwezigheid",
+                    'gamescore' => $this->scoringtext,
                     'special' => 1,
                 ];
             } else {
@@ -90,6 +91,7 @@ class GameNotification extends Notification
             return [
                 'round' => $this->round->round,
                 'opponnent' => $this->opponnent,
+                'gamescore' => $this->scoringtext,
                 'special' => 0,
             ];
         }

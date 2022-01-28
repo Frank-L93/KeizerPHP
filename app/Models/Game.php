@@ -36,7 +36,8 @@ class Game extends Model
     }
 
     protected $dispatchesEvents = [
-        'saving' => \App\Events\GameSaving::class,
+        'creating' => \App\Events\GameSaving::class,
+        'updated' => \App\Events\GameUpdating::class,
     ];
 
     protected static function booted()

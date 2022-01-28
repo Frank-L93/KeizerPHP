@@ -86,6 +86,7 @@ class RankingsController extends Controller
         $processingGames = $calculation->ProcessGames($request->games, $request->round['id']);
         $updatedRanking = $calculation->UpdateRanking();
         $closingRound = $calculation->CloseRound($request->round);
+        $notifyPlayers = $calculation->NotifyNewRanking($request->round);
 
         return redirect('/admin/rankings')->with('success', 'Ranglijst is geupdatet');
     }
