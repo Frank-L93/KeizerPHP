@@ -27,12 +27,14 @@ class ProcessNotifications
      */
     public function handle(NotificationSent $event)
     {
-        if ($event->notification->name == "PasswordReset") {
-            // We will now update the specific user.
+        if (property_exists($event->notification, "name") == true) {
+            if ($event->notification->name == "PasswordReset") {
+                // We will now update the specific user.
 
-            $event->notification->user->password = Hash::make($event->notification->password);
-            $event->notification->user->save();
-            return true;
+                $event->notification->user->password = Hash::make($event->notification->password);
+                $event->notification->user->save();
+            }
         }
+        // else just go on.
     }
 }

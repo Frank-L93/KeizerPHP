@@ -29,13 +29,15 @@ class RegisterSettings
         // These settings are shared via the Inertia-middleware to all pages, therefore creation of them is mandatory.
         Setting::create([
             'user_id' => $event->user->id,
-            'notifications' => 0,
+            'notifications' => false,
             'games' => 0,
             'ranking' => 0,
-            'rss' => 0,
             'layout' => 'standard',
             'language' => 'nl',
             'club_id' => $event->user->club_id,
+            'NotifyByMail' => false,
+            'NotifyByDB' => false,
+            'NotifyByRSS' => false,
         ]);
     }
 }

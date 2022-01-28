@@ -5,7 +5,9 @@ namespace App\Actions;
 use App\Models\Config;
 use App\Models\Game;
 use App\Models\Presence;
+use App\Models\Ranking;
 use App\Models\Round;
+use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 
@@ -23,8 +25,10 @@ class Pair
             return "Geen indeling mogelijk, er zijn geen spelers aanwezig!";
         }
         // Check if last player has an outlining rating
-        if ($this->CheckIfOkToPairThisWay(end($enriched_players)["rating"], $enriched_players[count($enriched_players) - 2]["rating"]) == false) {
-            $enriched_players = $this->moveElement($enriched_players, count($enriched_players) - 1, count($enriched_players) - rand(2, count($enriched_players) - 1));
+        if (count($enriched_players) > 2) {
+            if ($this->CheckIfOkToPairThisWay(end($enriched_players)["rating"], $enriched_players[count($enriched_players) - 2]["rating"]) == false) {
+                $enriched_players = $this->moveElement($enriched_players, count($enriched_players) - 1, count($enriched_players) - rand(2, count($enriched_players) - 1));
+            }
         }
 
 
@@ -46,7 +50,14 @@ class Pair
     private function players($presences)
     {
         $sorted_players = [];
+
+
         foreach ($presences as $player) {
+            // The player that is being matched is not yet in the rankings
+            if ($player->user->ranking == NULL) {
+                // Trigger the addition of a new player to the rankings.
+                $this->addPlayerToRanking($player);
+            }
             array_push($sorted_players, ["user" => $player->user_id, "value" => $player->user->ranking->value, "rating" => $player->user->rating, "color" => $player->user->ranking->color]);
         }
 
@@ -309,6 +320,27 @@ class Pair
 
 
         return [$white, $black];
+    }
+
+    /**
+     * @param mixed $player 
+     * @return never 
+     * @throws InvalidArgumentException 
+     * @throws InvalidCastException 
+     */
+    private function addPlayerToRanking($player)
+    {
+
+        $newRanking = new Ranking;
+        $newRanking->user_id = $player->user_id;
+        $newRanking->score = 0;
+        $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
+        $newRanking->value = $lowest_value->value - 1;
+        if ($newRanking->save()) {
+            return true;
+        } else {
+            return false;
+        }
     }
     // Swiss pairing maybe ever
 }

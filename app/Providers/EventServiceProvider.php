@@ -5,7 +5,10 @@ namespace App\Providers;
 use App\Events\ClubCreated;
 use App\Events\PlayerCreated;
 use App\Events\ClubOwnerCreated;
+use App\Events\GameSaving;
 use App\Events\UserCreated;
+use App\Events\GameUpdating;
+use App\Events\RankingUpdating;
 use App\Listeners\ClearClubIdFromSession;
 use App\Listeners\FirstTimeLogin;
 use App\Listeners\RegisterClubConfig;
@@ -50,6 +53,15 @@ class EventServiceProvider extends ServiceProvider
         ],
         PlayerCreated::class => [
             RegisterPlayer::class,
+        ],
+        GameSaving::class => [
+            'App\Listeners\GameSaving',
+        ],
+        GameUpdating::class => [
+            'App\Listeners\GameUpdating',
+        ],
+        RankingUpdating::class => [
+            'App\Listeners\RankingUpdating',
         ],
         'Illuminate\Notifications\Events\NotificationSent' =>
         [

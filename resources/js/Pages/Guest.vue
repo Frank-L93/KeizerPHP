@@ -1,7 +1,7 @@
 <template>
   <div>
     <teleport to="head">
-      <title>{{ title('Welcome') }}</title>
+      <title>{{ title('Welkom') }}</title>
     </teleport>
     <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center py-5">
       <div class="w-full bg-white border-t border-b overflow-hidden relative border-gray-200 px-5 py-16 md:py-24 text-gray-800">
@@ -52,7 +52,7 @@
             </div>
           </div>
         </div>
-        <guestmenu></guestmenu>
+        <guestmenu current="home"></guestmenu>
 
       </div>
     </div>

@@ -35,6 +35,11 @@ class Game extends Model
         return $this->hasOne('App\Models\Round', 'id', 'round_id');
     }
 
+    protected $dispatchesEvents = [
+        'creating' => \App\Events\GameSaving::class,
+        'updated' => \App\Events\GameUpdating::class,
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope(new ClubScope);

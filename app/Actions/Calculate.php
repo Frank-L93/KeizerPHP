@@ -9,13 +9,17 @@ use App\Models\Presence;
 use App\Models\Ranking;
 use App\Models\Round;
 use App\Models\User;
+use App\Notifications\RankingNotification;
+use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Inertia\Inertia;
 
+/** @package App\Actions */
 class Calculate
 {
+    /** @return mixed  */
     public function GetRound()
     {
         try {
@@ -28,6 +32,13 @@ class Calculate
         return $round;
     }
 
+    /**
+     * @param mixed $games 
+     * @param mixed $round 
+     * @return void 
+     * @throws InvalidArgumentException 
+     * @throws InvalidCastException 
+     */
     public function ProcessGames($games, $round)
     {
         $rankings = Ranking::all();
@@ -234,6 +245,10 @@ class Calculate
         }
     }
 
+    /**
+     * @param mixed $ClosingRound 
+     * @return void 
+     */
     public function CloseRound($ClosingRound)
     {
         $round = Round::where('id', $ClosingRound['id'])->first();
@@ -242,6 +257,10 @@ class Calculate
         $round->save();
     }
 
+    /**
+     * @param mixed $player 
+     * @return mixed 
+     */
     public function calculateTPR($player)
     {
         $user = Ranking::where('user_id', $player)->first();
@@ -257,6 +276,10 @@ class Calculate
         return $tpr;
     }
 
+    /**
+     * @param mixed $amount 
+     * @return mixed 
+     */
     public function GetValueForTPR($amount)
     {
         $amount = round($amount, 2);
@@ -268,6 +291,7 @@ class Calculate
     }
 
     // Update the ranking as now the scores are processed.
+    /** @return void  */
     public function UpdateRanking()
     {
         $Ranking = Ranking::orderBy('score', 'desc')->get();
@@ -279,5 +303,35 @@ class Calculate
             $rank->save();
             $i = $i - Config::InitRanking("step");
         }
+    }
+
+    /**
+     * @param mixed $round 
+     * @return true 
+     */
+    public function NotifyNewRanking($round)
+    {
+        $Ranking = Ranking::orderBy('score', 'desc')->limit('3')->get();
+        $ranking_notify = [];
+        $i = 1;
+        foreach ($Ranking as $rank) {
+            array_push($ranking_notify, [$i => [$rank, $rank->user]]);
+            $i++;
+        }
+        $users = User::all();
+        foreach ($users as $user) {
+            if ($user->hasSettings->notifications == true) {
+                if ($user->hasSettings->NotifyByMail == true) {
+                    $user->notify(new RankingNotification($ranking_notify, "mail"));
+                }
+                if ($user->hasSettings->NotifyByDB == true) {
+                    $user->notify(new RankingNotification($ranking_notify, "database"));
+                }
+                if ($user->hasSettings->NotifyByRSS == true) {
+                    //$user->notify(new RankingNotification($Ranking, "RSS")); wip
+                }
+            }
+        }
+        return true;
     }
 }

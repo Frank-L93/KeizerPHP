@@ -526,9 +526,10 @@ eval("/* module decorator */ module = __webpack_require__.nmd(module);\n/**\n * 
 /*!*******************************!*\
   !*** ./resources/css/app.css ***!
   \*******************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-throw new Error("Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):\nModuleBuildError: Module build failed (from ./node_modules/postcss-loader/dist/cjs.js):\nError: Cannot find module '@tailwindcss/ui'\nRequire stack:\n- /Users/frank/Sites/keizerphp/tailwind.config.js\n- /Users/frank/Sites/keizerphp/node_modules/tailwindcss/lib/lib/setupTrackingContext.js\n- /Users/frank/Sites/keizerphp/node_modules/tailwindcss/lib/index.js\n- /Users/frank/Sites/keizerphp/webpack.mix.js\n- /Users/frank/Sites/keizerphp/node_modules/laravel-mix/setup/webpack.config.js\n- /Users/frank/Sites/keizerphp/node_modules/webpack-cli/lib/webpack-cli.js\n- /Users/frank/Sites/keizerphp/node_modules/webpack-cli/lib/bootstrap.js\n- /Users/frank/Sites/keizerphp/node_modules/webpack-cli/bin/cli.js\n- /Users/frank/Sites/keizerphp/node_modules/webpack/bin/webpack.js\n    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:925:15)\n    at Function.Module._load (node:internal/modules/cjs/loader:769:27)\n    at Module.require (node:internal/modules/cjs/loader:997:19)\n    at require (node:internal/modules/cjs/helpers:92:18)\n    at Object.<anonymous> (/Users/frank/Sites/keizerphp/tailwind.config.js:31:9)\n    at Module._compile (node:internal/modules/cjs/loader:1108:14)\n    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1137:10)\n    at Module.load (node:internal/modules/cjs/loader:973:32)\n    at Function.Module._load (node:internal/modules/cjs/loader:813:14)\n    at Module.require (node:internal/modules/cjs/loader:997:19)\n    at processResult (/Users/frank/Sites/keizerphp/node_modules/webpack/lib/NormalModule.js:753:19)\n    at /Users/frank/Sites/keizerphp/node_modules/webpack/lib/NormalModule.js:855:5\n    at /Users/frank/Sites/keizerphp/node_modules/loader-runner/lib/LoaderRunner.js:399:11\n    at /Users/frank/Sites/keizerphp/node_modules/loader-runner/lib/LoaderRunner.js:251:18\n    at context.callback (/Users/frank/Sites/keizerphp/node_modules/loader-runner/lib/LoaderRunner.js:124:13)\n    at Object.loader (/Users/frank/Sites/keizerphp/node_modules/postcss-loader/dist/index.js:142:7)");
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiLi9yZXNvdXJjZXMvY3NzL2FwcC5jc3MuanMiLCJtYXBwaW5ncyI6IjtBQUFBIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vdnVlLTMvLi9yZXNvdXJjZXMvY3NzL2FwcC5jc3M/N2ZjNSJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBleHRyYWN0ZWQgYnkgbWluaS1jc3MtZXh0cmFjdC1wbHVnaW5cbmV4cG9ydCB7fTsiXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/css/app.css\n");
 
 /***/ }),
 
@@ -927,6 +928,38 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	__webpack_require__.m = __webpack_modules__;
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/chunk loaded */
+/******/ 	(() => {
+/******/ 		var deferred = [];
+/******/ 		__webpack_require__.O = (result, chunkIds, fn, priority) => {
+/******/ 			if(chunkIds) {
+/******/ 				priority = priority || 0;
+/******/ 				for(var i = deferred.length; i > 0 && deferred[i - 1][2] > priority; i--) deferred[i] = deferred[i - 1];
+/******/ 				deferred[i] = [chunkIds, fn, priority];
+/******/ 				return;
+/******/ 			}
+/******/ 			var notFulfilled = Infinity;
+/******/ 			for (var i = 0; i < deferred.length; i++) {
+/******/ 				var [chunkIds, fn, priority] = deferred[i];
+/******/ 				var fulfilled = true;
+/******/ 				for (var j = 0; j < chunkIds.length; j++) {
+/******/ 					if ((priority & 1 === 0 || notFulfilled >= priority) && Object.keys(__webpack_require__.O).every((key) => (__webpack_require__.O[key](chunkIds[j])))) {
+/******/ 						chunkIds.splice(j--, 1);
+/******/ 					} else {
+/******/ 						fulfilled = false;
+/******/ 						if(priority < notFulfilled) notFulfilled = priority;
+/******/ 					}
+/******/ 				}
+/******/ 				if(fulfilled) {
+/******/ 					deferred.splice(i--, 1)
+/******/ 					var r = fn();
+/******/ 					if (r !== undefined) result = r;
+/******/ 				}
+/******/ 			}
+/******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -969,7 +1002,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Admin_Configs_Index_vue":"941e4db2fcca57ce","resources_js_Pages_Admin_Games_Create_vue":"e8c6562b61815bb6","resources_js_Pages_Admin_Games_Index_vue":"f09b6061bbf2e99e","resources_js_Pages_Admin_Index_vue":"9f60802bbaee660a","resources_js_Pages_Admin_Presences_Create_vue":"052cdd5c3c48758b","resources_js_Pages_Admin_Presences_Edit_vue":"4614714b67038231","resources_js_Pages_Admin_Presences_Index_vue":"a77edc95c3bcc32e","resources_js_Pages_Admin_Rankings_Index_vue":"e1169d5b5ad7ce29","resources_js_Pages_Admin_Rankings_Update_vue":"1e94edaacd0d155a","resources_js_Pages_Admin_Rounds_Create_vue":"86ddad6204afda08","resources_js_Pages_Admin_Rounds_Edit_vue":"b04b57eb3258e3aa","resources_js_Pages_Admin_Rounds_Index_vue":"aa1003d234a7e125","resources_js_Pages_Admin_Users_Create_vue":"33da75e508cd1609","resources_js_Pages_Admin_Users_Edit_vue":"83a7486b38155085","resources_js_Pages_Admin_Users_Index_vue":"45f53cbff0a05253","resources_js_Pages_Auth_Login_vue":"7ca6881bf2bf77bd","resources_js_Pages_Auth_Password_vue":"25684eaa08569dc2","resources_js_Pages_Auth_Reset-password_vue":"cde16ff434a43941","resources_js_Pages_Auth_Settings_vue":"347bcd0b7270829a","resources_js_Pages_Auth_clubRegister_vue":"0ababead11d28176","resources_js_Pages_Games_Show_vue":"c315cb8c83b32116","resources_js_Pages_Guest_vue":"98fc063dba8ac808","resources_js_Pages_Index_vue":"65533c8f4dbdd145","resources_js_Pages_Presences_Create_vue":"b863a45197c95895","resources_js_Pages_Presences_Edit_vue":"56237428e3384c23","resources_js_Pages_Presences_Show_vue":"e75dd6643f903239","resources_js_Pages_Rankings_Show_vue":"6341ac9040f50bf5"}[chunkId] + "";
+/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Admin_Configs_Index_vue":"941e4db2fcca57ce","resources_js_Pages_Admin_Games_Create_vue":"e8c6562b61815bb6","resources_js_Pages_Admin_Games_Index_vue":"f09b6061bbf2e99e","resources_js_Pages_Admin_Index_vue":"9f60802bbaee660a","resources_js_Pages_Admin_Presences_Create_vue":"052cdd5c3c48758b","resources_js_Pages_Admin_Presences_Edit_vue":"4614714b67038231","resources_js_Pages_Admin_Presences_Index_vue":"a77edc95c3bcc32e","resources_js_Pages_Admin_Rankings_Index_vue":"e1169d5b5ad7ce29","resources_js_Pages_Admin_Rankings_Update_vue":"1e94edaacd0d155a","resources_js_Pages_Admin_Rounds_Create_vue":"86ddad6204afda08","resources_js_Pages_Admin_Rounds_Edit_vue":"b04b57eb3258e3aa","resources_js_Pages_Admin_Rounds_Index_vue":"aa1003d234a7e125","resources_js_Pages_Admin_Users_Create_vue":"33da75e508cd1609","resources_js_Pages_Admin_Users_Edit_vue":"83a7486b38155085","resources_js_Pages_Admin_Users_Index_vue":"45f53cbff0a05253","resources_js_Pages_Auth_Login_vue":"e5b2d182816d830b","resources_js_Pages_Auth_Password_vue":"6cdb181d51eb78ef","resources_js_Pages_Auth_Reset-password_vue":"3aaca228e3a9f04b","resources_js_Pages_Auth_Settings_vue":"a3324e1c27d8ef98","resources_js_Pages_Auth_clubRegister_vue":"18cbea1699740295","resources_js_Pages_Games_Show_vue":"c315cb8c83b32116","resources_js_Pages_Guest_vue":"e62d7789e9ed7655","resources_js_Pages_Index_vue":"65533c8f4dbdd145","resources_js_Pages_Presences_Create_vue":"b863a45197c95895","resources_js_Pages_Presences_Edit_vue":"2ef0896f5419e694","resources_js_Pages_Presences_Show_vue":"51c17c7edc8f42c9","resources_js_Pages_Rankings_Show_vue":"6341ac9040f50bf5"}[chunkId] + "";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -978,7 +1011,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference all chunks
 /******/ 		__webpack_require__.miniCssF = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return undefined;
+/******/ 			return "" + chunkId + ".css";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -1078,7 +1111,8 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
-/******/ 			"/js/app": 0
+/******/ 			"/js/app": 0,
+/******/ 			"css/app": 0
 /******/ 		};
 /******/ 		
 /******/ 		__webpack_require__.f.j = (chunkId, promises) => {
@@ -1090,7 +1124,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 					if(installedChunkData) {
 /******/ 						promises.push(installedChunkData[2]);
 /******/ 					} else {
-/******/ 						if(true) { // all chunks have JS
+/******/ 						if("css/app" != chunkId) {
 /******/ 							// setup Promise in chunk cache
 /******/ 							var promise = new Promise((resolve, reject) => (installedChunkData = installedChunks[chunkId] = [resolve, reject]));
 /******/ 							promises.push(installedChunkData[2] = promise);
@@ -1128,7 +1162,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		
 /******/ 		// no HMR manifest
 /******/ 		
-/******/ 		// no on chunks loaded
+/******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
 /******/ 		
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
@@ -1152,7 +1186,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 				}
 /******/ 				installedChunks[chunkId] = 0;
 /******/ 			}
-/******/ 		
+/******/ 			return __webpack_require__.O(result);
 /******/ 		}
 /******/ 		
 /******/ 		var chunkLoadingGlobal = self["webpackChunkvue_3"] = self["webpackChunkvue_3"] || [];
@@ -1164,9 +1198,10 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval-source-map devtool is used.
-/******/ 	__webpack_require__("./resources/js/app.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./resources/css/app.css");
+/******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
+/******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
 ;

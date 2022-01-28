@@ -13,7 +13,7 @@ class PlayerCreationCompleted extends Notification
     use Queueable;
 
     public $user;
-
+    public $name;
     public $password;
     /**
      * Create a new notification instance.
@@ -25,6 +25,7 @@ class PlayerCreationCompleted extends Notification
     {
         $this->user = $user;
         $this->password = $password;
+        $this->name = 'PlayerCreation';
     }
 
     /**
@@ -48,9 +49,9 @@ class PlayerCreationCompleted extends Notification
     {
         return (new MailMessage)
             ->greeting('Welcome!')
-            ->line('Hi '.$this->user->name.'! De competitieleider van jouw vereniging heeft voor jou een account aangemaakt op KeizerPHP.nl')
+            ->line('Hi ' . $this->user->name . '! De competitieleider van jouw vereniging heeft voor jou een account aangemaakt op KeizerPHP.nl')
             ->line('Met dit account kun je meedoen aan de Keizercompetitie van jouw vereniging. Log in en geef je beschikbare speelavonden op zodat je ingedeeld kunt worden.')
-            ->line('Je eerste wachtwoord is: '.$this->password.' Er wordt aangeraden om dit wachtwoord na inloggen aan te passen.')
+            ->line('Je eerste wachtwoord is: ' . $this->password . ' Er wordt aangeraden om dit wachtwoord na inloggen aan te passen.')
             ->action('Geef je beschikbaarheid op', url('/'))
             ->line('Succes!');
     }

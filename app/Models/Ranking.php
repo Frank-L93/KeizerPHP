@@ -22,6 +22,10 @@ class Ranking extends Model
         return $this->belongsTo('App\Models\User', 'user_id');
     }
 
+    protected $dispatchesEvents = [
+        'updating' => \App\Events\RankingUpdating::class,
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope(new ClubScope);

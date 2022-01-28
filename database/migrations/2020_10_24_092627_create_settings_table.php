@@ -16,10 +16,12 @@ class CreateSettingsTable extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('notifications')->default('0');
+            $table->boolean('notifications')->default(false);
+            $table->boolean('NotifyByMail')->default(false);
+            $table->boolean('NotifyByDB')->default(false);
+            $table->boolean('NotifyByRSS')->default(false);
             $table->integer('games')->default('0');
             $table->integer('ranking')->default('0');
-            $table->integer('rss')->default('0');
             $table->string('layout')->default('app');
             $table->string('language')->default('nl');
             $table->integer('club_id')->nullable();
