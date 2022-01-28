@@ -74,4 +74,11 @@ class RoundsController extends Controller
         return redirect('admin/rounds')->with('succes', 'Ronde ' . $editingRound->round . ' aangepast!');
         // if nog in foreach-loop it is empty so updating is possible.
     }
+
+    public function Data(Request $request)
+    {
+
+        $Round = Round::find($request->round);
+        return $Round->round;
+    }
 }

@@ -1,7 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    mode: 'jit',
     theme: {
         extend: {
             fontFamily: {
@@ -9,7 +8,6 @@ module.exports = {
             },
         },
     },
-    variants: {},
     purge: {
         content: [
             './app/**/*.php',
@@ -28,7 +26,6 @@ module.exports = {
         },
     },
     plugins: [
-        require('@tailwindcss/ui'),
         require('@tailwindcss/typography'),
         require('@tailwindcss/forms'),
     ],

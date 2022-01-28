@@ -28,29 +28,30 @@
             <text-input
               v-model="form.password"
               class="mt-6"
-              label="Password"
+              label="Wachtwoord"
               type="password"
               autocomplete="current-password"
             />
-
             <text-input
               v-model="form.password_confirmation"
               id="password_confirmation"
               class="block mt-1 w-full"
               type="password"
-              label="Bevestig password"
+              label="Bevestig wachtwoord"
               name="password_confirmation"
               required
             />
-
           </div>
-
-          <div class="flex items-center justify-end mt-4">
-            <loading-button
-              :loading="sending"
-              class="btn-indigo"
-              type="submit"
-            >Reset wachtwoord</loading-button>
+          <div class="mt-6">
+            <span class="block w-full rounded-md shadow-sm">
+              <button
+                :loading="sending"
+                type="submit"
+                class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-orange-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-orange active:bg-orange-700 transition duration-150 ease-in-out"
+              >
+                Reset wachtwoord
+              </button>
+            </span>
           </div>
         </form>
       </div>
@@ -61,12 +62,15 @@
 import LoadingButton from "@/Shared/LoadingButton";
 import Logo from "@/Shared/Logo";
 import TextInput from "@/Shared/TextInput";
+import FlashMessages from "@/Shared/FlashMessages";
+
 export default {
   name: "Reset wachtwoord",
   components: {
     LoadingButton,
     Logo,
     TextInput,
+    FlashMessages,
   },
   props: {
     errors: {
@@ -78,21 +82,16 @@ export default {
     return {
       sending: false,
       form: {
-        email: "",
+        email: this.$page.props.route.query.email,
         password: "",
         password_confirmation: "",
+        token: this.$page.props.route.params.token,
       },
     };
   },
   methods: {
     submit() {
-      const data = {
-        email: this.form.email,
-        password: this.form.password,
-        password_confirmation: this.form.password_confirmation,
-        token: this.$page.props.route.params.token,
-      };
-      this.$inertia.post(this.route("password.update"), data, {
+      this.$inertia.post(this.route("password.update"), this.form, {
         onStart: () => (this.sending = true),
         onFinish: () => (this.sending = false),
       });
