@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Pair;
+use App\Helpers\CurrentScores;
 use App\Http\Requests\StoreGameRequest;
 use App\Models\Game;
 use App\Models\Presence;
@@ -35,7 +36,12 @@ class GamesController extends Controller
         }, 'round'))->orderBy('round_id')->when($round_id ?? false, fn ($query, $round_id) => $query->where('round_id', $round_id->id))->get();
 
         $rounds = Round::select('round', 'uuid')->get();
-        return Inertia::render('Games/Show')->with('Games', $games)->with('Rounds', $rounds)->with('Navigation', $navigation);
+
+        // We want to include the scores for the current logged in player.
+        // We have a helper to calculate the scores per game at the current moment.
+        $scores = (new CurrentScores)->GetCurrentScore(auth()->user(), Round::currentRound());
+
+        return Inertia::render('Games/Show')->with('Games', $games)->with('Rounds', $rounds)->with('Navigation', $navigation)->with('Scores', $scores);
     }
 
     public function generate()
@@ -140,5 +146,12 @@ class GamesController extends Controller
         $game->delete();
 
         return redirect('admin/games')->with('success', 'Partij verwijderd.');
+    }
+
+    public function getGameScore($userID)
+    {
+        $user = User::find($userID);
+        $scores = (new CurrentScores)->GetCurrentScore($user, Round::currentRound());
+        return json_encode($scores);
     }
 }

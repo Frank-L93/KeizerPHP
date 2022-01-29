@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/games', [GamesController::class, 'view'])->name('games');
     Route::get('/rankings', [Controller::class, 'ranking'])->name('rankings');
     Route::get('/round/{round}', [RoundsController::class, 'data'])->name('roundNumber');
+    Route::get('/gamescore/{userID}', [GamesController::class, 'getGameScore'])->name('gameScore');
 
     /**
      * Aanwezigheden aanmaken

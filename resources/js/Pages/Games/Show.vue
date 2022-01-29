@@ -112,7 +112,7 @@
               <td class="py-3 px-6 text-center">
                 {{game.result}}
               </td>
-              <td class="py-3 px-6 text-center">Score</td>
+              <td class="py-3 px-6 text-center">{{score(game.id)}}</td>
             </tr>
           </tbody>
         </table>
@@ -139,6 +139,7 @@ export default {
   props: {
     Games: Array,
     Rounds: Array,
+    Scores: Array,
     Navigation: Array,
   },
   components: {
@@ -172,6 +173,13 @@ export default {
         return true;
       }
       return false;
+    },
+    score(id) {
+      for (let i = 0; i < this.Scores.length; i++) {
+        if (this.Scores[i]["id"] == id) {
+          return this.Scores[i]["score"];
+        }
+      }
     },
     formattedDate(originalDate) {
       var day = moment(originalDate);
