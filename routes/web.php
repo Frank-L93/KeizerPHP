@@ -16,6 +16,7 @@ use App\Http\Controllers\RankingsController;
 use App\Http\Controllers\RoundsController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\APIController;
 
 
 /*
@@ -68,6 +69,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/rankings', [Controller::class, 'ranking'])->name('rankings');
     Route::get('/round/{round}', [RoundsController::class, 'data'])->name('roundNumber');
     Route::get('/gamescore/{userID}', [GamesController::class, 'getGameScore'])->name('gameScore');
+
+    /**
+     * API-basics
+     */
+    Route::get('/api/players', [APIController::class, 'getCurrentPlayers'])->name('getCurrentPlayers');
+    Route::get('/api/top', [APIController::class, 'top'])->name('top');
+    Route::get('/api/games/current', [APIController::class, 'games'])->name('currentGames');
+    Route::get('/api/tpr', [APIController::class, 'tpr'])->name('tpr');
+    Route::get('/api/bestWin', [APIController::class, 'bestWin'])->name('bestWin');
+    Route::get('/api/leftRounds', [APIController::class, 'leftRounds'])->name('leftRounds');
 
     /**
      * Aanwezigheden aanmaken
