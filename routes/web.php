@@ -35,7 +35,7 @@ use App\Http\Controllers\APIController;
  */
 Route::get('/', [Controller::class, 'index'])->name('home');
 Route::get('/about', [Controller::class, 'about'])->name('about');
-Route::get('/help', [Controller::class, 'about'])->name('help');
+Route::get('/help', [Controller::class, 'help'])->name('help');
 Route::get('password/reset', [PasswordResetLinkController::class, 'create'])->name('password.request');
 Route::post('password/reset', [PasswordResetLinkController::class, 'store'])->name('password.resetting');
 Route::get('password/reset/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/rankings', [Controller::class, 'ranking'])->name('rankings');
     Route::get('/round/{round}', [RoundsController::class, 'data'])->name('roundNumber');
     Route::get('/gamescore/{userID}', [GamesController::class, 'getGameScore'])->name('gameScore');
+    Route::get('/uitleg', [Controller::class, 'aboutUser'])->name('aboutUser');
 
     /**
      * API-basics
@@ -79,6 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/tpr', [APIController::class, 'tpr'])->name('tpr');
     Route::get('/api/bestWin', [APIController::class, 'bestWin'])->name('bestWin');
     Route::get('/api/leftRounds', [APIController::class, 'leftRounds'])->name('leftRounds');
+    Route::post('/api/firsttimelogin', [APIController::class, 'firsttime'])->name('firsttime');
 
     /**
      * Aanwezigheden aanmaken

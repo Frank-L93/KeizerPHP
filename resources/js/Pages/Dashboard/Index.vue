@@ -40,19 +40,85 @@
       </div>
 
       <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
-        Partijen in huidige ronde
+        <div v-if="currentGames == 'Er is geen komende ronde'">
+          Er is geen komende ronde, dus geen partijen beschikbaar.
+        </div>
+        <div v-else>
+          <div v-if="currentGames.length > 0">
+            <table>
+              <th class="
+            table-cell
+            text-center">Bord</th>
+              <th class="
+            table-cell
+            text-center">Wit</th>
+              <th class="table-cell text-center">Zwart</th>
+              <th class="table-cell text-center">Resultaat</th>
+              <tr
+                v-for="(game,key) in currentGames"
+                :key="game.id"
+              >
+                <td class="
+            table-cell
+            text-center">{{key + 1}}</td>
+                <td class="
+            table-cell
+            text-center">{{game.white_player.name}}</td>
+                <td
+                  v-if="game.black_player == null && game.result == 'Afwezigheid'"
+                  class="
+            table-cell
+            text-center"
+                >
+                  -</td>
+                <td
+                  v-else-if="game.black_player == null"
+                  class="
+            table-cell
+            text-center"
+                >bye</td>
+                <td
+                  v-else
+                  class="table-cell text-center"
+                >{{game.black_player.name}}</td>
+                <td class="
+            table-cell
+            text-center">{{game.result}}</td>
+              </tr>
+            </table>
+          </div>
+          <div v-else>Er zijn nog geen partijen in de komende ronde</div>
+        </div>
       </div>
 
       <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
-        Beste TPR
+        <div
+          v-for="tpr in TPR"
+          :key="tpr.id"
+        >
+          {{tpr.user.name}} heeft de hoogste TPR:<br>
+          {{tpr.tpr}}</div>
       </div>
 
       <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
-        Beste overwinning gebruiker
+        Je beste overwinning is behaald tegen <span
+          v-for="(value, name) in bestWin.opponnent"
+          :key="name"
+        >
+          <span v-if="name === 'name'">{{value}}</span>
+          <span v-else></span>
+        </span> <span
+          v-for="(value, name) in bestWin.opponnent"
+          :key="name"
+        >
+          <span v-if="name === 'rating'"> (Rating: {{value}})</span>
+          <span v-else></span>
+        </span>
       </div>
 
       <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
-        Resterend aantal rondes
+        Resterend aantal rondes:<br>
+        {{leftRounds}}
       </div>
 
     </div>
@@ -72,9 +138,9 @@ export default {
     return {
       players: Array,
       top: Array,
-      currentGames: null,
-      TPR: null,
-      bestWin: null,
+      currentGames: Array,
+      TPR: Array,
+      bestWin: Object,
       leftRounds: null,
     };
   },

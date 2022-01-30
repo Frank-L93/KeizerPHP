@@ -75,11 +75,21 @@ class Controller extends BaseController
 
     public function about()
     {
-        return Inertia::render('about');
+        return Inertia::render('Specials/about');
+    }
+
+    public function aboutUser()
+    {
+        return Inertia::render('Specials/AboutUser');
     }
 
     public function clubRegister()
     {
         return Inertia::render('Auth/clubRegister');
+    }
+
+    public function help()
+    {
+        return Inertia::render('Specials/help');
     }
 }
