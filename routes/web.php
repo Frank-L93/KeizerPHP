@@ -17,6 +17,9 @@ use App\Http\Controllers\RoundsController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\APIController;
+use App\Models\Club;
+use App\Models\User;
+use App\Notifications\ClubCreationCompleted;
 
 /*
 |--------------------------------------------------------------------------
@@ -179,3 +182,8 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
 /**
  * Super-Admin
  */
+route::get('/resendlastnotification', function () {
+    $user = User::find(1)->first();
+    $club = Club::find(1)->first();
+    $user->notify(new ClubCreationCompleted($club));
+});
