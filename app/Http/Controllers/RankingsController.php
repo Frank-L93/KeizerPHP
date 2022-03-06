@@ -33,7 +33,11 @@ class RankingsController extends Controller
     public function create()
     {
         $round_id = Round::all()->sortBy('round', SORT_REGULAR, false)->first();
+
         $presences = Presence::where('round', $round_id->id)->get();
+        if ($presences->isEmpty()) {
+            return redirect('/admin/rankings')->with('error', 'Er is niemand aanwezig in de eerste ronde. Aanmaken van een eerste ranglijst is daardoor niet mogelijk');
+        }
         $users_present = array();
         foreach ($presences as $presence) {
             $user_that_is_present = User::where('id', $presence->user_id)->first();

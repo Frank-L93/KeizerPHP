@@ -28,6 +28,7 @@
       </div>
     </inertia-link>
     <inertia-link
+      v-show="current != 'about'"
       :href="route('about')"
       class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-indigo-500"
     >
@@ -36,6 +37,7 @@
       </div>
     </inertia-link>
     <inertia-link
+      v-show="current != 'help'"
       :href="route('help')"
       class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-indigo-500"
     >

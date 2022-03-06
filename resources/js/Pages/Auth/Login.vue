@@ -69,6 +69,7 @@ import LoadingButton from "@/Shared/LoadingButton";
 import Logo from "@/Shared/Logo";
 import TextInput from "@/Shared/TextInput";
 import Guestmenu from "@/Shared/Guestmenu";
+import FlashMessages from "@/Shared/FlashMessages";
 export default {
   name: "Login",
   components: {
@@ -76,6 +77,7 @@ export default {
     Logo,
     TextInput,
     Guestmenu,
+    FlashMessages,
   },
   props: {
     errors: {

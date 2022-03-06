@@ -6,7 +6,13 @@
     <div>
 
       <div>
-        Admin-uitleg
+        Inhoudsopgave:
+        1. Instellingen
+        2. Gebruikers
+        3. Ranglijst
+        4. rondes
+        5. Aanwezigheden
+        6. Partijen
       </div>
     </div>
   </div>

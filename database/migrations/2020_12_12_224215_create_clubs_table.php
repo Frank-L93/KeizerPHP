@@ -17,6 +17,8 @@ class CreateClubsTable extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('contact');
+            $table->string('token');
+            $table->boolean('active')->default(false);
             $table->integer('club_owner')->nullable();
             $table->timestamps();
         });

@@ -16,7 +16,7 @@ $i++;
 @endcomponent
 
 
-@component('mail::button', ['url' => '/rankings'])
+@component('mail::button', ['url' => env('APP_URL').'/rankings'])
 Bekijk de volledige ranking hier.
 @endcomponent
 

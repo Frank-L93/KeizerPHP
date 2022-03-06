@@ -215,7 +215,9 @@ export default {
       return false;
     },
     destroy(gameid) {
-      this.$inertia.delete(this.route("admin.games.delete", gameid));
+      this.$inertia.delete(this.route("admin.games.delete", gameid), {
+        preserveScroll: true,
+      });
     },
     formattedDate(originalDate) {
       var day = moment(originalDate);

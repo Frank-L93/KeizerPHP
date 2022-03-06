@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Club;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -47,13 +48,10 @@ class PlayerCreationCompleted extends Notification
      */
     public function toMail($notifiable)
     {
+        $club = Club::find($this->user->club_id)->firstOrFail();
         return (new MailMessage)
-            ->greeting('Welcome!')
-            ->line('Hi ' . $this->user->name . '! De competitieleider van jouw vereniging heeft voor jou een account aangemaakt op KeizerPHP.nl')
-            ->line('Met dit account kun je meedoen aan de Keizercompetitie van jouw vereniging. Log in en geef je beschikbare speelavonden op zodat je ingedeeld kunt worden.')
-            ->line('Je eerste wachtwoord is: ' . $this->password . ' Er wordt aangeraden om dit wachtwoord na inloggen aan te passen.')
-            ->action('Geef je beschikbaarheid op', url('/'))
-            ->line('Succes!');
+            ->subject('Uitnodiging voor het competitiesysteem van ' . $club->name)
+            ->markdown('emails.newAccount.user', ['user' => $this->user, 'password' => $this->password, 'url' => '/activate/' . $this->user->email . '/' . $this->user->id]);
     }
 
     /**

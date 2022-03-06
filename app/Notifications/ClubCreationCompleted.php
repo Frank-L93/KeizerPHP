@@ -47,10 +47,8 @@ class ClubCreationCompleted extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Welcome!')
-            ->line('Your club ' . $this->club->name . ' has been created!')
-            ->action('Configure your club through logging into your account', url('/'))
-            ->line('Thank you for choosing KeizerPHP!');
+            ->subject($this->club->name . ' is nu geregistreerd bij KeizerPHP')
+            ->markdown('emails.newAccount.competitionleader', ['club' => $this->club, 'url' => env('APP_URL') . '/activate/club/' . $this->club->id . '/' . $this->club->token]);
     }
 
     /**

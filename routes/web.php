@@ -16,7 +16,7 @@ use App\Http\Controllers\RankingsController;
 use App\Http\Controllers\RoundsController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\SettingsController;
-
+use App\Http\Controllers\APIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,12 +34,13 @@ use App\Http\Controllers\SettingsController;
  */
 Route::get('/', [Controller::class, 'index'])->name('home');
 Route::get('/about', [Controller::class, 'about'])->name('about');
-Route::get('/help', [Controller::class, 'about'])->name('help');
+Route::get('/help', [Controller::class, 'help'])->name('help');
 Route::get('password/reset', [PasswordResetLinkController::class, 'create'])->name('password.request');
 Route::post('password/reset', [PasswordResetLinkController::class, 'store'])->name('password.resetting');
 Route::get('password/reset/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
 Route::post('password/new', [NewPasswordController::class, 'store'])->name('password.update');
-Route::get('/activate/{user}/{activate}', [Controller::class, 'activate'])->name('activate');
+Route::get('/activate/{email}/{id}', [Controller::class, 'activate'])->name('activate');
+Route::get('/activate/club/{id}/{token}', [Controller::class, 'activateClub'])->name('activateClub');
 
 
 /**
@@ -67,6 +68,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/games', [GamesController::class, 'view'])->name('games');
     Route::get('/rankings', [Controller::class, 'ranking'])->name('rankings');
     Route::get('/round/{round}', [RoundsController::class, 'data'])->name('roundNumber');
+    Route::get('/gamescore/{userID}', [GamesController::class, 'getGameScore'])->name('gameScore');
+    Route::get('/uitleg', [Controller::class, 'aboutUser'])->name('aboutUser');
+
+    /**
+     * API-basics
+     */
+    Route::get('/api/players', [APIController::class, 'getCurrentPlayers'])->name('getCurrentPlayers');
+    Route::get('/api/top', [APIController::class, 'top'])->name('top');
+    Route::get('/api/games/current', [APIController::class, 'games'])->name('currentGames');
+    Route::get('/api/tpr', [APIController::class, 'tpr'])->name('tpr');
+    Route::get('/api/bestWin', [APIController::class, 'bestWin'])->name('bestWin');
+    Route::get('/api/leftRounds', [APIController::class, 'leftRounds'])->name('leftRounds');
+    Route::post('/api/firsttimelogin', [APIController::class, 'firsttime'])->name('firsttime');
 
     /**
      * Aanwezigheden aanmaken
@@ -126,6 +140,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
     Route::get('/admin/rounds', [RoundsController::class, 'index'])->name('admin.rounds')->middleware('auth');
     Route::get('/admin/rounds/create', [RoundsController::class, 'create'])->name('admin.rounds.create')->middleware('auth');
     Route::post('/admin/rounds/create', [RoundsController::class, 'store'])->name('admin.rounds.store')->middleware('auth');
+    Route::post('/admin/rounds/createRounds', [RoundsController::class, 'storeFile'])->name('admin.rounds.storeFile')->middleware('auth');
     Route::delete('admin/rounds/delete/{round}', [RoundsController::class, 'destroy'])->name('admin.rounds.delete')->middleware('auth');
     Route::patch('/admin/rounds/edit/{round}', [RoundsController::class, 'patch'])->name('admin.rounds.patch')->middleware('auth');
     Route::post('/admin/rounds/edit', [RoundsController::class, 'update'])->name('admin.rounds.update')->middleware('auth');
@@ -134,7 +149,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
      * Aanwezigheden
      */
     Route::get('/admin/presences', [PresencesController::class, 'AdminIndex'])->name('admin.presences')->middleware('auth');
-    Route::get('/admin/presences/create', [PresencesController::class, 'create'])->name('admin.presences.create')->middleware('auth');
+    Route::post('/admin/presences/create', [PresencesController::class, 'create'])->name('admin.presences.create')->middleware('auth');
     Route::get('/admin/presences/create/single', [PresencesController::class, 'singleCreateAdmin'])->name('admin.presences.singleCreate')->middleware('auth');
     Route::post('/admin/presences/create/single', [PresencesController::class, 'storeAdmin'])->name('admin.presences.store')->middleware('auth');
     Route::patch('/admin/presences/edit/{presence_id}', [PresencesController::class, 'patchAdmin'])->name('admin.presence.edit')->middleware('auth');
@@ -159,6 +174,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
     Route::delete('/admin/games/delete/{game}', [GamesController::class, 'delete'])->name('admin.games.delete')->middleware('auth');
     Route::post('/admin/games/create', [GamesController::class, 'store'])->name('admin.games.store')->middleware('auth');
 });
+
 
 /**
  * Super-Admin

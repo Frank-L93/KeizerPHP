@@ -11,12 +11,9 @@
               <Logo />
             </inertia-link>
 
-            <dropdown
-              class="md:hidden"
-              placement="bottom-end"
-            >
+            <dropdown class="md:hidden">
               <svg
-                class="fill-white w-6 h-6"
+                class="w-6 h-6"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >

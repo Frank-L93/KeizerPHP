@@ -4,10 +4,11 @@
       <title>{{ title('Welkom') }}</title>
     </teleport>
     <div class="min-w-screen min-h-screen bg-gray-50 flex items-center justify-center py-5">
+
       <div class="w-full bg-white border-t border-b overflow-hidden relative border-gray-200 px-5 py-16 md:py-24 text-gray-800">
         <div class="w-full max-w-6xl mx-auto">
           <div class="text-center pt-20 md:pt-0 max-w-xl my-auto mx-auto">
-            <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">KeizerPHP</h1>
+            <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">SchaakManager</h1>
             <h3 class="hidden md:flex text-xl mb-5 font-light">Beheer jouw Keizercompetitie, speel mee met een Keizercompetitie</h3>
             <div class="text-center mb-10">
               <span class="inline-block w-1 h-1 rounded-full bg-orange-400 ml-1"></span>
@@ -18,7 +19,7 @@
             </div>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 ml-2 mr-2 mb-4 md:flex items-start">
-
+            <flash-messages />
             <div class="w-full rounded-lg bg-white border border-gray-200 p-5 mr-3 text-gray-800 font-light mb-6">
               <div class="w-full flex mb-4 items-center">
                 <div class="flex-grow pl-3">
@@ -61,10 +62,12 @@
 
 <script>
 import Guestmenu from "@/Shared/Guestmenu";
+import FlashMessages from "@/Shared/FlashMessages";
 export default {
   name: "Guest",
   components: {
     Guestmenu,
+    FlashMessages,
   },
 };
 </script>

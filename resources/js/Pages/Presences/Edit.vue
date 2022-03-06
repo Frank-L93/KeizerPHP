@@ -84,7 +84,7 @@ export default {
   },
   props: {
     Presence: Object,
-    Round: Object,
+    Round: Number,
     errors: Object,
   },
   remember: "form",
