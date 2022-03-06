@@ -47,7 +47,7 @@
               :data="{round: round.uuid}"
               aria-current="page"
               class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-              :class="{'z-10 bg-indigo-50 border-indigo-500 text-indigo-600': $page.props.route.query.round == round.uuid ?? 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 '}"
+              :class="{'z-10 bg-orange-50 border-orange-500 text-orange-600': $page.props.route.query.round == round.uuid ?? 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 '}"
             >
 
               {{round.round}}

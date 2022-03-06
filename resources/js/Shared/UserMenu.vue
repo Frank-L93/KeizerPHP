@@ -5,14 +5,14 @@
   >
     <div class="flex items-center cursor-pointer select-none group">
       <icon
-        class="w-5 h-5 mx-1 group-hover:fill-indigo-600 fill-gray-700 focus:fill-indigo-600"
+        class="w-5 h-5 mx-1 group-hover:fill-orange-600 fill-gray-700 focus:fill-orange-600"
         name="user"
       />
-      <div class="text-gray-700 group-hover:text-indigo-600 focus:text-indigo-600 mr-1 whitespace-no-wrap">
+      <div class="text-gray-700 group-hover:text-orange-600 focus:text-orange-600 mr-1 whitespace-no-wrap">
         <span>{{ $page.props.auth.user.name }}</span>
       </div>
       <icon
-        class="w-5 h-5 group-hover:fill-indigo-600 fill-gray-700 focus:fill-indigo-600"
+        class="w-5 h-5 group-hover:fill-orange-600 fill-gray-700 focus:fill-orange-600"
         name="cheveron-down"
       />
     </div>
@@ -20,12 +20,12 @@
       <div class="mt-2 py-2 shadow-xl bg-white rounded text-sm">
 
         <inertia-link
-          class="block px-6 py-2 hover:bg-indigo-500 hover:text-white"
+          class="block px-6 py-2 hover:bg-orange-500 hover:text-white"
           :href="route('settings')"
         >Jouw Instellingen</inertia-link>
 
         <inertia-link
-          class="block px-6 py-2 hover:bg-indigo-500 hover:text-white"
+          class="block px-6 py-2 hover:bg-orange-500 hover:text-white"
           :href="route('logout')"
           method="post"
         >Logout</inertia-link>

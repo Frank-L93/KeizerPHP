@@ -65,7 +65,7 @@ class HandleInertiaRequests extends Middleware
                     return
                         Club::where('id', Auth::user()->club_id)->pluck('name');
                 } else {
-                    return ['KeizerPHP'];
+                    return ['SchaakManager'];
                 }
             },
             'club' => function () use ($request) {

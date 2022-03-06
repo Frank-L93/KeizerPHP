@@ -4,7 +4,7 @@
       <title>{{ title('Registreer Club') }}</title>
     </teleport>
     <Guestmenu current="registerClub" />
-    <div class="p-6 bg-white-800 min-h-screen flex justify-center items-center">
+    <div class="p-6 bg-white-800 flex place-content-center items-center">
       <div class="w-full max-w-md">
         <logo
           class="block mx-auto w-full max-w-xs fill-white"
@@ -63,7 +63,7 @@
           <div class="px-10 py-4 bg-gray-100 border-t border-gray-200 flex justify-between items-center">
             <loading-button
               :loading="sending"
-              class="btn-indigo"
+              class="btn-orange"
               type="submit"
             >Registreer</loading-button>
           </div>

@@ -3,7 +3,7 @@
     <inertia-link
       v-show="current != 'login'"
       :href="route('login')"
-      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-indigo-500"
+      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-orange-500"
     >
       <div class="text-center">
         <span class="block text-sm leading-none">Login</span>
@@ -12,7 +12,7 @@
     <inertia-link
       v-show="current != 'home'"
       :href="route('home')"
-      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-indigo-500"
+      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-orange-500"
     >
       <div class="text-center">
         <span class="block text-sm leading-none">Home</span>
@@ -21,7 +21,7 @@
     <inertia-link
       v-show="current != 'registerClub'"
       :href="route('register')"
-      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-indigo-500"
+      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-orange-500"
     >
       <div class="text-center">
         <span class="block text-sm leading-none">Registreer je vereniging</span>
@@ -30,16 +30,16 @@
     <inertia-link
       v-show="current != 'about'"
       :href="route('about')"
-      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-indigo-500"
+      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-orange-500"
     >
       <div class="text-center">
-        <span class="block text-sm leading-none">Over KeizerPHP</span>
+        <span class="block text-sm leading-none">Over SchaakManager</span>
       </div>
     </inertia-link>
     <inertia-link
       v-show="current != 'help'"
       :href="route('help')"
-      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-indigo-500"
+      class="flex flex-grow items-center justify-center p-2 text-gray-500 hover:text-orange-500"
     >
       <div class="text-center">
         <span class="block text-sm leading-none">Help</span>

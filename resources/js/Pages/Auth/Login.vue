@@ -4,7 +4,7 @@
       <title>{{ title('Login') }}</title>
     </teleport>
     <Guestmenu current="login" />
-    <div class="p-6 bg-white-800 min-h-screen flex justify-center items-center">
+    <div class="p-6 bg-white-800 flex place-content-center items-center">
       <div class="w-full max-w-md">
         <logo
           class="block mx-auto w-full max-w-xs fill-white"
@@ -54,7 +54,7 @@
             >Wachtwoord vergeten?</inertia-link>
             <loading-button
               :loading="sending"
-              class="btn-indigo"
+              class="btn-orange"
               type="submit"
             >Login</loading-button>
           </div>
