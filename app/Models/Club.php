@@ -14,6 +14,12 @@ class Club extends Model
      * @var string[]
      */
     public $fillable = [
-        'name', 'contact', 'club_owner',
+        'name', 'contact', 'club_owner', 'token',
     ];
+
+
+    public function name()
+    {
+        return $this->name;
+    }
 }

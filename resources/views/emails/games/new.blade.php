@@ -3,7 +3,7 @@
 
 In ronde __{{$round}}__ speel jij tegen __{{$opponnent}}__
 
-@component('mail::button', ['url' => '/rankings'])
+@component('mail::button', ['url' => env('APP_URL').'/rankings'])
 Bekijk hier alle partijen
 @endcomponent
 

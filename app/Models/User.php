@@ -81,6 +81,7 @@ class User extends Authenticatable
         return $this->name;
     }
 
+
     public function ranking()
     {
         return $this->hasOne('App\Models\Ranking');

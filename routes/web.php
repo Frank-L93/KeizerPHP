@@ -18,7 +18,6 @@ use App\Http\Controllers\ClubController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\APIController;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,7 +39,8 @@ Route::get('password/reset', [PasswordResetLinkController::class, 'create'])->na
 Route::post('password/reset', [PasswordResetLinkController::class, 'store'])->name('password.resetting');
 Route::get('password/reset/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
 Route::post('password/new', [NewPasswordController::class, 'store'])->name('password.update');
-Route::get('/activate/{user}/{activate}', [Controller::class, 'activate'])->name('activate');
+Route::get('/activate/{email}/{id}', [Controller::class, 'activate'])->name('activate');
+Route::get('/activate/club/{id}/{token}', [Controller::class, 'activateClub'])->name('activateClub');
 
 
 /**
@@ -140,6 +140,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
     Route::get('/admin/rounds', [RoundsController::class, 'index'])->name('admin.rounds')->middleware('auth');
     Route::get('/admin/rounds/create', [RoundsController::class, 'create'])->name('admin.rounds.create')->middleware('auth');
     Route::post('/admin/rounds/create', [RoundsController::class, 'store'])->name('admin.rounds.store')->middleware('auth');
+    Route::post('/admin/rounds/createRounds', [RoundsController::class, 'storeFile'])->name('admin.rounds.storeFile')->middleware('auth');
     Route::delete('admin/rounds/delete/{round}', [RoundsController::class, 'destroy'])->name('admin.rounds.delete')->middleware('auth');
     Route::patch('/admin/rounds/edit/{round}', [RoundsController::class, 'patch'])->name('admin.rounds.patch')->middleware('auth');
     Route::post('/admin/rounds/edit', [RoundsController::class, 'update'])->name('admin.rounds.update')->middleware('auth');
@@ -148,7 +149,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
      * Aanwezigheden
      */
     Route::get('/admin/presences', [PresencesController::class, 'AdminIndex'])->name('admin.presences')->middleware('auth');
-    Route::get('/admin/presences/create', [PresencesController::class, 'create'])->name('admin.presences.create')->middleware('auth');
+    Route::post('/admin/presences/create', [PresencesController::class, 'create'])->name('admin.presences.create')->middleware('auth');
     Route::get('/admin/presences/create/single', [PresencesController::class, 'singleCreateAdmin'])->name('admin.presences.singleCreate')->middleware('auth');
     Route::post('/admin/presences/create/single', [PresencesController::class, 'storeAdmin'])->name('admin.presences.store')->middleware('auth');
     Route::patch('/admin/presences/edit/{presence_id}', [PresencesController::class, 'patchAdmin'])->name('admin.presence.edit')->middleware('auth');
@@ -173,6 +174,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
     Route::delete('/admin/games/delete/{game}', [GamesController::class, 'delete'])->name('admin.games.delete')->middleware('auth');
     Route::post('/admin/games/create', [GamesController::class, 'store'])->name('admin.games.store')->middleware('auth');
 });
+
 
 /**
  * Super-Admin

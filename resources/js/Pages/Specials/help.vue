@@ -7,7 +7,7 @@
       <div class="w-full bg-white border-t border-b overflow-hidden relative border-gray-200 px-5 py-16 md:py-24 text-gray-800">
         <div class="w-full max-w-6xl mx-auto">
           <div class="text-center pt-20 md:pt-0 max-w-xl my-auto mx-auto">
-            <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">KeizerPHP</h1>
+            <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">SchaakManager</h1>
             <h3 class="hidden md:flex text-xl mb-5 font-light">Beheer jouw Keizercompetitie, speel mee met een Keizercompetitie</h3>
             <div class="text-center mb-10">
               <span class="inline-block w-1 h-1 rounded-full bg-orange-400 ml-1"></span>
@@ -26,7 +26,7 @@
                 </div>
               </div>
               <div class="w-full">
-                <p class="text-sm leading-tight">De eerste stap die gedaan moet worden om gebruik te maken van KeizerPHP is dat de contactpersoon van de vereniging, zich registreert en de competitie instelt. De eerste maal duurt het zo'n 5 tot 10 minuten om alles naar wens in te stellen en de leden aan te maken.</p>
+                <p class="text-sm leading-tight">De eerste stap die gedaan moet worden om gebruik te maken van SchaakManager is dat de contactpersoon van de vereniging, zich registreert en de competitie instelt. De eerste maal duurt het zo'n 5 tot 10 minuten om alles naar wens in te stellen en de leden aan te maken.</p>
               </div>
             </div>
             <div class="w-full rounded-lg bg-white border border-gray-200 p-5 mr-3 text-gray-800 font-light mb-6">
@@ -48,7 +48,7 @@
               </div>
               <div class="w-full">
                 <p class="text-sm leading-tight">Plaatjes zeggen veel meer dan woorden, dus bij deze ook een reeks van screenshots.
-                <p><img src='/assets/dashboard.png' /></p>
+                  <img src='/assets/dashboard.png' />
                 </p>
               </div>
             </div>

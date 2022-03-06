@@ -25,7 +25,8 @@ class APIController extends Controller
 
     public function games(): string
     {
-        $currentRound = Round::currentRound();
+        $currentRound = Round::firstRound();
+
         if ($currentRound == NULL) {
             $gamesInCurrentRound = "Er is geen komende ronde";
         } else {

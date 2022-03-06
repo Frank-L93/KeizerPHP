@@ -5,7 +5,10 @@
     </teleport>
     <div class="flex items-center justify-between">
       <div class="text-xl font-bold mx-2 inline-flex align-middle">Partijen</div>
-      <div>
+      <div v-if="this.$page.props.flash.error">
+
+      </div>
+      <div v-else>
         <div class="text-xl font-bold mx-2 inline-flex align-middle">Rondes</div>
         <nav
           class="inline-flex rounded-md shadow-sm -space-x-px align-middle"
@@ -35,9 +38,8 @@
 
           </inertia-link>
 
-          <!-- Current: "z-10 bg-indigo-50 border-indigo-500 text-indigo-600", Default: "bg-white border-gray-300 text-gray-500 hover:bg-gray-50" -->
-          <span
-            v-for="round in Rounds"
+          <div
+            v-for="round in RoundsToShow"
             :key="round.uuid"
           >
             <inertia-link
@@ -45,33 +47,32 @@
               :data="{round: round.uuid}"
               aria-current="page"
               class="relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-              :class="{'z-10 bg-indigo-50 border-indigo-500 text-indigo-600': $page.props.route.params.filters == round.uuid ?? 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 '}"
+              :class="{'z-10 bg-indigo-50 border-indigo-500 text-indigo-600': $page.props.route.query.round == round.uuid ?? 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50 '}"
             >
 
               {{round.round}}
             </inertia-link>
-          </span>
+
+          </div>
           <div v-if="previousShow == false"></div>
           <div v-else-if="next ==Rounds[1].uuid">
             <inertia-link
               :href="route('games')"
               :data="{round: next}"
-              class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+              class="relative inline-flex items-center px-2 py-2 ml-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
             >
               <Icon name="chevron-right" />
               <span class="sr-only">Next</span>
-
             </inertia-link>
           </div>
           <inertia-link
             v-else
             :href="route('games')"
             :data="{round: next}"
-            class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+            class="relative inline-flex items-center px-2 py-2 ml-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
           >
             <Icon name="chevron-right" />
             <span class="sr-only">Next</span>
-
           </inertia-link>
         </nav>
 
@@ -141,6 +142,7 @@ export default {
     Rounds: Array,
     Scores: Array,
     Navigation: Array,
+    Current: Object,
   },
   components: {
     Icon,
@@ -165,6 +167,16 @@ export default {
       } else {
         return this.Navigation[0].uuid;
       }
+    },
+    RoundsToShow() {
+      const showableRounds = [];
+
+      for (let k = -3; k < 3; k++) {
+        if (this.Rounds[this.Current.round + k] !== undefined) {
+          showableRounds.push(this.Rounds[this.Current.round + k]);
+        }
+      }
+      return showableRounds;
     },
   },
   methods: {

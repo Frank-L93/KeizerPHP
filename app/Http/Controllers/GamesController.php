@@ -11,6 +11,7 @@ use App\Models\Round;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 class GamesController extends Controller
@@ -18,7 +19,7 @@ class GamesController extends Controller
     public function index()
     {
 
-        $games = Game::with('whitePlayer', 'blackPlayer', 'round')->orderBy('round_id')->get();
+        $games = Game::with('whitePlayer', 'blackPlayer', 'round')->orderBy('round_id', 'desc')->get();
         $users = User::all();
 
         return Inertia::render('Admin/Games/Index')->with('Games', $games)->with('Users', $users);
@@ -26,22 +27,25 @@ class GamesController extends Controller
 
     public function view(Request $round)
     {
+        if ($round->has('round')) {
+            $round_id = Round::where('uuid', $round->query('round'))->get()[0];
+            $navigation = Round::where('round', $round_id->round - 1)->orWhere('round', $round_id->round + 1)->select('round', 'uuid')->get();
+            $games = Game::query()->with(array('whitePlayer' => function ($query) {
+                $query->select('id', 'name');
+            }, 'blackPlayer' => function ($query) {
+                $query->select('id', 'name');
+            }, 'round'))->orderBy('round_id')->when($round_id ?? false, fn ($query, $round_id) => $query->where('round_id', $round_id->id))->get();
 
-        $round_id = Round::where('uuid', $round->query('round'))->get()[0];
-        $navigation = Round::where('round', $round_id->round - 1)->orWhere('round', $round_id->round + 1)->select('round', 'uuid')->get();
-        $games = Game::query()->with(array('whitePlayer' => function ($query) {
-            $query->select('id', 'name');
-        }, 'blackPlayer' => function ($query) {
-            $query->select('id', 'name');
-        }, 'round'))->orderBy('round_id')->when($round_id ?? false, fn ($query, $round_id) => $query->where('round_id', $round_id->id))->get();
+            $rounds = Round::select('round', 'uuid')->get();
 
-        $rounds = Round::select('round', 'uuid')->get();
+            // We want to include the scores for the current logged in player.
+            // We have a helper to calculate the scores per game at the current moment.
+            $scores = (new CurrentScores)->GetCurrentScore(auth()->user(), Round::currentRound());
 
-        // We want to include the scores for the current logged in player.
-        // We have a helper to calculate the scores per game at the current moment.
-        $scores = (new CurrentScores)->GetCurrentScore(auth()->user(), Round::currentRound());
-
-        return Inertia::render('Games/Show')->with('Games', $games)->with('Rounds', $rounds)->with('Navigation', $navigation)->with('Scores', $scores);
+            return Inertia::render('Games/Show')->with('Games', $games)->with('Rounds', $rounds)->with('Navigation', $navigation)->with('Scores', $scores)->with('Current', $round_id);
+        } else {
+            return Redirect::route('dashboard')->with('error', 'Er zijn nog geen partijen');
+        }
     }
 
     public function generate()
@@ -66,17 +70,34 @@ class GamesController extends Controller
             $checked = $this->checkProcessedRound($old_round);
         }
 
+
         if ($checked == false) {
             // redirect with error message
-            return redirect('admin/games')->with('error', 'Er zijn nog openstaande partijen in de vorige ronde.');
+            return redirect('admin/games')->with('error', 'Er zijn nog onverwerkte partijen in de vorige ronde.');
         }
 
+        if ($round_to_process->paired == 1) {
+            $paired = false;
+        } else {
+            $paired = true;
+        }
+        if ($paired == false) {
+            return redirect('admin/games')->with('error', 'De huidige te verwerken ronde is al ingedeeld.');
+        }
         // Start generating games
         // What do we need to generate games?
         // Players that are present in the round to be processed
 
         $present_players = $this->getPlayers($round_to_process);
 
+        // Check if all present players are in the current ranking, if not, add them.
+        foreach ($present_players as $player) {
+            if ($player->user->ranking == NULL) {
+                // Trigger the addition of a new player to the rankings.
+                $newPlayers = new Pair();
+                $newPlayers->addPlayerToRanking($player);
+            }
+        }
         // Now we can start the matching procedure
         $paired = new Pair();
         $matching = $paired->keizer($round_to_process, $present_players);

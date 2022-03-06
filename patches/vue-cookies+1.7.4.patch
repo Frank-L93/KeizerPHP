@@ -1,0 +1,56 @@
+diff --git a/node_modules/vue-cookies/vue-cookies.js b/node_modules/vue-cookies/vue-cookies.js
+index fe7cc6d..42807b4 100644
+--- a/node_modules/vue-cookies/vue-cookies.js
++++ b/node_modules/vue-cookies/vue-cookies.js
+@@ -19,7 +19,7 @@
+   var VueCookies = {
+     // install of Vue
+     install: function (Vue) {
+-      Vue.prototype.$cookies = this;
++      Vue.prototype ? Vue.prototype.$cookies = this : Vue.config.globalProperties.$cookies = this;
+       Vue.$cookies = this;
+     },
+     config: function (expireTimes, path, domain, secure, sameSite) {
+@@ -65,7 +65,7 @@
+               var _expireTime = expireTimes.replace(/^(\d+)(?:y|m|d|h|min|s)$/i, '$1');
+               // get capture type group , to lower case
+               switch (expireTimes.replace(/^(?:\d+)(y|m|d|h|min|s)$/i, '$1').toLowerCase()) {
+-                  // Frequency sorting
++                // Frequency sorting
+                 case 'm':
+                   _expires = '; max-age=' + +_expireTime * 2592000;
+                   break; // 60 * 60 * 24 * 30
+@@ -97,12 +97,12 @@
+         }
+       }
+       document.cookie =
+-          encodeURIComponent(key) + '=' + encodeURIComponent(value) +
+-          _expires +
+-          (domain ? '; domain=' + domain : defaultConfig.domain) +
+-          (path ? '; path=' + path : defaultConfig.path) +
+-          (secure == undefined ? defaultConfig.secure : secure ? '; Secure' : '') +
+-          (sameSite == undefined ? defaultConfig.sameSite : (sameSite ? '; SameSite=' + sameSite : ''));
++        encodeURIComponent(key) + '=' + encodeURIComponent(value) +
++        _expires +
++        (domain ? '; domain=' + domain : defaultConfig.domain) +
++        (path ? '; path=' + path : defaultConfig.path) +
++        (secure == undefined ? defaultConfig.secure : secure ? '; Secure' : '') +
++        (sameSite == undefined ? defaultConfig.sameSite : (sameSite ? '; SameSite=' + sameSite : ''));
+       return this;
+     },
+     remove: function (key, path, domain) {
+@@ -110,10 +110,10 @@
+         return false;
+       }
+       document.cookie = encodeURIComponent(key) +
+-          '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
+-          (domain ? '; domain=' + domain : defaultConfig.domain) +
+-          (path ? '; path=' + path : defaultConfig.path) +
+-          '; SameSite=Lax';
++        '=; expires=Thu, 01 Jan 1970 00:00:00 GMT' +
++        (domain ? '; domain=' + domain : defaultConfig.domain) +
++        (path ? '; path=' + path : defaultConfig.path) +
++        '; SameSite=Lax';
+       return this;
+     },
+     isKey: function (key) {

@@ -9,6 +9,7 @@ use App\Models\Ranking;
 use App\Models\Round;
 use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
 class Pair
@@ -44,6 +45,8 @@ class Pair
             return $text;
         }
         $paired_games = Game::where('round_id', $round->id)->get();
+        $round->paired = 1;
+        $round->save();
         return $paired_games;
     }
 
@@ -130,15 +133,23 @@ class Pair
 
             Bye:
             if ($k == count($playerstopair)) {
-                return "Invalid Bye, can not Match. Create games manually.";
+                return "Na " . $k . " pogingen, gestopt vanwege: Invalid Bye, can not Match. Create games manually.";
             }
 
             $bye = 0;
-            if (!count($playerstopair) == 1) {
-                $bye = rand(0, count($playerstopair)); // Random Bye
+            if (count($playerstopair) !== 1) {
+
+                $luckFactor = rand(0, 100);
+
+                // Give bye to last player with an earlier played game or, if luck factor is high enough, make it random.
+                if ($luckFactor > 50) {
+                    $bye = rand(0, count($playerstopair)); // Random Bye
+                } else {
+                    $bye = count($playerstopair) - $k;
+                }
             }
 
-            if ($this->validBye($playerstopair[$bye], $round) == true) {
+            if ($this->validBye($playerstopair[$bye - 1], $round) == true) {
                 $this->createGame($playerstopair[$bye]["user"], "Bye", $round);
                 array_push($matched, $playerstopair[$bye]["user"]);
             } else {
@@ -233,10 +244,16 @@ class Pair
         ) {
             $round_minimum = 1;
         }
-        $game_exist = Game::where([['white', '=', $player_one], ['black', '=', 'Bye']])->whereBetween('round_id', [$round_minimum, $round])->get();
-        if (($game_exist->isNotEmpty())) {
+        $bye_game_exist = Game::where([['white', '=', $player_one], ['black', '=', 'Bye']])->whereBetween('round_id', [$round_minimum, $round])->get();
+        if (($bye_game_exist->isNotEmpty())) {
             return false;
         }
+        // Check if the current player even had a game earlier, otherwise, the player will be here for the first time, then it is no valid bye.
+        $game_exist = Game::where('white', $player_one)->orWhere('black', $player_one)->get();
+        if ($game_exist->isEmpty()) {
+            return false;
+        }
+
         // If valid return True;
         return true;
     }
@@ -328,7 +345,7 @@ class Pair
      * @throws InvalidArgumentException 
      * @throws InvalidCastException 
      */
-    private function addPlayerToRanking($player)
+    public function addPlayerToRanking($player)
     {
 
         $newRanking = new Ranking;

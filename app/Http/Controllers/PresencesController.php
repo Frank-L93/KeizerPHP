@@ -66,7 +66,7 @@ class PresencesController extends Controller
 
     public function singleCreate()
     {
-        $rounds = Round::select('date')->orderBy('date')->get();
+        $rounds = Round::select('date')->where('processed', NULL)->orderBy('date')->get();
         if ($rounds->isEmpty()) {
             return redirect('presences')->with('error', 'De competitieleider heeft geen rondes aangemaakt, je kunt nog geen aanwezigheid opgeven.');
         }
@@ -77,7 +77,7 @@ class PresencesController extends Controller
     public function singleCreateAdmin()
     {
         $users = User::select(['id', 'name'])->get();
-        $rounds = Round::select('date')->orderBy('date')->get();
+        $rounds = Round::select('date')->where('processed', NULL)->orderBy('date')->get();
         if ($rounds->isEmpty()) {
             return redirect('presences')->with('error', 'De competitieleider heeft geen rondes aangemaakt, je kunt nog geen aanwezigheid opgeven.');
         }
@@ -315,6 +315,7 @@ class PresencesController extends Controller
                 return redirect('/admin/presences')->with('error', 'Deze aanwezigheid kun je niet meer aanpassen.');
             }
         }
-        return Inertia::render('Admin/Presences/Edit')->with('Presence', $presence_id);
+        $Round = Round::find($presence_id->round);
+        return Inertia::render('Admin/Presences/Edit')->with('Presence', $presence_id)->with('Round', $Round->round);
     }
 }

@@ -7,7 +7,7 @@
       <div class="w-full bg-white border-t border-b overflow-hidden relative border-gray-200 px-5 py-16 md:py-24 text-gray-800">
         <div class="w-full max-w-6xl mx-auto">
           <div class="text-center pt-20 md:pt-0 max-w-xl my-auto mx-auto">
-            <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">KeizerPHP</h1>
+            <h1 class="text-6xl md:text-7xl font-bold mb-5 text-gray-600">SchaakManager</h1>
             <h3 class="hidden md:flex text-xl mb-5 font-light">Beheer jouw Keizercompetitie, speel mee met een Keizercompetitie</h3>
             <div class="text-center mb-10">
               <span class="inline-block w-1 h-1 rounded-full bg-orange-400 ml-1"></span>
@@ -26,22 +26,22 @@
                 </div>
               </div>
               <div class="w-full">
-                <p class="text-sm leading-tight">KeizerPHP is gemaakt door Frank Lambregts. Frank schaakt zelf ook en in zijn vrije tijd probeert hij deze applicatie te optimaliseren. Je kunt meer over Frank te weten komen op zijn eigen <a
+                <p class="text-sm leading-tight">SchaakManager is gemaakt door Frank Lambregts. Frank schaakt zelf ook en in zijn vrije tijd probeert hij deze applicatie te optimaliseren. Je kunt meer over Frank te weten komen op zijn eigen <a
                     href='https://franklambregts.com/'
                     target='_blank'
-                  >website</a>! Vragen of opmerkingen over deze applicatie, stuur gerust een mail naar dev@keizerphp.nl!</p>
+                  >website</a>! Vragen of opmerkingen over deze applicatie, stuur gerust een mail naar dev@SchaakManager.nl!</p>
               </div>
             </div>
             <div class="w-full rounded-lg bg-white border border-gray-200 p-5 mr-3 text-gray-800 font-light mb-6">
               <div class="w-full flex mb-4 items-center">
 
                 <div class="flex-grow pl-3">
-                  <h6 class="font-bold text-sm uppercase text-gray-600">Technische werking van KeizerPHP</h6>
+                  <h6 class="font-bold text-sm uppercase text-gray-600">Technische werking van SchaakManager</h6>
                 </div>
               </div>
               <div class="w-full">
                 <p class="text-sm leading-tight">Wellicht ben je benieuwd hoe het een en ander werkt op de achtergrond. Dat is gemakkelijk uit te zoeken, omdat de broncode van deze applicatie vrij toegankelijk is voor iedereen. Er wordt gebruik gemaakt van toffe technieken en frameworks zoals Laravel (backend), Vue (frontend), Inertia (de lijm tussen back- en frontend) en Tailwind (de opmaak). Op <a
-                    href="https://github.com/frank-l93/keizerphp"
+                    href="https://github.com/frank-l93/KeizerPHP"
                     target='_blank'
                   >GitHub</a> kun je bijdragen of rondsnuffelen. Er zijn geen tests geschreven, dat is wel iets wat zou moeten, dus ben jij een tester, schroom niet!</p>
               </div>
@@ -54,7 +54,7 @@
               </div>
               <div class="w-full">
                 <p class="text-sm leading-tight">Om gebruik te maken van de applicatie, betaal je echt helemaal niks. Je kunt eventuele aanvullende services aanvragen, zoals een private versie voor je vereniging. Om de applicatie (momenteel) in de lucht te houden, kost het Frank zo'n 25 bakjes koffie per maand. Die kun je, als je wilt, betalen via donatieplatform <a
-                    href='https://ko-fi.com/keizerphp'
+                    href='https://ko-fi.com/SchaakManager'
                     target='_blank'
                   >Ko-Fi</a></p>
               </div>

@@ -1,46 +1,43 @@
-## About KeizerPHP (2.0)
-<p>Ever wanted to manage a chess club competition with some ease, just from the web? Now it is possible. KeizerPHP (oh boy, what a name) gives you the possibility to do this. Just sign up your club and start using it.</p>
+## Over SchaakManager
+<p>Ooit gedroomd van het beheren van een schaakclubcompetitie of toernooi, met het gemak van het web.
+Nu is dat mogelijk met SchaakManager! Registreer je vereniging en begin met gebruiken.</p>
 
 ## Help
-Okay, to be fair, you can't use it just yet (sorry, sorry, this is just a hobby of me). I'm working on a new release somewhere begin 2021. The sourcecode you are seeing here is not complete. But when you can use it, this page will be updated.
+Je kunt registreren op https://schaakmanager.nl
+Iedereen vereniging kan er gebruik van maken als zij gebruik maken van het Keizersysteem voor hun interne competitie.
+De oorspronkelijke versie draait, speciaal voor De Pion op https://interndepion.nl
 
-You can then just sign up via https://keizerphp.nl (the homepage of this project is now https://interndepion.nl which runs version 1.0 of KeizerPHP, released in 2020, but that version is old and way too depressing to work on.) 
-
-To check things out by then, use DEMO and password DEMO.
-
-## About
-### Features
+## Over
+### Eigenschappen
 <ol>
-<li>Keizer-competition</li>
-<li>Manage your members</li>
-<li>Absence generator at the start of the competition</li>
-<li>Dashboard with information about the upcoming round</li>
-<li>TPR calculation</li>
-<li>Random byes & strong players that just start in the competition are not automatically paired to the weakest player in the ranking.</li>
-<li>Mobile-friendly layout</li>
-<li>Notifications (WebPush, E-mail, Website, RSS)</li>
-<li>English & Dutch support</li>
-<li>For all details, feel free to test it (it does not cost anything).</li>
+<li>Keizercompetitie</li>
+<li>Beheer je leden</li>
+<li>Gemakkelijk aanwezigheden aan te maken aan het begin van de competitie.</li>
+<li>Dashboard met informatie over de volgende ronde</li>
+<li>TPR Berekening</li>
+<li>Willekeurige byes & sterke spelers die aankomen waaien, worden niet standaard tegen de laagste speler in de ranglijst ingedeeld.</li>
+<li>Mobiel vriendelijk</li>
+<li>Notificaties via de E-mail van nieuwe partijen, uitslagen en standen.</li>
+<li>Gratis te gebruiken</li>
 </ol>
 
 #### Features in the making
 <ol>
-<li>APIs to include information on your club website</li>
-<li>Other competition systems (i.e. Swiss)</li>
-<li>Better security, more roles</li>
+<li>Notificaties via Push-meldingen</li>
+<li>Zwitserse toernooien</li>
+<li>Engelse vertaling (sommige meldingen zijn wel in het Engels al)</li>
+<li>APIs</li>
 </ol>
 
 ### Credits
-This project is made with Laravel, a PHP Framework. 
 All rights reserved to the third party vendor packages that make this work. And a special shout-out to JBFSoftware for making Sevilla, software to manage your chess club competition. Used it so often to check if calculation I made were right.</p>
 
 
 ### About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax.
-KeizerPHP 2021 is based on 8.x version of Laravel. 
+SchaakManager is gebouwd in versie 8.x version van Laravel, in combinatie met Vue3, Inertia en TailwindCSS. Laravel 9 support wordt aangewerkt.
 
-## License
-The sourcecode of KeizerPHP is open to anyone. _But if you like it, you are free to donate me a coffee._
-
-If you want to contribute in a more technical way, feel free to. See the full license in the license file.
+## Licentie
+De broncode van Schaakmanager is vrij toegankelijk voor iedereen. Als je het fijn vindt, kun je wel koffie doneren :)
+Als je technisch wilt bijdragen, doe dat gerust. Voor de volledige licentie, bekijk het licentiebestand..
