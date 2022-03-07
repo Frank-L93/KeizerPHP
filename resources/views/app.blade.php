@@ -13,7 +13,7 @@
     <script src="{{ mix('/js/app.js') }}" defer></script>
 </head>
 
-<body>
+<body class="bg-gray-300">
     @inertia
     @include('cookie-consent::index')
 </body>

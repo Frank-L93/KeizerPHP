@@ -2,7 +2,7 @@
   <div>
     <div class="flex flex-wrap -mx-2 overflow-hidden lg:-mx-3 xl:-mx-3">
 
-      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
+      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-md bg-orange-400">
         <Icon
           name="users"
           class="inline-flex"
@@ -10,7 +10,7 @@
         Aantal standaard aanwezige deelnemers: {{players[1]}}
       </div>
 
-      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
+      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-md bg-orange-400">
         <div class="grid grid-cols-5 grid-flow-col">
           <div class="col-span-1">
             <Icon
@@ -39,7 +39,7 @@
         </div>
       </div>
 
-      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
+      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-md bg-orange-400">
         <div v-if="currentGames == 'Er is geen komende ronde'">
           Er is geen komende ronde, dus geen partijen beschikbaar.
         </div>
@@ -91,7 +91,7 @@
         </div>
       </div>
 
-      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
+      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-md bg-orange-400">
         <div
           v-for="tpr in TPR"
           :key="tpr.id"
@@ -100,7 +100,7 @@
           {{tpr.tpr}}</div>
       </div>
 
-      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
+      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-md bg-orange-400">
         Je beste overwinning is behaald tegen <span
           v-for="(value, name) in bestWin.opponnent"
           :key="name"
@@ -116,7 +116,7 @@
         </span>
       </div>
 
-      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-xl bg-orange-500">
+      <div class="my-2 px-2 w-full overflow-hidden md:w-1/2 lg:my-3 lg:px-3 lg:w-1/3 xl:my-3 xl:px-3 xl:w-1/3 border rounded-xl shadow-md bg-orange-400">
         Resterend aantal rondes:<br>
         {{leftRounds}}
       </div>

@@ -42,6 +42,7 @@ class Controller extends BaseController
         }
         $club = Club::where('id', auth()->user()->club_id)->first();
         if ($club->active == false) {
+            Auth::logout();
             return redirect('/login')->with('error', 'De vereniging is niet actief. De competitieleider zal nog moeten bevestigen!');
         }
         return Inertia::render('Index');

@@ -3,12 +3,12 @@
     <teleport to="head">
       <title>{{ title('Reset wachtwoord') }}</title>
     </teleport>
-    <div class="p-6 bg-white-800 flex place-content-center items-center">
-      <div class="w-full max-w-md">
-        <logo
-          class="block mx-auto w-full max-w-xs fill-white"
-          height="50"
-        />
+    <div class="text-center pt-20 md:pt-0 max-w-xl my-5 mx-auto">
+      <MainLogo />
+    </div>
+
+    <div class="w-full bg-white border-t border-b overflow-hidden relative border-gray-200 px-5 py-16 md:py-24 text-gray-800">
+      <div class="w-full max-w-md mx-auto">
         <flash-messages></flash-messages>
         <form
           class="mt-8 bg-white rounded-lg shadow-xl overflow-hidden"
@@ -55,22 +55,25 @@
           </div>
         </form>
       </div>
+      <Guestmenu />
     </div>
   </div>
 </template>
 <script>
 import LoadingButton from "@/Shared/LoadingButton";
-import Logo from "@/Shared/Logo";
+import MainLogo from "@/Shared/MainLogo";
 import TextInput from "@/Shared/TextInput";
 import FlashMessages from "@/Shared/FlashMessages";
+import Guestmenu from "@/Shared/Guestmenu.vue";
 
 export default {
   name: "Reset wachtwoord",
   components: {
     LoadingButton,
-    Logo,
+    MainLogo,
     TextInput,
     FlashMessages,
+    Guestmenu,
   },
   props: {
     errors: {

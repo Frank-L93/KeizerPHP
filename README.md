@@ -1,3 +1,5 @@
+![Logo SchaakManager](https://github.com/Frank-L93/KeizerPHP/blob/master/logo_large.png?raw=true)
+
 ## Over SchaakManager
 <p>Ooit gedroomd van het beheren van een schaakclubcompetitie of toernooi, met het gemak van het web.
 Nu is dat mogelijk met SchaakManager! Registreer je vereniging en begin met gebruiken.</p>

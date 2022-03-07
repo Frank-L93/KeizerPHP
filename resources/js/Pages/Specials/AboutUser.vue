@@ -8,13 +8,19 @@
       In principe spreekt het voor zich, maar omdat het kan voorkomen dat je toch wat vragen hebt, hierbij een kleine uitleg.
     </p>
     <p class="mb-2 font-bold">Aanwezigheden doorgeven</p>
-    <p class="mb-2">Aan het begin van het seizoen kan de competitieleider ervoor kiezen om iedereen die heeft aangegeven standaard aanwezig te zijn, voor alle rondes in een keer aanwezig te zetten. <br />
+    <p class="mb-2">Aan het begin van het seizoen kan de competitieleider ervoor kiezen om iedereen die heeft aangegeven standaard aanwezig te zijn, voor alle rondes in een keer aanwezig te zetten.</p>
+    <p>
       Als hij dat gedaan heeft, zul je zien dat je al een hele lijst aan aanwezigheden hebt. Die kun je aanpassen met het potloodje
-    <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110 inline-flex">
-      <Icon name="pencil" />
-    </div>. Dat wijst voor zich, ben je aanwezig, kun je het aanpassen naar afwezig en vice versa. <br />
-    Bij het afwezig melden kun je een reden opgeven. Per reden kan een andere score nog worden gekregen, afhankelijk van hoe de competitieleider dat heeft ingesteld.
-    <br /> Het toevoegen van een nieuwe aanwezigheid, gaat gemakkelijk met de groene knop rechtsboven op de pagina van de aanwezigheden. Je selecteert de datum waarvoor je je aanwezigheid wilt opgeven en kiest vervolgens of je afwezig bent of aanwezig bent die datum.
+
+      <Icon
+        name="pencil"
+        class="w-4 mr-2 transform inline-flex"
+      />
+    </p>
+    <p>Dat wijst voor zich, ben je aanwezig, kun je het aanpassen naar afwezig en vice versa.
+      Bij het afwezig melden kun je een reden opgeven. Per reden kan een andere score nog worden gekregen, afhankelijk van hoe de competitieleider dat heeft ingesteld.
+    </p>
+    <p>Het toevoegen van een nieuwe aanwezigheid, gaat gemakkelijk met de groene knop rechtsboven op de pagina van de aanwezigheden. Je selecteert de datum waarvoor je je aanwezigheid wilt opgeven en kiest vervolgens of je afwezig bent of aanwezig bent die datum.
     </p>
     <p class="mb-2 font-bold">Partijen bekijken</p>
     <p class="mb-2">Zodra er partijen zijn, kun je bij de pagina met partijen, alle partijen terugvinden per ronde. Rechtsboven kun je naar de rondes door klikken.<br /> Bovendien zie je bij je eigen partijen welke score je hebt gehaald.</p>
