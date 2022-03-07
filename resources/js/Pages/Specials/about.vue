@@ -5,8 +5,10 @@
     </teleport>
     <div class="text-center pt-20 md:pt-0 max-w-xl my-5 mx-auto">
       <MainLogo />
+
+      <guestmenu current="about"></guestmenu>
     </div>
-    <div class="w-full bg-white border-t border-b overflow-hidden relative border-gray-200 px-5 py-16 md:py-24 text-gray-800">
+    <div class="w-full bg-gray-300 border-t border-b overflow-hidden relative border-gray-200 px-5 py-16 md:py-24 text-gray-800">
       <div class="w-full max-w-6xl mx-auto">
 
         <div class="grid grid-cols-1 md:grid-cols-3 ml-2 mr-2 mb-4 md:flex items-start">
@@ -76,7 +78,6 @@
           </div>
         </div>
       </div>
-      <guestmenu current="about"></guestmenu>
 
     </div>
   </div>

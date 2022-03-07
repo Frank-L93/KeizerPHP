@@ -1,5 +1,5 @@
 <template>
-  <div class="block z-10 bg-white absolute top-0 w-full overflow-auto border-gray-200 md:flex">
+  <div class="block md:inline-flex top-0 w-full overflow-auto border-gray-200">
     <inertia-link
       v-show="current != 'login'"
       :href="route('login')"
