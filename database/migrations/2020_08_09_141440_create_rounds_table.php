@@ -15,7 +15,7 @@ class CreateRoundsTable extends Migration
     {
         Schema::create('rounds', function (Blueprint $table) {
             $table->uuid('uuid');
-            $table->id()->primary();
+            $table->id();
             $table->integer('round');
             $table->datetime('date');
             $table->integer('processed')->nullable();
