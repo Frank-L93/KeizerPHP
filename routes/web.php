@@ -182,8 +182,3 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
 /**
  * Super-Admin
  */
-route::get('/resendlastnotification', function () {
-    $user = User::find(1)->first();
-    $club = Club::find(1)->first();
-    $user->notify(new ClubCreationCompleted($club));
-});
