@@ -11,7 +11,6 @@
     <p class="mb-2">Aan het begin van het seizoen kan de competitieleider ervoor kiezen om iedereen die heeft aangegeven standaard aanwezig te zijn, voor alle rondes in een keer aanwezig te zetten.</p>
     <p>
       Als hij dat gedaan heeft, zul je zien dat je al een hele lijst aan aanwezigheden hebt. Die kun je aanpassen met het potloodje
-
       <Icon
         name="pencil"
         class="w-4 mr-2 transform inline-flex"

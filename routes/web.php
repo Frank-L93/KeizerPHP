@@ -17,9 +17,7 @@ use App\Http\Controllers\RoundsController;
 use App\Http\Controllers\ClubController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\APIController;
-use App\Models\Club;
-use App\Models\User;
-use App\Notifications\ClubCreationCompleted;
+use App\Http\Controllers\Api\ClubsApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +42,15 @@ Route::get('password/reset/{token}', [NewPasswordController::class, 'create'])->
 Route::post('password/new', [NewPasswordController::class, 'store'])->name('password.update');
 Route::get('/activate/{email}/{id}', [Controller::class, 'activate'])->name('activate');
 Route::get('/activate/club/{id}/{token}', [Controller::class, 'activateClub'])->name('activateClub');
+Route::get('/favoriteclub', [Controller::class, 'club'])->name('setFavoriteClub');
 
+
+/**
+ * API for a dashboard
+ */
+Route::get('/api/clubs/club/{clubid}/games/current', [ClubsApiController::class, 'games'])->name('api.clubs.currentGames');
+Route::get('/api/clubs/club/{clubid}/ranking/current', [ClubsApiController::class, 'getRanking'])->name('api.clubs.currentRanking');
+Route::get('/api/clubs/club/{clubid}/name', [ClubsApiController::class, 'detail'])->name('api.clubs.currentFavoriteClub');
 
 /**
  *  These routes should not be possible to visit when Logged in, so go through the middleware.

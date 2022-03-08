@@ -6,6 +6,7 @@ use App\Models\Club;
 use App\Models\Round;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Session;
 
@@ -91,6 +92,12 @@ class HandleInertiaRequests extends Middleware
                 return [
                     'params' => $request->route()->parameters(),
                     'query' => $request->all(),
+                ];
+            },
+            'clubs' => function () use ($request) {
+                return [
+
+                    'clubs' => isset($_COOKIE['club']) ? false : Club::withoutGlobalScopes()->get(['id', 'name']),
                 ];
             },
         ]);

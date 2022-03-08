@@ -934,6 +934,14 @@ var map = {
 		"./resources/js/Pages/Specials/AboutUser.vue",
 		"resources_js_Pages_Specials_AboutUser_vue"
 	],
+	"./Specials/Dashboard": [
+		"./resources/js/Pages/Specials/Dashboard.vue",
+		"resources_js_Pages_Specials_Dashboard_vue"
+	],
+	"./Specials/Dashboard.vue": [
+		"./resources/js/Pages/Specials/Dashboard.vue",
+		"resources_js_Pages_Specials_Dashboard_vue"
+	],
 	"./Specials/about": [
 		"./resources/js/Pages/Specials/about.vue",
 		"resources_js_Pages_Specials_about_vue"
@@ -949,6 +957,14 @@ var map = {
 	"./Specials/help.vue": [
 		"./resources/js/Pages/Specials/help.vue",
 		"resources_js_Pages_Specials_help_vue"
+	],
+	"./Specials/landing": [
+		"./resources/js/Pages/Specials/landing.vue",
+		"resources_js_Pages_Specials_landing_vue"
+	],
+	"./Specials/landing.vue": [
+		"./resources/js/Pages/Specials/landing.vue",
+		"resources_js_Pages_Specials_landing_vue"
 	]
 };
 function webpackAsyncContext(req) {
@@ -1099,7 +1115,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Admin_Configs_Index_vue":"01b3a7478cf0f3c0","resources_js_Pages_Admin_Games_Create_vue":"ffa6edca979952b0","resources_js_Pages_Admin_Games_Index_vue":"8384e516d71f1596","resources_js_Pages_Admin_Index_vue":"d886811830cd2f61","resources_js_Pages_Admin_Presences_Create_vue":"fa5dc8d8144707c8","resources_js_Pages_Admin_Presences_Edit_vue":"9af6df579d125829","resources_js_Pages_Admin_Presences_Index_vue":"ea9f9843a4ec2463","resources_js_Pages_Admin_Rankings_Index_vue":"902f38e25a316657","resources_js_Pages_Admin_Rankings_Update_vue":"ee1970b4a48a53d5","resources_js_Pages_Admin_Rounds_Create_vue":"3d32a2a7866dd4af","resources_js_Pages_Admin_Rounds_Edit_vue":"88385aaa6267857c","resources_js_Pages_Admin_Rounds_Index_vue":"04f86069fdfaf4f8","resources_js_Pages_Admin_Users_Create_vue":"9a8cb1fced5a8f8c","resources_js_Pages_Admin_Users_Edit_vue":"f4ee0bcbfe0ad01a","resources_js_Pages_Admin_Users_Index_vue":"eed9f9759f043b23","resources_js_Pages_Auth_Login_vue":"4b567b3f3756e42e","resources_js_Pages_Auth_Password_vue":"35db22e8cdc51d3a","resources_js_Pages_Auth_Reset-password_vue":"c0ccd56cde0b6ae8","resources_js_Pages_Auth_Settings_vue":"7e783eb3a876dc24","resources_js_Pages_Auth_clubRegister_vue":"c6dfe6a82faa5302","resources_js_Pages_Dashboard_Index_vue":"239be4094a61187f","resources_js_Pages_Games_Show_vue":"fb4e6fd89131319a","resources_js_Pages_Guest_vue":"0e96135331c5b886","resources_js_Pages_Index_vue":"eb418002f97cb59e","resources_js_Pages_Presences_Create_vue":"79a9aa80f6ccc7e9","resources_js_Pages_Presences_Edit_vue":"c8695358d4560228","resources_js_Pages_Presences_Show_vue":"a8a30c82a13d48c0","resources_js_Pages_Rankings_Show_vue":"8b59e335755057c4","resources_js_Pages_Specials_AboutUser_vue":"ea23bf7e6e18ba1a","resources_js_Pages_Specials_about_vue":"ca6323bca8d2d532","resources_js_Pages_Specials_help_vue":"a24b511186b1c525"}[chunkId] + "";
+/******/ 			return "js/" + chunkId + ".js?id=" + {"resources_js_Pages_Admin_Configs_Index_vue":"01b3a7478cf0f3c0","resources_js_Pages_Admin_Games_Create_vue":"ffa6edca979952b0","resources_js_Pages_Admin_Games_Index_vue":"8384e516d71f1596","resources_js_Pages_Admin_Index_vue":"3507fed78ab691e4","resources_js_Pages_Admin_Presences_Create_vue":"fa5dc8d8144707c8","resources_js_Pages_Admin_Presences_Edit_vue":"9af6df579d125829","resources_js_Pages_Admin_Presences_Index_vue":"ea9f9843a4ec2463","resources_js_Pages_Admin_Rankings_Index_vue":"902f38e25a316657","resources_js_Pages_Admin_Rankings_Update_vue":"ee1970b4a48a53d5","resources_js_Pages_Admin_Rounds_Create_vue":"3d32a2a7866dd4af","resources_js_Pages_Admin_Rounds_Edit_vue":"88385aaa6267857c","resources_js_Pages_Admin_Rounds_Index_vue":"04f86069fdfaf4f8","resources_js_Pages_Admin_Users_Create_vue":"9a8cb1fced5a8f8c","resources_js_Pages_Admin_Users_Edit_vue":"f4ee0bcbfe0ad01a","resources_js_Pages_Admin_Users_Index_vue":"eed9f9759f043b23","resources_js_Pages_Auth_Login_vue":"6203d9df2f9dfe4c","resources_js_Pages_Auth_Password_vue":"7d47fa4e64f56d42","resources_js_Pages_Auth_Reset-password_vue":"ce50b94471c4dbdd","resources_js_Pages_Auth_Settings_vue":"7e783eb3a876dc24","resources_js_Pages_Auth_clubRegister_vue":"cf1ab9f0c9f642f4","resources_js_Pages_Dashboard_Index_vue":"239be4094a61187f","resources_js_Pages_Games_Show_vue":"fb4e6fd89131319a","resources_js_Pages_Guest_vue":"70057dce362fcc7b","resources_js_Pages_Index_vue":"eb418002f97cb59e","resources_js_Pages_Presences_Create_vue":"79a9aa80f6ccc7e9","resources_js_Pages_Presences_Edit_vue":"c8695358d4560228","resources_js_Pages_Presences_Show_vue":"a8a30c82a13d48c0","resources_js_Pages_Rankings_Show_vue":"8b59e335755057c4","resources_js_Pages_Specials_AboutUser_vue":"9a5f4af4c937c88d","resources_js_Pages_Specials_Dashboard_vue":"9267a3af9f77c9f0","resources_js_Pages_Specials_about_vue":"4df2e2c2a8fb8835","resources_js_Pages_Specials_help_vue":"786c7f4b71fb2ce1","resources_js_Pages_Specials_landing_vue":"0abc86754a273d44"}[chunkId] + "";
 /******/ 		};
 /******/ 	})();
 /******/ 	

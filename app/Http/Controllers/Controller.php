@@ -10,11 +10,12 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Cookie;
 
 class Controller extends BaseController
 {
@@ -120,5 +121,15 @@ class Controller extends BaseController
     public function help()
     {
         return Inertia::render('Specials/help');
+    }
+
+    public function club(Request $club)
+    {
+        if ($club->has('favoriteClub')) {
+            setcookie('club', $club->query('favoriteClub'), time() + 60 * 60 * 24 * 1000);
+            return redirect()->back();
+        } else {
+            return redirect()->back();
+        }
     }
 }
