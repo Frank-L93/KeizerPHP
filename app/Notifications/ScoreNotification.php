@@ -57,8 +57,6 @@ class ScoreNotification extends Notification
      */
     public function toMail($notifiable)
     {
-
-
         if (intval($this->black == 0)) {
             if ($this->opponnent == 2) {
                 return (new MailMessage)->subject('Uitslag ronde ' . $this->round->round)->markdown('emails.games.scoreBye', ['round' => $this->round->round, 'gamescore' => $this->scoringtext]);

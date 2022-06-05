@@ -89,6 +89,7 @@ class RankingsController extends Controller
         $calculation = new Calculate;
         $processingGames = $calculation->ProcessGames($request->games, $request->round['id']);
         $updatedRanking = $calculation->UpdateRanking();
+        $EndSeasonPart = $calculation->EndSeasonPart($request->round);
         $closingRound = $calculation->CloseRound($request->round);
         $notifyPlayers = $calculation->NotifyNewRanking($request->round);
 

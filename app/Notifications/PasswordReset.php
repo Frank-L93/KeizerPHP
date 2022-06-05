@@ -20,7 +20,7 @@ class PasswordReset extends Notification
      * Create a new notification instance.
      *
      * @param \App\Models\User $user
-     * @param \App\Models\Club $club
+     * @param $password
      */
     public function __construct(User $user, $password)
     {

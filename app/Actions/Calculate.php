@@ -305,6 +305,32 @@ class Calculate
         }
     }
 
+    // The ranking should be saved if the season part is over.
+    /** @return void */
+    public function EndSeasonPart($round)
+    {
+        // 4, 8, 12, 16, 20
+        // 1, 2, 3, 4,...
+        // 13, 26, 39,
+
+        $division = $round['round'] / Config::SeasonPart();
+        if (fmod($division, 1) !== 0.0) {
+            // Do nothing
+        } else {
+            // This is a season part.
+            // Save the ranking to a EndSeasonPart or add a column to the rankings-table?
+            // i.e. a JSON-column: [SeasonPart => 1, Score 1], [SeasonPart 2 => Score 2]
+            $Ranking = Ranking::orderBy('score', 'desc')->get();
+            foreach ($Ranking as $rank) {
+                $newSeasonParts = [];
+                $oldSeasonParts = $rank->SeasonParts;
+                $newSeasonParts = array_push($oldSeasonParts, [$division => ['part_score' => $rank->score, 'part_value' => $rank->value]]);
+                $rank->SeasonParts = $newSeasonParts;
+                $rank->save();
+            }
+        }
+    }
+
     /**
      * @param mixed $round 
      * @return true 

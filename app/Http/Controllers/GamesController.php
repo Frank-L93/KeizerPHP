@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Calculate;
 use App\Actions\Pair;
 use App\Helpers\CurrentScores;
 use App\Http\Requests\StoreGameRequest;
@@ -18,11 +19,13 @@ class GamesController extends Controller
 {
     public function index()
     {
+        $round = new Calculate;
+
 
         $games = Game::with('whitePlayer', 'blackPlayer', 'round')->orderBy('round_id', 'desc')->get();
         $users = User::all();
 
-        return Inertia::render('Admin/Games/Index')->with('Games', $games)->with('Users', $users);
+        return Inertia::render('Admin/Games/Index')->with('Games', $games)->with('Users', $users)->with('Round', $round->GetRound());
     }
 
     public function view(Request $round)

@@ -26,6 +26,14 @@ class Ranking extends Model
         'updating' => \App\Events\RankingUpdating::class,
     ];
 
+    protected $fillable = [
+        'SeasonParts'
+    ];
+
+    protected $casts = [
+        'SeasonParts' => 'array'
+    ];
+
     protected static function booted()
     {
         static::addGlobalScope(new ClubScope);

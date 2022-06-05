@@ -18,7 +18,6 @@ class ClubCreationCompleted extends Notification
     /**
      * Create a new notification instance.
      *
-     * @param \App\Models\User $user
      * @param \App\Models\Club $club
      */
     public function __construct(Club $club)

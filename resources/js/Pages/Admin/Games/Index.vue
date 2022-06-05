@@ -11,7 +11,7 @@
           :href="route('admin.rankings.process')"
           class="py-2 px-2 bg-orange-400 hover:bg-orange-600 rounded-md border-gray-200 shadow-md text-white text-xs mx-2"
         >
-          Verwerk partijen voor de laatste onverwerkte ronde
+          Verwerk partijen voor Ronde {{Round.round}}
         </inertia-link>
         <inertia-link
           :href="route('admin.games.generate')"
@@ -190,6 +190,7 @@ export default {
   props: {
     Games: Array,
     Users: Array,
+    Round: Object,
   },
   data() {
     return {

@@ -39,14 +39,14 @@ class Pair
 
         $text = $this->MatchGame($enriched_players, $round->id, $bye_necessary);
         // should return a collection of games.
-
+        $round->paired = 1;
+        $round->save();
         if ($text != "Succes") {
 
             return $text;
         }
         $paired_games = Game::where('round_id', $round->id)->get();
-        $round->paired = 1;
-        $round->save();
+
         return $paired_games;
     }
 
@@ -326,7 +326,7 @@ class Pair
             $black = $player_one;
         } else {
             $color_random = rand(0, 1);
-            if ($color_random = 0) {
+            if ($color_random == 0) {
                 $white = $player_one;
                 $black = $player_two;
             } else {
