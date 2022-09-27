@@ -100,17 +100,31 @@ class CurrentScores
                         $white_score += Config::Scoring("Bye") * $white_ranking->value;
                     }
                     $white_score += Config::Scoring("Presence");
-                } elseif ($white_result == 1) {
+                } elseif ($white_result == "1") {
 
                     if ($game['round_id'] < $round) {
 
-                        $white_score += $white_result * $black_ranking->LastValue;  //
+                        $white_score += 1 * $black_ranking->LastValue;  //
                     } elseif ($game['round_id'] > $round) {
                     } else {
-                        $white_score += $white_result * $black_ranking->value; //58+60 = 118.05 + 59 = 178.1 + 28.5 = 205.65 
+                        $white_score += 1 * $black_ranking->value; //58+60 = 118.05 + 59 = 178.1 + 28.5 = 205.65 
                     }
-                    $white_score += Config::Scoring("Presence");
+                    if (Config::UsagePresenceScore() == true) {
+                        $white_score += Config::Scoring("Presence");
+                    }
                     $black_score += Config::Scoring("Presence");
+                } elseif ($white_result == "1R") {
+
+                    if ($game['round_id'] < $round) {
+
+                        $white_score += 1 * $black_ranking->LastValue;  //
+                    } elseif ($game['round_id'] > $round) {
+                    } else {
+                        $white_score += 1 * $black_ranking->value; //58+60 = 118.05 + 59 = 178.1 + 28.5 = 205.65 
+                    }
+                    if (Config::UsagePresenceScore() == true) {
+                        $white_score += Config::Scoring("Presence");
+                    }
                 } elseif ($white_result == 0.5) {   //69.05 += 0.5 * 69 = 69.05 + 34.5 = 103.60
                     if ($game['round_id'] < $round) {
                         $white_score += $white_result * $black_ranking->LastValue;
@@ -120,17 +134,31 @@ class CurrentScores
                         $white_score += $white_result * $black_ranking->value;
                         $black_score += $black_result * $white_ranking->value;
                     }
-
-                    $white_score += Config::Scoring("Presence");
-                    $black_score += Config::Scoring("Presence");
-                } elseif ($black_result == 1) {
+                    if (Config::UsagePresenceScore() == true) {
+                        $white_score += Config::Scoring("Presence");
+                        $black_score += Config::Scoring("Presence");
+                    }
+                } elseif ($black_result == "1") {
                     if ($game['round_id'] < $round) {
-                        $black_score += $black_result * $white_ranking->LastValue;
+                        $black_score += 1 * $white_ranking->LastValue;
                     } elseif ($game['round_id'] > $round) {
                     } else {
-                        $black_score += $black_result * $white_ranking->value;
+                        $black_score += 1 * $white_ranking->value;
                     }
-                    $black_score += Config::Scoring("Presence");
+                    if (Config::UsagePresenceScore() == true) {
+                        $black_score += Config::Scoring("Presence");
+                    }
+                    $white_score += Config::Scoring("Presence");
+                } elseif ($black_result == "1R") {
+                    if ($game['round_id'] < $round) {
+                        $black_score += 1 * $white_ranking->LastValue;
+                    } elseif ($game['round_id'] > $round) {
+                    } else {
+                        $black_score += 1 * $white_ranking->value;
+                    }
+                    if (Config::UsagePresenceScore() == true) {
+                        $black_score += Config::Scoring("Presence");
+                    }
                     $white_score += Config::Scoring("Presence");
                 } else // No result yet?
                 {
