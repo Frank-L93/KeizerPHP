@@ -45,7 +45,7 @@ class RoundsController extends Controller
 
         $pathToCsv = $request->file('roundsFile');
 
-        $rows = SimpleExcelReader::create($pathToCsv, 'xlsx')->getRows();
+        $rows = SimpleExcelReader::create($pathToCsv, 'csv')->useDelimiter(";")->getRows();
         $SuccesWhileCreation = array();
         $ErrorWhileCreation = array();
         foreach ($rows as $row) {
@@ -95,6 +95,14 @@ class RoundsController extends Controller
     {
         $editRound = Round::find($round);
         return inertia::render('Admin/Rounds/Edit')->with('Round', $editRound);
+    }
+
+    public function publish($round)
+    {
+        $publishRound = Round::find($round);
+        $publishRound->published = 1;
+        $publishRound->save();
+        return redirect('admin/rounds')->with('success', 'Ronde gepubliceerd.');
     }
 
     public function update(Request $request)

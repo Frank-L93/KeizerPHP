@@ -49,10 +49,7 @@
               label="Afwezigheidsreden"
               type=""
             >
-              <option value="Empty"></option>
               <option value="Other">Afwezig met bericht</option>
-              <option value="Club">Afwezig i.v.m. clubactiviteit</option>
-              <option value="Personal">Afwezig door persoonlijke omstandigheid</option>
             </select-input>
 
           </div>

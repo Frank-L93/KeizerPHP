@@ -80,8 +80,10 @@
     </div>
 
     <div class="w-full">
-      <div class="bg-white shadow-md rounded my-6">
+      <div v-if="Current.published == 0">Partijen nog niet gepubliceerd</div>
 
+      <div v-else class="bg-white shadow-md rounded my-6">
+        
         <table class="sticky top-0 min-w-max w-full table-auto">
           <thead class="">
             <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">

@@ -41,6 +41,8 @@ class RegisterPlayer
         event(new UserCreated($event->user));
 
         // Notify the player.
-        $event->user->notify(new PlayerCreationCompleted($event->user, $event->password));
+        if ($event->method == "single") {
+            $event->user->notify(new PlayerCreationCompleted($event->user, $event->password));
+        }
     }
 }

@@ -7,8 +7,10 @@ use App\Models\Game;
 use App\Models\Presence;
 use App\Models\Ranking;
 use App\Models\Round;
+use App\Models\User;
 use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
 
@@ -291,6 +293,32 @@ class Pair
             // Game exists, so return false.
             return false;
         }
+        $season_part = Config::SeasonPart();
+
+        // returns 10
+        // The current paired round is our round variable
+        // If the round variable <= 10 we are in the first part of the season
+        // Else we are in the second part of the season
+        if ($round <= $season_part) {
+            // Check for games in the first part of the season
+            $game_exist = Game::where([['white', '=', $player_one], ['black', '=', $player_two]])->where('round_id', '<=', $season_part)->get();
+
+            $game_two_exist = Game::where([['white', '=', $player_two], ['black', '=', $player_one]])->where('round_id', '<=', $season_part)->get();
+
+            if (($game_exist->isNotEmpty()) || ($game_two_exist->isNotEmpty())) {
+                // Game exists, so return false.
+                return false;
+            }
+        } else {
+            // Check for games in the second part of the season
+            $game_exist = Game::where([['white', '=', $player_one], ['black', '=', $player_two]])->where('round_id', '>', $season_part)->get();
+            $game_two_exist = Game::where([['white', '=', $player_two], ['black', '=', $player_one]])->where('round_id', '>', $season_part)->get();
+
+            if (($game_exist->isNotEmpty()) || ($game_two_exist->isNotEmpty())) {
+                // Game exists, so return false.
+                return false;
+            }
+        }
         // If valid return True;
         return true;
     }
@@ -351,8 +379,25 @@ class Pair
         $newRanking = new Ranking;
         $newRanking->user_id = $player->user_id;
         $newRanking->score = 0;
-        $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
-        $newRanking->value = $lowest_value->value - 1;
+
+        $player_unranked = User::find($player->user_id);
+
+
+        $player_closest_by = DB::table('users')->join('rankings', 'users.id', '=', 'rankings.user_id')->select('users.id', 'users.rating', 'rankings.value', DB::raw('ABS(' . $player_unranked->rating . ' - users.rating) as difference'))->orderby('difference')->limit(1)->first();
+
+
+        if ($player_closest_by == null) {
+            //doe iets anders
+            $lowest_value = Ranking::select('value')->orderBy('value', 'asc')->limit(1)->first();
+
+            if ($lowest_value ==  Config::InitRanking('start')) {
+                $newRanking->value = $lowest_value;
+            } else {
+                $newRanking->value = $lowest_value->value - 1;
+            }
+        } else {
+            $newRanking->value = $player_closest_by->value;
+        }
         if ($newRanking->save()) {
             return true;
         } else {

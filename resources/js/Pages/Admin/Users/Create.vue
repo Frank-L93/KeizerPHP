@@ -55,26 +55,25 @@
             </div>
           </div>
         </form>
-        <form @submit.prevent="submitFile">
-          <div class="border-t p-8 -mr-6 -mb-8 flex flex-wrap">
-
-            <file-input
-              v-model="fileform.file"
-              :error="errors.file"
-              class="pr-6 pb-8 w-full lg:w-1/2"
-              type="file"
-              accept=".csv"
-              label="Gebruik een CSV-bestand met kolommen Naam, Email, Rating, KNSB en Beschikbaar"
-            />
-            <div>
-              <loading-button
-                :loading="sending"
-                class="mt-5 py-2 px-2 bg-green-300 rounded-xl border-1 shadow-xl border-gray-200 inline-block justify-between items-center hover:bg-green-500"
-                type="submit"
-              >Maak gebruikers</loading-button>
-            </div>
-          </div>
+         <form @submit.prevent="submitFile">
+          <label>Gebruik een CSV-bestand met kolommen Naam, Email, Rating, KNSB en Beschikbaar</label>
+          <input
+            type="file"
+            @input="fileForm.usersFile = $event.target.files[0]"
+          />
+          <progress
+            v-if="fileForm.progress"
+            :value="fileForm.progress.percentage"
+            max="100"
+          >
+            {{ fileForm.progress.percentage }}%
+          </progress>
+          <button
+            class="mt-5 py-2 px-2 bg-green-300 rounded-xl border-1 shadow-xl border-gray-200 inline-block justify-between items-center hover:bg-green-500"
+            type="submit"
+          >Maak gebruikers</button>
         </form>
+        
         <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex justify-end items-center">
 
         </div>
@@ -92,9 +91,23 @@ import Modal from "@/Shared/Modal";
 import SelectInput from "@/Shared/SelectInput";
 import FileInput from "@/Shared/FileInput";
 
+import { useForm } from "@inertiajs/inertia-vue3";
+
 export default {
   name: "Create",
   layout: Layout,
+  setup() {
+    const fileForm = useForm({
+      usersFile: null,
+    });
+
+    function submitFile() {
+      console.log("test");
+      fileForm.post("/admin/users/createUsers");
+    }
+
+    return { fileForm, submitFile };
+  },
   components: {
     Modal,
     LoadingButton,
@@ -115,10 +128,7 @@ export default {
         rating: null,
         knsb_id: null,
         beschikbaar: null,
-      },
-      fileform: {
-        file: null,
-      },
+      }
     };
   },
   methods: {
@@ -129,7 +139,6 @@ export default {
         onFinish: () => (this.sending = false),
       });
     },
-    submitFile() {},
   },
 };
 </script>

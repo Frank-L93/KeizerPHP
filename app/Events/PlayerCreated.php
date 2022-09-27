@@ -9,21 +9,21 @@ use Illuminate\Queue\SerializesModels;
 
 class PlayerCreated
 {
-use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets, SerializesModels;
 
-public $user;
+    public $user;
 
-public $password;
+    public $password;
 
-/**
-* Create a new event instance.
-* This Event is used when a Player is created by the Club-owner
-* @param \App\Models\User $user
-*/
-public function __construct(User $user, $password)
-{
-$this->user = $user;
-$this->password = $password;
-}
-
+    /**
+     * Create a new event instance.
+     * This Event is used when a Player is created by the Club-owner
+     * @param \App\Models\User $user
+     */
+    public function __construct(User $user, $password, public $method = "")
+    {
+        $this->user = $user;
+        $this->password = $password;
+        $this->method = $method;
+    }
 }

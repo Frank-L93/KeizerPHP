@@ -24,54 +24,57 @@ class Config extends Model
      * @var array
      */
     protected $fillable = [
-        'RoundsBetween_Bye', 'RoundsBetween', 'Club','Personal','Bye','Other','Presence','Start','Step','Name','Season','Admin','AbsenceMax','announcement','SeasonPart','club_id',
-  ];
-    public static function RoundsBetween($bye){
-        if($bye == 1)
-        {
+        'RoundsBetween_Bye', 'RoundsBetween', 'Club', 'Personal', 'Bye', 'Other', 'Presence', 'Start', 'Step', 'Name', 'Season', 'Admin', 'AbsenceMax', 'announcement', 'SeasonPart', 'club_id',
+    ];
+    public static function RoundsBetween($bye)
+    {
+        if ($bye == 1) {
             $value = Config::select('RoundsBetween_Bye')->first();
 
             // Maybe you want to add more rounds between Bye-games.
             return $value->RoundsBetween_Bye;
-        }
-        else
-        {
+        } else {
             $value = Config::select('RoundsBetween')->first();
 
             return $value->RoundsBetween;
         }
     }
 
+    public static function UsagePresenceScore()
+    {
+        $value = Config::select('presenceOrLoss')->first();
+
+        if ($value->presenceOrLoss == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public static function Scoring($result)
     {
         // Absence club (afwezig club)
-        if($result == "Club")
-        {
+        if ($result == "Club") {
             $value = Config::select('Club')->first();
 
             return $value->Club;
         }
         // Absence due to personal reasons/sickness/force majeure (0.25)
-        elseif($result == "Personal")
-        {
+        elseif ($result == "Personal") {
             $value = Config::select('Personal')->first();
 
             return $value->Personal;
-        }
-        elseif($result == "Bye")
-        {
+        } elseif ($result == "Bye") {
             $value = Config::select("Bye")->first();
 
             return $value->Bye;
-        }
-        elseif($result == "Presence")
-        {
+        } elseif ($result == "Presence") {
             $value = Config::select('Presence')->first();
 
             return $value->Presence;
         }
         // Absence with message (afwezig met bericht) (0.3333) --> max 5 times per season part
-        else{
+        else {
             $value = Config::select('Other')->first();
 
             return $value->Other;
@@ -87,16 +90,15 @@ class Config extends Model
     {
         $value = Config::select('AbsenceMax')->first();
 
-            return $value->AbsenceMax;
+        return $value->AbsenceMax;
     }
     public static function InitRanking($key)
     {
-        if($key == "start"){
+        if ($key == "start") {
             $value = Config::select('Start')->first();
 
             return $value->Start;
-        }
-        else{
+        } else {
             $value = Config::select('Step')->first();
 
             return $value->Step;
@@ -105,8 +107,7 @@ class Config extends Model
     public static function CompetitionName()
     {
         $value = Config::select('Name')->first();
-        if($value == NULL)
-        {
+        if ($value == NULL) {
             return "Need Install";
         }
         return $value->Name;
@@ -116,21 +117,21 @@ class Config extends Model
     {
         $value = Config::select('Season')->first();
 
-            return $value->Season;
+        return $value->Season;
     }
-     public static function Admin()
+    public static function Admin()
     {
         $value = Config::select('Admin')->first();
 
-            return $value->Admin;
+        return $value->Admin;
     }
 
     protected static function booted()
     {
         static::addGlobalScope(new ClubScope);
 
-        static::creating(function($model) {
-            if(session()->has('club_id')) {
+        static::creating(function ($model) {
+            if (session()->has('club_id')) {
                 $model->club_id = session()->get('club_id');
             }
         });

@@ -33,6 +33,8 @@ class GameUpdating
                 '1-0' => 'gewonnen',
                 '0.5-0.5' => 'remise gespeeld',
                 '0-1' => 'verloren',
+                '1-0R' => 'reglementair gewonnen',
+                '0-1R' => 'reglementair verloren',
                 'Afwezigheid' => 'Afwezigheid',
                 default => 'nog geen resultaat',
             };
@@ -40,6 +42,8 @@ class GameUpdating
                 '1-0' => 'verloren',
                 '0.5-0.5' => 'remise gespeeld',
                 '0-1' => 'gewonnen',
+                '1-0R' => 'reglementair verloren',
+                '0-1R' => 'reglementair gewonnen',
                 default => 'nog geen resultaat',
             };
 

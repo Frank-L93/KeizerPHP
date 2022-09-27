@@ -132,6 +132,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
     Route::get('/admin/users', [UsersController::class, 'index'])->name('admin.users')->middleware('auth');
     Route::get('/admin/users/create', [UsersController::class, 'create'])->name('admin.users.create')->middleware('auth');
     Route::post('/admin/users/create', [UsersController::class, 'store'])->name('admin.users.store')->middleware('auth');
+    Route::post('/admin/users/createUsers', [UsersController::class, 'storeFile'])->name('admin.users.storeFile')->middleware('auth');
     Route::delete('/admin/user/delete/{user}', [UsersController::class, 'destroy'])->name('admin.users.delete')->middleware('auth');
     Route::patch('/admin/users/edit/{user}', [UsersController::class, 'patch'])->name('admin.users.edit')->middleware('auth');
     Route::post('/admin/users/edit', [UsersController::class, 'update'])->name('admin.users.update')->middleware('auth');
@@ -153,6 +154,7 @@ Route::group(['middleware' => ['role:competitionleader']], function () {
     Route::delete('admin/rounds/delete/{round}', [RoundsController::class, 'destroy'])->name('admin.rounds.delete')->middleware('auth');
     Route::patch('/admin/rounds/edit/{round}', [RoundsController::class, 'patch'])->name('admin.rounds.patch')->middleware('auth');
     Route::post('/admin/rounds/edit', [RoundsController::class, 'update'])->name('admin.rounds.update')->middleware('auth');
+    Route::patch('/admin/rounds/edit/{round}', [RoundsController::class, 'publish'])->name('admin.rounds.publish')->middleware('auth');
 
     /**
      * Aanwezigheden

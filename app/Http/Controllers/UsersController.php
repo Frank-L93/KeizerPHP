@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
+use Spatie\SimpleExcel\SimpleExcelReader;
 
 class UsersController extends Controller
 {
@@ -50,10 +51,53 @@ class UsersController extends Controller
             'activate' => true,
         ]);
 
-        PlayerCreated::dispatch($user_created, $password);
+        PlayerCreated::dispatch($user_created, $password, "single");
         return redirect('/admin/users')->with('success', 'Speler: ' . $request->name . ' is aangemaakt en op de hoogte gebracht');
     }
+    public function storeFile(Request $request)
+    {
+        $pathToCsv = $request->file('usersFile');
 
+        $rows = SimpleExcelReader::create($pathToCsv, 'csv')->useDelimiter(";")->getRows();
+        $SuccesWhileCreation = array();
+        $ErrorWhileCreation = array();
+        foreach ($rows as $row) {
+
+            $name = $row['Naam'];
+
+            $email = $row['Email'];
+
+            $knsb = $row['KNSB'];
+
+            $rating = $row['Rating'];
+
+            $beschikbaar = $row['Beschikbaar'];
+
+            $password = $this->randomPassword();
+
+            if (User::where('email', $email)->first() == NULL) {
+
+                $nieuweGebruiker = User::create([
+                    'email' => $email,
+                    'name' => $name,
+                    'password' => Hash::make($password),
+                    'knsb_id' => $knsb,
+                    'club_id' => session()->get('club_id'),
+                    'rating' => $rating,
+                    'beschikbaar' => $beschikbaar,
+                    'active' => true,
+                    'activate' => false,
+                    'firsttimelogin' => true,
+                ]);
+
+                PlayerCreated::dispatch($nieuweGebruiker, $password, "file");
+            }
+        }
+
+
+
+        return redirect('admin/users')->with('success', 'Het gebruikers-bestand is verwerkt. ');
+    }
     function randomPassword()
     {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';

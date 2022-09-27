@@ -103,6 +103,8 @@
                     <option value="1-0">1-0</option>
                     <option value="0.5-0.5">0.5-0.5</option>
                     <option value="0-1">0-1</option>
+                    <option value="1-0R">1-0R</option>
+                    <option value="0-1R">0-1R</option>
                   </select-input>
                 </div>
                 <div v-else>{{ game.result }}</div>

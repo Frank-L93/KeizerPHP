@@ -178,18 +178,32 @@ class Calculate
                         $white_score += Config::Scoring("Bye") * $white_ranking->value;
                     }
                     $white_score += Config::Scoring("Presence");
-                } elseif ($white_result == 1) {
+                } elseif ($white_result == "1") {
                     if ($game['round_id'] < $round) {
-                        $white_score += $white_result * $black_ranking->LastValue;  //
+                        $white_score += 1 * $black_ranking->LastValue;  //
                     } elseif ($game['round_id'] > $round) {
                     } else {
-                        $white_score += $white_result * $black_ranking->value; //58+60 = 118.05 + 59 = 178.1 + 28.5 = 205.65 
+                        $white_score += 1 * $black_ranking->value; //58+60 = 118.05 + 59 = 178.1 + 28.5 = 205.65 
                     }
                     $white_ranking->amount = $white_ranking->amount + 1;
                     $black_ranking->amount = $black_ranking->amount + 1;
                     $white_ranking->gamescore = $white_ranking->gamescore + 1;
-                    $white_score += Config::Scoring("Presence");
+                    if (Config::UsagePresenceScore() == true) {
+                        $white_score += Config::Scoring("Presence");
+                    }
                     $black_score += Config::Scoring("Presence");
+                } elseif ($white_result == "1R") {
+                    if ($game['round_id'] < $round) {
+                        $white_score += 1 * $black_ranking->LastValue;  //
+                    } elseif ($game['round_id'] > $round) {
+                    } else {
+                        $white_score += 1 * $black_ranking->value; //58+60 = 118.05 + 59 = 178.1 + 28.5 = 205.65 
+                    }
+                    $white_ranking->amount = $white_ranking->amount + 1;
+                    $white_ranking->gamescore = $white_ranking->gamescore + 1;
+                    if (Config::UsagePresenceScore() == true) {
+                        $white_score += Config::Scoring("Presence");
+                    }
                 } elseif ($white_result == 0.5) {   //69.05 += 0.5 * 69 = 69.05 + 34.5 = 103.60
                     if ($game['round_id'] < $round) {
                         $white_score += $white_result * $black_ranking->LastValue;
@@ -203,20 +217,38 @@ class Calculate
                     $black_ranking->amount = $black_ranking->amount + 1;
                     $white_ranking->gamescore = $white_ranking->gamescore + 0.5;
                     $black_ranking->gamescore = $black_ranking->gamescore + 0.5;
-                    $white_score += Config::Scoring("Presence");
-                    $black_score += Config::Scoring("Presence");
-                } elseif ($black_result == 1) {
+                    if (Config::UsagePresenceScore() == true) {
+                        $white_score += Config::Scoring("Presence");
+                        $black_score += Config::Scoring("Presence");
+                    }
+                } elseif ($black_result == "1") {
                     if ($game['round_id'] < $round) {
-                        $black_score += $black_result * $white_ranking->LastValue;
+                        $black_score += 1 * $white_ranking->LastValue;
                     } elseif ($game['round_id'] > $round) {
                     } else {
-                        $black_score += $black_result * $white_ranking->value;
+                        $black_score += 1 * $white_ranking->value;
                     }
                     $white_ranking->amount = $white_ranking->amount + 1;
                     $black_ranking->amount = $black_ranking->amount + 1;
                     $black_ranking->gamescore = $black_ranking->gamescore + 1;
-                    $black_score += Config::Scoring("Presence");
+                    if (Config::UsagePresenceScore() == true) {
+                        $black_score += Config::Scoring("Presence");
+                    }
                     $white_score += Config::Scoring("Presence");
+                } elseif ($black_result == "1R") {
+                    if (
+                        $game['round_id'] < $round
+                    ) {
+                        $black_score += 1 * $white_ranking->LastValue;
+                    } elseif ($game['round_id'] > $round) {
+                    } else {
+                        $black_score += 1 * $white_ranking->value;
+                    }
+                    $black_ranking->amount = $black_ranking->amount + 1;
+                    $black_ranking->gamescore = $black_ranking->gamescore + 1;
+                    if (Config::UsagePresenceScore() == true) {
+                        $black_score += Config::Scoring("Presence");
+                    }
                 } else // No result yet?
                 {
                     continue;
@@ -229,16 +261,35 @@ class Calculate
                     $white_ranking->color = $white_ranking->color - 1;
                     $white_ranking->save();
                 } else {
+                    if ($black_result == "1R") { // White didn't play
+                    } else {
+                        if ($black_rating->rating == 0) {
+                            $white_ranking->ratop = $white_ranking->ratop + 1000;
+                        } else {
+                            $white_ranking->ratop = $white_ranking->ratop + $black_rating->rating;
+                        }
 
-                    $white_ranking->ratop = $white_ranking->ratop + $black_rating->rating;
-                    $white_ranking->save();
+                        $white_ranking->save();
+                    }
                     $white_ranking->TPR = $this->calculateTPR($game['white']);
                     $white_ranking->save();
+
+                    $black_ranking->score = $black_score;
+                    if ($white_result == "1R") {
+                    } else {
+                        if ($white_rating->rating  == 0) {
+                            $black_ranking->ratop = $black_ranking->ratop + 1000;
+                        } else {
+                            $black_ranking->ratop = $black_ranking->ratop + $white_rating->rating;
+                        }
+                        $black_ranking->save();
+                    }
+                    $black_ranking->TPR = $this->calculateTPR($game['black']);
+                    $black_ranking->save();
+
+
                     $black_ranking->score = $black_score;
                     $black_ranking->color = $black_ranking->color - 1;
-                    $black_ranking->ratop = $black_ranking->ratop + $white_rating->rating;
-                    $black_ranking->save();
-                    $black_ranking->TPR = $this->calculateTPR($game['black']);
                     $black_ranking->save();
                 }
             }

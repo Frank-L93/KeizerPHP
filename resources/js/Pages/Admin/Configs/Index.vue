@@ -94,6 +94,12 @@
                 type="number"
                 step="0.01"
               />
+              <text-input
+                v-model="form.presenceOrLoss"
+                class="appearance-none block mt-1 py-3 px-4"
+                label="Gebruik de aanwezigheidsscore alleen voor verliezers (0 voor nee, 1 voor ja)"
+                type="number"
+              />
             </div>
           </div>
         </div>
@@ -183,7 +189,7 @@
               <text-input
                 v-model="form.endseason"
                 class="appearance-none block mt-1 py-3 px-4"
-                label="Indicator voor einde seizoen"
+                label="Indicator voor einde seizoen, zet op 1 voor reset"
                 type="number"
               />
             </div>
@@ -250,6 +256,7 @@ export default {
         personal: this.Configs[0].Personal,
         other: this.Configs[0].Other,
         bye: this.Configs[0].Bye,
+        presenceOrLoss: this.Configs[0].presenceOrLoss
       },
     };
   },

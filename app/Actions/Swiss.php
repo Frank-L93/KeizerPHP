@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\InvalidCastException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use InvalidArgumentException;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class Swiss
 {
@@ -27,9 +28,53 @@ class Swiss
         return false;
     }
 
-    public function ValidOpponent($rank1, $rank2)
+    // Sort the Ranking Initially
+    public function SortInitial($currentRanking)
     {
-        //Do something with $rank1 and $rank2
+        return $currentRanking;
+    }
+
+    // Sort the Ranking in Point Groups
+
+    // Rule 1
+    /**
+     * @param mixed $player1 
+     * @param mixed $player2 
+     * @return bool 
+     */
+    public function FacingOpponentOnce($player1, $player2): bool
+    {
+        // Check if game already exists in tournament
+        // if found return false;
+        return true;
+    }
+
+    // Rule 2
+    /**
+     * @param mixed $player1 
+     * @param mixed $player2 
+     * @return bool 
+     */
+    public function FacingOpponentWithSameScore($player1, $player2): bool
+    {
+        return true;
+    }
+
+    //Rule 3
+    /**
+     * @param mixed $player1 
+     * @param mixed $player2 
+     * @param mixed $method 
+     * @return bool 
+     */
+    public function FacingOpponentInSecondPartOfGroup($player1, $player2, $method): bool
+    {
+        // Either on rating or on WP
+        return true;
+    }
+
+    public function FacingOpponentWithOtherColor($player1, $player2): bool
+    {
         return true;
     }
 }
