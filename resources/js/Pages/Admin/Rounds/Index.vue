@@ -43,7 +43,7 @@
               <td class="py-3 px-6 text-center">
                 <div class="flex item-center justify-center">
                   <button
-                  v-if="round.published === null || 0"
+                  v-if="round.published === 0"
                     type="button"
                     @click="publish(round.id)"
                   >
