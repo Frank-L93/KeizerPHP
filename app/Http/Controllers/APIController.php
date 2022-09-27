@@ -29,6 +29,8 @@ class APIController extends Controller
 
         if ($currentRound == NULL) {
             $gamesInCurrentRound = "Er is geen komende ronde";
+        } elseif ($currentRound->published == 0) {
+            $gamesInCurrentRound = "De partijen voor deze ronde zijn nog niet gepubliceerd";
         } else {
             $gamesInCurrentRound =
                 Game::query()->with(array('whitePlayer' => function ($query) {
